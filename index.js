@@ -6,7 +6,7 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-  if (message.content === '@increasingly-nervous-man') {
+  if (message.content.indexOf('increasingly-nervous-man')> -1) {
     message.reply('http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002');
   }
 });
