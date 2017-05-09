@@ -6,7 +6,7 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-  if (message.content.indexOf('increasingly-nervous-man')> -1) {
+  if (message.content.indexOf('nervous man') > -1 || message.content.indexOf('end of trump\'s campaign') > -1) {
     message.reply('http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002');
   }
 });
