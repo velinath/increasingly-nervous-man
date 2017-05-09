@@ -6,8 +6,8 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-  if (message.content === 'ping') {
-    message.reply('pong');
+  if (message.content === '@increasingly-nervous-man') {
+    message.reply('http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002');
   }
 });
 
