@@ -6,7 +6,7 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-  if ((message.content.indexOf('nervous man') > -1 || message.content.indexOf('end of trump\'s campaign') > -1) && (message.channel.id === 272035227574992897 || message.channel.id === 311818566007652354)) {
+  if ((message.content.indexOf('nervous man') > -1 || message.content.indexOf('end of trump\'s campaign') > -1) && (message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354)) {
     message.reply('http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002');
   }
 });
