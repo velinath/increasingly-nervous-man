@@ -7,11 +7,11 @@ client.on('ready', () => {
   console.log('I am ready!');
 });
 
-var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\s)/i
-var wh_live_pattern = /(^|\s)(today's disasters)($|\s)/i
+var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p|\s)/i
+var wh_live_pattern = /(^|\s)(today's disasters)($|\p|\s)/i
 
 client.on('message', message => {
-  if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
+  if(message.channel.id == 272035227574992897) {
     if (onion_pattern.test(message.content)) {
       message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
     } else if (wh_live_pattern.test(message.content)) {
