@@ -16,10 +16,10 @@ client.on('message', message => {
       message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
     } else if (wh_live_pattern.test(message.content)) {
       var url = 'https://www.whitehouse.gov/live';
+      var events = [];
       request(url, function(error, response, html) {
         if(!error) {
           var $ = cheerio.load(html);
-          var events = [];
           $('.view-content').filter(function() {
             var data = $(this);
             data.find('.views-row').each(function(i,v) {
