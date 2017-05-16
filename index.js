@@ -31,7 +31,7 @@ client.on('message', message => {
           });
         }
       });
-      console.log(events);
+      console.log(events.toString());
       message.reply(events.join("\n"));
     }  
   }
