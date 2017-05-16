@@ -27,7 +27,9 @@ client.on('message', message => {
               var event = $(this).find('a').text();
               events.push(time + ': ' + event);
             });
-            message.reply(events.toString());
+          });
+          message.reply(events.toString());
+        }
       }
     }
   }
