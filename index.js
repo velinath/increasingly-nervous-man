@@ -32,7 +32,7 @@ client.on('message', message => {
           });
         }
       });
-      message.reply(events.toString());
+      message.reply(events.join("\n"));
     }  
   }
 });
