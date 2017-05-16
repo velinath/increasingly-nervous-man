@@ -25,9 +25,10 @@ client.on('message', message => {
             data.find('.views-row').each(function(i,v) {
               var eventTime = $(this).find('.date-display-single').first().text();
               var eventName = $(this).find('a').first().text();
-              var eventStr = eventTime + ': ' + eventName
+              var eventStr = eventTime + ': ' + eventName;
               events.push(eventStr);
             });
+            console.log(events.toString());
           });
         }
       });
