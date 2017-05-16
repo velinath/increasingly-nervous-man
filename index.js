@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-var request = require('request');
 var cheerio = require('cheerio');
+var rp = require('request-promise');
 
 client.on('ready', () => {
   console.log('I am ready!');
@@ -17,23 +17,25 @@ client.on('message', message => {
     } else if (wh_live_pattern.test(message.content)) {
       var url = 'https://www.whitehouse.gov/live';
       var events = [];
-      request(url, function(error, response, html) {
-        if(!error) {
-          var $ = cheerio.load(html);
-          $('.view-content').filter(function() {
-            var data = $(this);
-            data.find('.views-row').each(function(i,v) {
-              var eventTime = $(this).find('.date-display-single').first().text();
-              var eventName = $(this).find('a').first().text();
-              var eventStr = eventTime + ': ' + eventName;
-              events.push(eventStr);
-            });
-            console.log(events.toString());
+      rp(url)
+      .then(function(html) {
+        var $ = cheerio.load(html);
+        $('.view-content').filter(function() {
+          var data = $(this);
+          data.find('.views-row').each(function(i,v) {
+            var eventTime = $(this).find('.date-display-single').first().text();
+            var eventName = $(this).find('a').first().text();
+            var eventStr = eventTime + ': ' + eventName;
+            events.push(eventStr);
           });
-        }
+          console.log(events.toString());
+        });
+        message.reply(events.join("\n"));
+      })
+      .catch(function(err) {
+        console.log('Crawl failed!');
       });
-      console.log(events.toString());
-      message.reply(events.join("\n"));
+      
     }  
   }
 });
