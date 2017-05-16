@@ -5,8 +5,10 @@ client.on('ready', () => {
   console.log('I am ready!');
 });
 
+var onion_pattern = new RegExp("(^|\s)(nervous man|end of trump's campaign)($|\s)")
+
 client.on('message', message => {
-  if ((/(^|\s)(nervous man|end of trump\'s campaign)($|\s)/.test(message.content) && message.channel.id == 272035227574992897) {
+  if (onion_pattern.test(message.content) && message.channel.id == 272035227574992897) {
     message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
   }
 });
