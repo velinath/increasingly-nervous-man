@@ -5,7 +5,7 @@ client.on('ready', () => {
   console.log('I am ready!');
 });
 
-var onion_pattern = new RegExp("(^|\s)(nervous man|end of trump's campaign)($|\s)")
+var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\s)/i
 
 client.on('message', message => {
   if (onion_pattern.test(message.content) && message.channel.id == 272035227574992897) {
