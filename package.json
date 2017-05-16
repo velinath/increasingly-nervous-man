@@ -13,7 +13,8 @@
     "erlpack": "0.1.2",
     "discord.js": "11.1.0",
     "request": "latest",
-    "cheerio": "latest"
+    "cheerio": "latest",
+    "request-promise": "latest"
   },
   "repository": {
     "type": "git",
