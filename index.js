@@ -28,10 +28,10 @@ client.on('message', message => {
               events.push(time + ': ' + event);
             });
           });
-          message.reply(events.toString());
         }
-      }
-    }
+      });
+      message.reply(events.toString());
+    }  
   }
 });
 
