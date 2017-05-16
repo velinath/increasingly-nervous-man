@@ -25,13 +25,12 @@ client.on('message', message => {
             data.find('.views-row').each(function(i,v) {
               var time = $(this).find('.date-display-single').first().text();
               var event = $(this).find('a').first().text();
-              console.log(time);
-              console.log(event);
               events.push(time + ': ' + event);
             });
           });
         }
       });
+      console.log(events);
       message.reply(events.join("\n"));
     }  
   }
