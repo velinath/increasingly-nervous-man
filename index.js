@@ -9,11 +9,14 @@ client.on('ready', () => {
 
 var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p|\s)/i
 var wh_live_pattern = /(^|\s)(today's disasters)($|\p|\s)/i
+var happening_pattern = /(^|\s)(?!.*it's)happening/i
 
 client.on('message', message => {
   if(message.channel.id == 272035227574992897) {
     if (onion_pattern.test(message.content)) {
       message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
+    } else if (happening_pattern.test(message.content)) {
+      message.reply('https://media.giphy.com/media/5mBE2MiMVFITS/giphy.gif');
     } else if (wh_live_pattern.test(message.content)) {
       var url = 'https://www.whitehouse.gov/live';
       var events = [];
