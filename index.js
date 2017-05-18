@@ -10,6 +10,7 @@ client.on('ready', () => {
 var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p|\s)/i
 var wh_live_pattern = /(^|\s)(today's disasters)($|\p|\s)/i
 var mattering_pattern = /(^|\s)mattering/i
+var sad_pattern = /(^|\s)(sad!|low energy)/i
 
 client.on('message', message => {
   if(message.channel.id == 272035227574992897) {
@@ -17,6 +18,8 @@ client.on('message', message => {
       message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
     } else if (happening_pattern.test(message.content)) {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
+    } else if (sad_pattern.test(message.content)) {
+      message.react(':sad:');
     } else if (wh_live_pattern.test(message.content)) {
       var url = 'https://www.whitehouse.gov/live';
       var events = [];
