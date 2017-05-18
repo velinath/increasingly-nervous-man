@@ -16,7 +16,7 @@ client.on('message', message => {
   if(message.channel.id == 272035227574992897) {
     if (onion_pattern.test(message.content)) {
       message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
-    } else if (happening_pattern.test(message.content)) {
+    } else if (mattering_pattern.test(message.content)) {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
     } else if (sad_pattern.test(message.content)) {
       message.react(':sad:');
