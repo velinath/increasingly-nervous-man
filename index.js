@@ -11,6 +11,7 @@ var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p|\s)/i
 var wh_live_pattern = /(^|\s)(today's disasters)($|\p|\s)/i
 var mattering_pattern = /(^|\s|\p)mattering/i
 var sad_pattern = /(^|\s)(sad!|low energy)/i
+var abuela_pattern = /(^|\s)(hillary|clinton)($|\s)/i
 
 client.on('message', message => {
   if(message.channel.id == 272035227574992897) {
@@ -20,6 +21,8 @@ client.on('message', message => {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
     } else if (sad_pattern.test(message.content)) {
       message.react(':sad:');
+    } else if {abuela_pattern.test(message.content)) {
+      message.react(':abuela:');
     } else if (wh_live_pattern.test(message.content)) {
       var url = 'https://www.whitehouse.gov/live';
       var events = [];
