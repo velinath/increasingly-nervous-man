@@ -9,7 +9,7 @@ client.on('ready', () => {
 
 var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p|\s)/i
 var wh_live_pattern = /(^|\s)(today's disasters)($|\p|\s)/i
-var mattering_pattern = /(^|\s)mattering/i
+var mattering_pattern = /(^|\s|\p)mattering/i
 var sad_pattern = /(^|\s)(sad!|low energy)/i
 
 client.on('message', message => {
