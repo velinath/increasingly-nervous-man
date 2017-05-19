@@ -21,7 +21,7 @@ client.on('message', message => {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
     } else if (sad_pattern.test(message.content)) {
       message.react(':sad:');
-    } else if {abuela_pattern.test(message.content)) {
+    } else if (abuela_pattern.test(message.content)) {
       message.react(':abuela:');
     } else if (wh_live_pattern.test(message.content)) {
       var url = 'https://www.whitehouse.gov/live';
