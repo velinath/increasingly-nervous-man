@@ -11,7 +11,8 @@ var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p|\s)/i
 var wh_live_pattern = /(^|\s)(today's disasters)($|\p|\s)/i
 var mattering_pattern = /(^|\s|\p)mattering/i
 var sad_pattern = /(^|\s)(sad!|low energy)/i
-var abuela_pattern = /(^|\s)(hillary|clinton)($|\s)/i
+var abuela_pattern = /(^|\s)(hillary|clinton)($|\s|\p)/i
+var daniels_pattern = /(^|\s)(voice friend bad|135b)($|\s|\p)/i
 
 client.on('message', message => {
   if(message.channel.id == 272035227574992897) {
@@ -19,6 +20,8 @@ client.on('message', message => {
       message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
     } else if (mattering_pattern.test(message.content)) {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
+    } else if (daniels_pattern.test(message.content)) {
+      message.channel.send('`.---- ...-- ..... -...`');
     } else if (sad_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'sad');
       message.react(emoji);
@@ -41,7 +44,7 @@ client.on('message', message => {
           });
           console.log(events.toString());
         });
-        message.reply(events.join("\n"));
+        message.channel.send(events.join("\n"));
       })
       .catch(function(err) {
         console.log('Crawl failed!');
