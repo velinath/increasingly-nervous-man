@@ -20,9 +20,11 @@ client.on('message', message => {
     } else if (mattering_pattern.test(message.content)) {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
     } else if (sad_pattern.test(message.content)) {
-      message.react('sad');
+      var emoji = message.guild.emojis.find('identifier', 'sad');
+      message.react(emoji);
     } else if (abuela_pattern.test(message.content)) {
-      message.react('abuela');
+      var emoji = message.guild.emojis.find('identifier', 'abuela');
+      message.react(emoji);
     } else if (wh_live_pattern.test(message.content)) {
       var url = 'https://www.whitehouse.gov/live';
       var events = [];
