@@ -14,8 +14,7 @@
     "discord.js": "11.1.0",
     "request": "latest",
     "cheerio": "latest",
-    "request-promise": "latest",
-    "get-tweets": "latest"
+    "request-promise": "latest"
   },
   "repository": {
     "type": "git",
