@@ -13,6 +13,7 @@ var mattering_pattern = /(^|\s|\p)mattering/i
 var sad_pattern = /(^|\s)(sad!|low energy)/i
 var abuela_pattern = /(^|\s)(hillary|clinton)($|\s|\p)/i
 var daniels_pattern = /(^|\s)(voice friend bad|135b|but what if)($|\s|\p)/i
+var bernie_pattern = /(^|\s)(bernie)($|\s|\p)/i
 
 client.on('message', message => {
   if(message.channel.id == 272035227574992897) {
@@ -22,6 +23,8 @@ client.on('message', message => {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
     } else if (daniels_pattern.test(message.content)) {
       message.channel.send('`.---- ...-- ..... -...`');
+    } else if (bernie_pattern.test(message.content)) {
+      message.reply('he would have won. :vv:');
     } else if (sad_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'sad');
       message.react(emoji);
