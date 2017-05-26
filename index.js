@@ -57,6 +57,7 @@ client.on('message', message => {
       var emoji = message.guild.emojis.find('name', 'mlyp');
       message.react(emoji);
     }
+  }
 });
 
 client.login(process.env.app_token);
