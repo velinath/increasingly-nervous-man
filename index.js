@@ -14,7 +14,6 @@ var sad_pattern = /(^|\s)(sad!|low energy)/i
 var abuela_pattern = /(^|\s)(hillary|clinton)($|\s|\p)/i
 var daniels_pattern = /(^|\s)(voice friend bad|135b|but what if)($|\s|\p)/i
 var mlyp_pattern = /(^|\s|\p)(good|shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|bad|disgusting)($|\s|\p)/i
-var posts_pattern = /(^|\s|\p)(posts|posting)($|\s|\p)/i
 
 client.on('message', message => {
   if(message.channel.id == 272035227574992897) {
@@ -54,7 +53,7 @@ client.on('message', message => {
       
     }  
   } else {
-    if (mlyp_pattern.test(message.content) && !posts_pattern.test(message.content)) {
+    if (mlyp_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'mlyp');
       message.react(emoji);
     }
