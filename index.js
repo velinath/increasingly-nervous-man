@@ -21,8 +21,6 @@ client.on('message', message => {
       message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
     } else if (mattering_pattern.test(message.content)) {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
-    } else if (daniels_pattern.test(message.content)) {
-      message.channel.send('`.---- ...-- ..... -...`');
     } else if (sad_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'sad');
       message.react(emoji);
@@ -56,6 +54,8 @@ client.on('message', message => {
     if (mlyp_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'mlyp');
       message.react(emoji);
+    } else if (daniels_pattern.test(message.content)) {
+      message.channel.send('`.---- ...-- ..... -...`');
     }
   }
 });
