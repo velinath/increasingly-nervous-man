@@ -12,7 +12,7 @@ var wh_live_pattern = /(^|\s)(today's disasters)($|\p|\s)/i
 var mattering_pattern = /(^|\s|\p)mattering/i
 var sad_pattern = /(^|\s)(sad!|low energy)/i
 var abuela_pattern = /(^|\s)(hillary|clinton)($|\s|\p)/i
-var daniels_pattern = /(^|\s)(voice friend bad|135b|but what if)($|\s|\p)/i
+var daniels_pattern = /(^|\s|\p)(voice friend bad|135b|but what if)($|\s|\p)/i
 var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|awful|disgusting|terrible|unpleasant)($|\s|\p)/i
 
 client.on('message', message => {
