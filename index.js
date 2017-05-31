@@ -25,9 +25,6 @@ client.on('message', message => {
     } else if (mattering_pattern.test(message.content)) {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
     } else if (cofveve_pattern.test(message.content)) {
-      var emoji = message.guild.emojis.find('name', 'coffee');
-      message.react(emoji);
-    } else if (tweet_pattern.test(message.content)) {
       message.reply(quotes.end(12).process());
     } else if (sad_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'sad');
