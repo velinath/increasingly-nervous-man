@@ -1,6 +1,6 @@
 {
   "name": "increasingly-nervous-man",
-  "version": "0.2.0",
+  "version": "0.2.5",
   "description": "an increasingly nervous man",
   "engines": {
     "node": "7.10.0"
@@ -14,7 +14,8 @@
     "discord.js": "11.1.0",
     "request": "latest",
     "cheerio": "latest",
-    "request-promise": "latest"
+    "request-promise": "latest",
+    "markovchain": "latest"
   },
   "repository": {
     "type": "git",
