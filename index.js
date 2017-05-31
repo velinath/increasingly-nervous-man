@@ -2,7 +2,9 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 var cheerio = require('cheerio');
 var rp = require('request-promise');
-
+var markov = require('markovchain')
+  , fs = require('fs')
+  , quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'))
 client.on('ready', () => {
   console.log('I am ready!');
 });
@@ -14,7 +16,7 @@ var sad_pattern = /(^|\s)(sad!|low energy)/i
 var abuela_pattern = /(^|\s)(hillary|clinton)($|\s|\p)/i
 var daniels_pattern = /(^|\s|\p)(voice friend bad|135b|but what if)($|\s|\p)/i
 var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|awful|disgusting|terrible|unpleasant)($|\p)/i
-var covfefe = /(^|\s|\p)(covfefe)($|\s|\p)/i
+var covfefe_pattern = /(^|\s|\p)(covfefe)($|\s|\p)/i
 
 client.on('message', message => {
   if(message.channel.id == 272035227574992897) {
@@ -23,7 +25,10 @@ client.on('message', message => {
     } else if (mattering_pattern.test(message.content)) {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
     } else if (cofveve_pattern.test(message.content)) {
-      //Do something.
+      var emoji = message.guild.emojis.find('name', 'coffee');
+      message.react(emoji);
+    } else if (tweet_pattern.test(message.content)) {
+      message.reply(quotes.end(12).process());
     } else if (sad_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'sad');
       message.react(emoji);
