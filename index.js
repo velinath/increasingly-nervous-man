@@ -14,6 +14,7 @@ var sad_pattern = /(^|\s)(sad!|low energy)/i
 var abuela_pattern = /(^|\s)(hillary|clinton)($|\s|\p)/i
 var daniels_pattern = /(^|\s|\p)(voice friend bad|135b|but what if)($|\s|\p)/i
 var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|awful|disgusting|terrible|unpleasant)($|\p)/i
+var cofveve_pattern = /(^|\s|\p)(cofveve)($|\s|\p)/i
 
 client.on('message', message => {
   if(message.channel.id == 272035227574992897) {
@@ -21,6 +22,9 @@ client.on('message', message => {
       message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
     } else if (mattering_pattern.test(message.content)) {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
+    } else if (cofveve_pattern.test(message.content)) {
+      var emoji = message.guild.emojis.find('name', 'coffee');
+      message.react(emoji);
     } else if (sad_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'sad');
       message.react(emoji);
