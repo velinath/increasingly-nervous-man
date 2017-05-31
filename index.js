@@ -24,7 +24,7 @@ client.on('message', message => {
       message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
     } else if (mattering_pattern.test(message.content)) {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
-    } else if (cofveve_pattern.test(message.content)) {
+    } else if (covfefe_pattern.test(message.content)) {
       message.reply(quotes.end(12).process());
     } else if (sad_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'sad');
