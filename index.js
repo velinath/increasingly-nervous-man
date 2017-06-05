@@ -17,6 +17,7 @@ var abuela_pattern = /(^|\s)(hillary|clinton)($|\s|\p)/i
 var daniels_pattern = /(^|\s|\p)(voice friend bad|135b|but what if)($|\s|\p)/i
 var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|awful|disgusting|terrible|unpleasant)($|\p)/i
 var covfefe_pattern = /(^|\s|\p)(covfefe)($|\s|\p)/i
+var timestamp = 0;
 
 client.on('message', message => {
   if(message.channel.id == 272035227574992897) {
@@ -25,7 +26,10 @@ client.on('message', message => {
     } else if (mattering_pattern.test(message.content)) {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
     } else if (covfefe_pattern.test(message.content)) {
-      message.reply(quotes.end(12).process());
+      if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
+        timestamp = Math.floor(Date.now() / 1000); 
+        message.reply(quotes.end(12).process());
+      }
     } else if (sad_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'sad');
       message.react(emoji);
