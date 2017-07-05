@@ -20,7 +20,7 @@ var covfefe_pattern = /(^|\s|\p)(covfefe)($|\s|\p{P})/i
 var timestamp = 0;
 
 client.on('message', message => {
-  if(message.channel.id == 272035227574992897) {
+  if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
     if (onion_pattern.test(message.content)) {
       message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
     } else if (mattering_pattern.test(message.content)) {
