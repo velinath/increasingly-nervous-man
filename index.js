@@ -57,7 +57,7 @@ client.on('message', message => {
           message.channel.send(events.join("\n"));
         } else {
           var pictureID = Math.floor(Math.random() * 3) + 1;
-          message.channel.sendFile('img/' + pictureID + '.gif');
+          message.channel.sendFile('img/' + pictureID + '.gif'); //TODO deprecated method; replace with send('', {embed: {image: {'img/' + pictureID + '.gif'}});??
         }
       })
       .catch(function(err) {
