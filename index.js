@@ -53,7 +53,7 @@ client.on('message', message => {
           });
           console.log(events.toString());
         });
-        if (eventStr != '' && message.channel.id != 311818566007652354) {
+        if (events.toString() != '' && message.channel.id != 311818566007652354) {
           message.channel.send(events.join("\n"));
         } else {
           var pictureID = Math.floor(Math.random() * 3) + 1);
