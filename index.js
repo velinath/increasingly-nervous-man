@@ -53,7 +53,12 @@ client.on('message', message => {
           });
           console.log(events.toString());
         });
-        message.channel.send(events.join("\n"));
+        if (eventStr != '' || message.channel.id == 311818566007652354) {
+          message.channel.send(events.join("\n"));
+        } else {
+          var pictureID = Math.floor(Math.random() * 3) + 1);
+          message.channel.sendFile('img/' + pictureID + '.gif');
+        }
       })
       .catch(function(err) {
         console.log('Crawl failed!');
