@@ -11,6 +11,7 @@ client.on('ready', () => {
 
 var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p{P}|\s)/i
 var wh_live_pattern = /(^|\s)(today'?s disasters)(\p{P}|\s|$)/i
+var wh_live_pattern = /(^|\s)(is trump still president)(\p{P}|\s|$)/i
 var mattering_pattern = /(^|\s|\p{P})mattering/i
 var sad_pattern = /(^|\s)(sad!|low energy)/i
 var abuela_pattern = /(^|\s)(hillary|clinton)($|\s|\p{P})/i
@@ -58,7 +59,18 @@ client.on('message', message => {
         console.log('Crawl failed!');
       });
       
-    }  
+    } else if (pres_pattern.test(message.content)) {
+      var url = 'http://www.istrumpstillpresident.com/';
+      var events = [];
+      rp(url)
+      .then(function(html) {
+        var $ = cheerio.load(html);
+        message.channel.send($('#main').text().join("\n"));
+      })
+      .catch(function(err) {
+        console.log('Crawl failed!');
+      });
+    }
   } else {
     if (mlyp_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'mlyp');
