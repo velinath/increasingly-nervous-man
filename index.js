@@ -60,16 +60,7 @@ client.on('message', message => {
       });
       
     } else if (pres_pattern.test(message.content)) {
-      var url = 'http://www.istrumpstillpresident.com/';
-      var events = [];
-      rp(url)
-      .then(function(html) {
-        var $ = cheerio.load(html);
-        message.channel.send($('#main').text().join("\n"));
-      })
-      .catch(function(err) {
-        console.log('Crawl failed!');
-      });
+      message.reply("Yes.");
     }
   } else {
     if (mlyp_pattern.test(message.content)) {
