@@ -11,7 +11,7 @@ client.on('ready', () => {
 
 var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p{P}|\s)/i
 var wh_live_pattern = /(^|\s)(today'?s disasters)(\p{P}|\s|$)/i
-var wh_live_pattern = /(^|\s)(is trump still president)(\p{P}|\s|$)/i
+var pres_pattern = /(^|\s)(is trump still president)(\p{P}|\s|$)/i
 var mattering_pattern = /(^|\s|\p{P})mattering/i
 var sad_pattern = /(^|\s)(sad!|low energy)/i
 var abuela_pattern = /(^|\s)(hillary|clinton)($|\s|\p{P})/i
