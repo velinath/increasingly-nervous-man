@@ -34,9 +34,8 @@ client.on('message', message => {
       }
     } else if (covfefe_seed_pattern.test(message.content)) {
       if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
-        timestamp = Math.floor(Date.now() / 1000); 
-        var content = message.content.split('covfefe ')[1]
-        var seed_matches = content.match(covfefe_seed_pattern);
+        timestamp = Math.floor(Date.now() / 1000);
+        var seed_matches = message.content.match(covfefe_seed_pattern);
         //message.reply(quotes.start(seed_matches[1]).end(12).process());
         message.reply(seed_matches[1]);
       }
