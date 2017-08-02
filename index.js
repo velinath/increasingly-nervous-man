@@ -18,7 +18,7 @@ var abuela_pattern = /(^|\s)(hillary|clinton)($|\s|\p{P})/i
 var daniels_pattern = /(^|\s|\p)(voice friend bad|135b|but what if)($|\s|\p{P})/i
 var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|awful|disgusting|terrible|unpleasant|impressive)($|\p{P})/i
 var covfefe_pattern = /(^|\s|\p)(covfefe)$/i
-var covfefe_seed_pattern = /(^|\s|\p)(covfefe)(.*)$/i
+var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
 var timestamp = 0;
 
 client.on('message', message => {
@@ -33,12 +33,12 @@ client.on('message', message => {
         message.reply(quotes.end(12).process());
       }
     } else if (covfefe_seed_pattern.test(message.content)) {
-      if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
-        timestamp = Math.floor(Date.now() / 1000);
+      //if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
+        //timestamp = Math.floor(Date.now() / 1000);
         var seed_matches = message.content.match(covfefe_seed_pattern);
         //message.reply(quotes.start(seed_matches[1]).end(12).process());
-        message.reply(seed_matches[1]);
-      }
+        message.reply(seed_matches);
+      //}
     } else if (sad_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'sad');
       message.react(emoji);
