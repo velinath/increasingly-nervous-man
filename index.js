@@ -33,12 +33,11 @@ client.on('message', message => {
         message.reply(quotes.end(12).process());
       }
     } else if (covfefe_seed_pattern.test(message.content)) {
-      //if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
-        //timestamp = Math.floor(Date.now() / 1000);
+      if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
+        timestamp = Math.floor(Date.now() / 1000);
         var seed_matches = message.content.match(covfefe_seed_pattern);
         message.reply(quotes.start(seed_matches[3]).end(12).process());
-        message.reply(seed_matches[3]);
-      //}
+      }
     } else if (sad_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'sad');
       message.react(emoji);
