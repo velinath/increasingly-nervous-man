@@ -17,7 +17,8 @@ var sad_pattern = /(^|\s)(sad!|low energy)/i
 var abuela_pattern = /(^|\s)(hillary|clinton)($|\s|\p{P})/i
 var daniels_pattern = /(^|\s|\p)(voice friend bad|135b|but what if)($|\s|\p{P})/i
 var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|awful|disgusting|terrible|unpleasant|impressive)($|\p{P})/i
-var covfefe_pattern = /(^|\s|\p)(covfefe)($|\s|\p{P})/i
+var covfefe_pattern = /(^|\s|\p)(covfefe)$/i
+var covfefe_seed_pattern = /(^|\s|\p)(covfefe)(.*)$/i
 var timestamp = 0;
 
 client.on('message', message => {
@@ -30,6 +31,14 @@ client.on('message', message => {
       if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
         timestamp = Math.floor(Date.now() / 1000); 
         message.reply(quotes.end(12).process());
+      }
+    } else if (covfefe_seed_pattern.test(message.content)) {
+      if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
+        timestamp = Math.floor(Date.now() / 1000); 
+        var seed_matches = message.content.match(covfefe_seed_pattern);
+        console.log(seed_matches);
+        //message.reply(quotes.start(seed_matches[0]).end(12).process());
+        message.reply(seed_matches);
       }
     } else if (sad_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'sad');
