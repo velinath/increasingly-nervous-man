@@ -35,10 +35,10 @@ client.on('message', message => {
     } else if (covfefe_seed_pattern.test(message.content)) {
       if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
         timestamp = Math.floor(Date.now() / 1000); 
-        var seed_matches = message.content.match(covfefe_seed_pattern);
-        console.log(seed_matches);
-        //message.reply(quotes.start(seed_matches[0]).end(12).process());
-        message.reply(seed_matches);
+        var content = message.content.split('covfefe ')[1]
+        var seed_matches = content.match(covfefe_seed_pattern);
+        //message.reply(quotes.start(seed_matches[1]).end(12).process());
+        message.reply(seed_matches[1]);
       }
     } else if (sad_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'sad');
