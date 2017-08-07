@@ -4,7 +4,6 @@ var cheerio = require('cheerio');
 var rp = require('request-promise');
 var markov = require('markovchain')
   , fs = require('fs')
-  , quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'))
 client.on('ready', () => {
   console.log('I am ready!');
 });
@@ -29,11 +28,13 @@ client.on('message', message => {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
     } else if (covfefe_pattern.test(message.content)) {
       if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
+        quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
         timestamp = Math.floor(Date.now() / 1000); 
         message.reply(quotes.end(12).process());
       }
     } else if (covfefe_seed_pattern.test(message.content)) {
       if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
+        quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
         timestamp = Math.floor(Date.now() / 1000);
         var seed_matches = message.content.match(covfefe_seed_pattern);
         message.reply(quotes.start(seed_matches[3]).end(12).process());
