@@ -32,7 +32,7 @@ t.stream('statuses/filter',
          { follow: 'realDonaldTrump', stall_warnings: true},
          function(stream) {
   stream.on('tweet', function(tweet) {
-    //send Discord message to channel
+    client.sendMessage('272035227574992897', 'A STATEMENT FROM THE PRESIDENT: ' + tweet);
   });
 }
          ); */
