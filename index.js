@@ -4,7 +4,7 @@ var cheerio = require('cheerio');
 var rp = require('request-promise');
 var markov = require('markovchain')
   , fs = require('fs')
-//var twit = require('twit');
+var twit = require('twit');
 client.on('ready', () => {
   console.log('I am ready!');
 });
