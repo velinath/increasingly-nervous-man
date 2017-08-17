@@ -21,22 +21,21 @@ var covfefe_pattern = /(^|\s|\p)(covfefe)$/i
 var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
 var timestamp = 0;
 
-/* var t = new twit({
-  consumer_key: process.env.consumer_key,
-  consumer_secret: process.env.consumer_secret,
+var t = new twit({
+  consumer_key: process.env.twitter_app_key,
+  consumer_secret: process.env.twitter_app_secret,
   access_token: process.env.access_token,
   access_token_secret: process.env.token_secret 
 });
 
 t.stream('statuses/filter',
-         { follow: 'realDonaldTrump', stall_warnings: true},
+         { follow: 'realDonaldTrump', stall_warnings: true },
          function(stream) {
-  stream.on('tweet', function(tweet) {
-    var channel = client.channels.get('272035227574992897');
-    channel.sendMessage('A STATEMENT FROM THE PRESIDENT: ' + tweet);
-  });
-}
-         ); */
+           stream.on('tweet', function(tweet) {
+             var channel = client.channels.get('272035227574992897');
+             channel.sendMessage('A STATEMENT FROM THE PRESIDENT: ' + tweet);
+           });
+        }); 
 
 client.on('message', message => {
   if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
