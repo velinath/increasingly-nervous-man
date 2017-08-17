@@ -4,6 +4,7 @@ var cheerio = require('cheerio');
 var rp = require('request-promise');
 var markov = require('markovchain')
   , fs = require('fs')
+//var twit = require('twit');
 client.on('ready', () => {
   console.log('I am ready!');
 });
@@ -19,6 +20,22 @@ var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|p
 var covfefe_pattern = /(^|\s|\p)(covfefe)$/i
 var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
 var timestamp = 0;
+
+/* var t = new twit({
+  consumer_key: process.env.consumer_key,
+  consumer_secret: process.env.consumer_secret,
+  access_token: process.env.access_token,
+  access_token_secret: process.env.token_secret 
+});
+
+t.stream('statuses/filter',
+         { follow: 'realDonaldTrump', stall_warnings: true},
+         function(stream) {
+  stream.on('tweet', function(tweet) {
+    //send Discord message to channel
+  });
+}
+         ); */
 
 client.on('message', message => {
   if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
