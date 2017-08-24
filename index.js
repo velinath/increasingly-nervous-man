@@ -1,4 +1,3 @@
-asdgjhslghdlbh
 const Discord = require('discord.js');
 const client = new Discord.Client();
 var cheerio = require('cheerio');
@@ -32,8 +31,8 @@ var t = new twit({
 var stream = t.stream('statuses/filter', { follow: 25073877, stall_warnings: true });
 stream.on('tweet', function(tweet) {
   console.log(tweet);
-  var channel = client.channels.get('272035227574992897');
-  channel.send('A STATEMENT FROM THE PRESIDENT: ' + tweet);
+  var channel = client.channels.get('311818566007652354');
+  channel.send('A STATEMENT FROM THE PRESIDENT: ' + tweet.text);
 }); 
 
 client.on('message', message => {
