@@ -32,7 +32,7 @@ var stream = t.stream('statuses/filter', { follow: 25073877, stall_warnings: tru
 stream.on('tweet', function(tweet) {
   if(tweet.user.id == 25073877) {
     console.log(tweet.user.id);
-    var channel = client.channels.get('311818566007652354');
+    var channel = client.channels.get('272035227574992897');
     channel.send('A STATEMENT FROM THE PRESIDENT: ```' + tweet.text + '```');
   }
 }); 
