@@ -28,16 +28,13 @@ var t = new twit({
   access_token_secret: process.env.token_secret 
 });
 
-t.stream('statuses/filter',
-         { follow: 'realDonaldTrump', stall_warnings: true },
-         function(stream) {
-           stream.on('tweet', function(tweet) {
-             console.log('tweet!');
-             console.log(tweet);
-             var channel = client.channels.get('272035227574992897');
-             channel.send('A STATEMENT FROM THE PRESIDENT: ' + tweet);
-           });
-        }); 
+t.stream('statuses/filter', { follow: 25073877, stall_warnings: true });
+stream.on('tweet', function(tweet) {
+  console.log('tweet!');
+  console.log(tweet);
+  var channel = client.channels.get('272035227574992897');
+  channel.send('A STATEMENT FROM THE PRESIDENT: ' + tweet);
+}); 
 
 client.on('message', message => {
   if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
