@@ -30,8 +30,8 @@ var t = new twit({
 
 var stream = t.stream('statuses/filter', { follow: 25073877, stall_warnings: true });
 stream.on('tweet', function(tweet) {
-  console.log(tweet.user.id);
   if(tweet.user.id == 25073877) {
+    console.log(tweet.user.id);
     var channel = client.channels.get('311818566007652354');
     channel.send('A STATEMENT FROM THE PRESIDENT: ' + tweet.text);
   }
