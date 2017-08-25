@@ -19,7 +19,6 @@ var daniels_pattern = /(^|\s|\p)(voice friend bad|135b|but what if)($|\s|\p{P})/
 var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|awful|disgusting|terrible|unpleasant|impressive)($|\p{P})/i
 var covfefe_pattern = /(^|\s|\p)(covfefe)$/i
 var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
-var timestamp = 0;
 
 var t = new twit({
   consumer_key: process.env.twitter_app_key,
@@ -43,27 +42,6 @@ client.on('message', message => {
       message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
     } else if (mattering_pattern.test(message.content)) {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
-    }
-  } else if(message.channel.id == 350440271709732869) {
-    if (covfefe_pattern.test(message.content)) {
-      if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
-        quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
-        timestamp = Math.floor(Date.now() / 1000); 
-        message.reply(quotes.end(12).process());
-      }
-    } else if (covfefe_seed_pattern.test(message.content)) {
-      if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
-        quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
-        timestamp = Math.floor(Date.now() / 1000);
-        var seed_matches = message.content.match(covfefe_seed_pattern);
-        message.reply(quotes.start(seed_matches[3]).end(12).process());
-      }
-    } else if (sad_pattern.test(message.content)) {
-      var emoji = message.guild.emojis.find('name', 'sad');
-      message.react(emoji);
-    } else if (abuela_pattern.test(message.content)) {
-      var emoji = message.guild.emojis.find('name', 'abuela');
-      message.react(emoji);
     } else if (wh_live_pattern.test(message.content)) {
       var url = 'https://www.whitehouse.gov/live';
       var events = [];
@@ -90,9 +68,23 @@ client.on('message', message => {
       .catch(function(err) {
         console.log('Crawl failed!');
       });
-      
+    } else if (sad_pattern.test(message.content)) {
+      var emoji = message.guild.emojis.find('name', 'sad');
+      message.react(emoji);
+    } else if (abuela_pattern.test(message.content)) {
+      var emoji = message.guild.emojis.find('name', 'abuela');
+      message.react(emoji);
     } else if (pres_pattern.test(message.content)) {
       message.reply("Yes.");
+    }
+  } else if(message.channel.id == 350440271709732869) {
+    if (covfefe_pattern.test(message.content)) {
+      quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
+      message.reply(quotes.end(12).process());
+    } else if (covfefe_seed_pattern.test(message.content)) {
+      quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
+      var seed_matches = message.content.match(covfefe_seed_pattern);
+      message.reply(quotes.start(seed_matches[3]).end(12).process());
     }
   } else {
     if (mlyp_pattern.test(message.content)) {
