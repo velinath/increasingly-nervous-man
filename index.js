@@ -43,7 +43,9 @@ client.on('message', message => {
       message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
     } else if (mattering_pattern.test(message.content)) {
       message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
-    } else if (covfefe_pattern.test(message.content)) {
+    }
+  } else if(message.channel.id == 350440271709732869) {
+    if (covfefe_pattern.test(message.content)) {
       if(Math.floor(Date.now() / 1000) >= timestamp + 30) {
         quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
         timestamp = Math.floor(Date.now() / 1000); 
