@@ -61,7 +61,7 @@ client.on('message', message => {
         if (events.toString() != '') {
           message.channel.send(events.join("\n"));
         } else {
-          var pictureID = Math.floor(Math.random() * 3) + 1;
+          var pictureID = Math.floor(Math.random() * 4) + 1;
           message.channel.sendFile('img/' + pictureID + '.gif'); //TODO deprecated method; replace with send('', {embed: {image: {'img/' + pictureID + '.gif'}});??
         }
       })
