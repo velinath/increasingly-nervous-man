@@ -95,7 +95,7 @@ client.on('message', message => {
       message.channel.send('`.---- ...-- ..... -...`');
     } else if (role_pattern.test(message.content)) {
       console.log('hey, this worked, but...');
-      message.channel.send(Math.floor(Math.random() * role_pattern.exec(message.content)[1]) + 1;
+      message.channel.send(Math.floor(Math.random() * role_pattern.exec(message.content)[1]) + 1);
     } else {
       console.log('nonmatching msg');
     }
