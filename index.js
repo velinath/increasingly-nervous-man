@@ -19,7 +19,7 @@ var daniels_pattern = /(^|\s|\p)(voice friend bad|135b|but what if)($|\s|\p{P})/
 var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|awful|disgusting|terrible|unpleasant|impressive)($|\p{P})/i
 var covfefe_pattern = /(^|\s|\p)(covfefe)$/i
 var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
-var role_pattern = /^\!r ([0-9]{1,3})$/im
+var role_pattern = /^\!r ([0-9]{1})d([0-9]{1,3})$/im
 
 var t = new twit({
   consumer_key: process.env.twitter_app_key,
@@ -84,7 +84,7 @@ client.on('message', message => {
       message.reply(quotes.end(12).process());
     } else if (covfefe_seed_pattern.test(message.content)) {
       quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
-      var seed_matches = message.content.match(covfefe_seed_pattern);
+      var seed_matches = covfefe_seed_pattern.exec(message.content)[1];
       message.reply(quotes.start(seed_matches[3]).end(12).process());
     }
   } else {
@@ -94,7 +94,14 @@ client.on('message', message => {
     } else if (daniels_pattern.test(message.content)) {
       message.channel.send('`.---- ...-- ..... -...`');
     } else if (role_pattern.test(message.content)) {
-      message.channel.send(Math.floor(Math.random() * role_pattern.exec(message.content)[1]) + 1);
+      var total = 0;
+      var count = 0;
+      var regex_groups = role_pattern.exec(message.content)
+      while (count < regex_groups[1]) {
+        total += Math.floor(Math.random() * regex_groups[2]) + 1);
+        count++;
+      }
+      message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + total + "`");
     }
   }
 });
