@@ -94,10 +94,7 @@ client.on('message', message => {
     } else if (daniels_pattern.test(message.content)) {
       message.channel.send('`.---- ...-- ..... -...`');
     } else if (role_pattern.test(message.content)) {
-      console.log('hey, this worked, but...');
       message.channel.send(Math.floor(Math.random() * role_pattern.exec(message.content)[1]) + 1);
-    } else {
-      console.log('nonmatching msg');
     }
   }
 });
