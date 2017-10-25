@@ -19,7 +19,7 @@ var daniels_pattern = /(^|\s|\p)(voice friend bad|135b|but what if)($|\s|\p{P})/
 var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|awful|disgusting|terrible|unpleasant|impressive)($|\p{P})/i
 var covfefe_pattern = /(^|\s|\p)(covfefe)$/i
 var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
-var role_pattern = /^!r ([0-9]{1,3})$/i
+var role_pattern = /^\!r ([0-9]{1,3})$/i
 
 var t = new twit({
   consumer_key: process.env.twitter_app_key,
