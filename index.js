@@ -98,7 +98,7 @@ client.on('message', message => {
       var count = 0;
       var regex_groups = role_pattern.exec(message.content)
       while (count < regex_groups[1]) {
-        total += Math.floor(Math.random() * regex_groups[2]) + 1);
+        total += Math.floor(Math.random() * regex_groups[2]) + 1;
         count++;
       }
       message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + total + "`");
