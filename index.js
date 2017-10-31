@@ -85,7 +85,7 @@ client.on('message', message => {
     } else if (covfefe_seed_pattern.test(message.content)) {
       quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
       var seed_matches = covfefe_seed_pattern.exec(message.content)[1];
-      message.reply(quotes.start(seed_matches[3]).end(12).process());
+      message.reply(quotes.start(seed_matches).end(12).process());
     }
   } else {
     if (mlyp_pattern.test(message.content)) {
