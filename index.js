@@ -31,7 +31,6 @@ var t = new twit({
 var stream = t.stream('statuses/filter', { follow: 25073877, stall_warnings: true });
 stream.on('tweet', function(tweet) {
   if(tweet.user.id == 25073877) {
-    console.log(tweet.user.id);
     var channel = client.channels.get('272035227574992897');
     channel.send('A STATEMENT FROM THE PRESIDENT: ```' + tweet.text + '```');
   }
@@ -57,7 +56,6 @@ client.on('message', message => {
             var eventStr = eventTime + ': ' + eventName;
             events.push(eventStr);
           });
-          console.log(events.toString());
         });
         if (events.toString() != '') {
           message.channel.send(events.join("\n"));
@@ -85,7 +83,6 @@ client.on('message', message => {
     } else if (covfefe_seed_pattern.test(message.content)) {
       quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
       var seed_matches = covfefe_seed_pattern.exec(message.content);
-      console.log(seed_matches);
       message.reply(quotes.start(seed_matches[3]).end(12).process());
     }
   } else {
