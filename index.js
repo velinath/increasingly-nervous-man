@@ -118,12 +118,16 @@ router.get('/build_success', function(req, res) {
   var channel = client.channels.get('314855070330126338');
   //todo: check last deploy and send "back to normal" vs "success"
   channel.send('A new WotLK server build just deployed successfully.');
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.end('increasingly-nervous-man\n');
 });
 
 
 router.get('/build_failure', function(req, res) {
   var channel = client.channels.get('314855070330126338');
   channel.send('A new WotLK server build just failed, and @FL should fix it.');
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.end('increasingly-nervous-man\n');
 });
 
 var server = http.createServer(function(req, res) {
