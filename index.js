@@ -126,7 +126,7 @@ router.get('/build_success', function(req, res) {
 
 router.get('/build_failure', function(req, res) {
   var channel = client.channels.get('314855070330126338');
-  channel.send('A new WotLK server build just failed, and @FL should fix it.');
+  channel.send('A new WotLK server build just failed, and <@98805971358330880> should fix it.');
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
   res.end('increasingly-nervous-man\n');
 });
