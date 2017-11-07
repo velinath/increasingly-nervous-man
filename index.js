@@ -106,8 +106,26 @@ client.on('message', message => {
 
 client.login(process.env.app_token);
 var http = require('http');
+var Router = require('router');
 
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('increasingly-nervous-man\n'); })
-  .listen(process.env.PORT || 8080);
+var router = Router()
+router.get('/', function(req, res) {
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.end('increasingly-nervous-man\n');
+});
+
+router.get('/build_success', function(req, res) {
+  var channel = client.channels.get('314855070330126338');
+  channel.send('A new WotLK server build just deployed successfully.');
+});
+
+
+router.get('/build_failure', function(req, res) {
+  var channel = client.channels.get('314855070330126338');
+  channel.send('A new WotLK server build just failed, and @FL should fix it.');
+});
+
+var server = http.createServer(function(req, res) {
+  router(req, res, finalhandler(req, res))
+})
+server.listen(process.env.PORT || 8080);
