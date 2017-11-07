@@ -116,6 +116,7 @@ router.get('/', function(req, res) {
 
 router.get('/build_success', function(req, res) {
   var channel = client.channels.get('314855070330126338');
+  //todo: check last deploy and send "back to normal" vs "success"
   channel.send('A new WotLK server build just deployed successfully.');
 });
 
