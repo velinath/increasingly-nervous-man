@@ -18,7 +18,8 @@
     "markovchain": "latest",
     "simple-ngram-markov": "latest",
     "twit": "latest",
-    "router": "latest"
+    "router": "latest",
+    "finalhandler": "latest"
   },
   "repository": {
     "type": "git",
