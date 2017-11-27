@@ -25,14 +25,15 @@ var t = new twit({
   consumer_key: process.env.twitter_app_key,
   consumer_secret: process.env.twitter_app_secret,
   access_token: process.env.access_token,
-  access_token_secret: process.env.token_secret 
+  access_token_secret: process.env.token_secret,
+  tweet_mode: 'extended'
 });
 
 var stream = t.stream('statuses/filter', { follow: 25073877, stall_warnings: true });
 stream.on('tweet', function(tweet) {
   if(tweet.user.id == 25073877) {
     var channel = client.channels.get('272035227574992897');
-    channel.send('A STATEMENT FROM THE PRESIDENT: ```' + tweet.text + '```');
+    channel.send('A STATEMENT FROM THE PRESIDENT: ```' + tweet.full_text + '```');
   }
 }); 
 
