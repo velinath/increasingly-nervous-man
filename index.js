@@ -108,7 +108,7 @@ client.on('message', message => {
       }
       message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + total + "`");
     } else if (eggp_pattern.test(message.content)) {
-      var emoji = message.guild.emojis.find('name', 'eggplant');
+      message.react("🍆");
     }
   }
 });
