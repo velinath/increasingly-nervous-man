@@ -112,6 +112,7 @@ client.on('message', message => {
       message.react("🍆");
     } else if (swd_pattern.test(message.content)) {
       message.react("💦");
+    }
   }
 });
 
