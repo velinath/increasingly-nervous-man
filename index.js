@@ -20,7 +20,8 @@ var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|p
 var covfefe_pattern = /(^|\s|\p)(covfefe)$/i
 var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
 var role_pattern = /^\!r ([0-9]{1})d([0-9]{1,3})$/im
-var eggp_pattern = /(^|\s|\p)(knifies)/i
+var eggp_pattern = /(^|\s|\p)(hard|package)/i
+var swd_pattern = /(^|\s|\p)(knifies)/i
 
 var t = new twit({
   consumer_key: process.env.twitter_app_key,
@@ -109,7 +110,8 @@ client.on('message', message => {
       message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + total + "`");
     } else if (eggp_pattern.test(message.content)) {
       message.react("🍆");
-    }
+    } else if (swd_pattern.test(message.content)) {
+      message.react("💦");
   }
 });
 
