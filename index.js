@@ -56,9 +56,9 @@ var receiveMsg = function() {
       console.log("Receive Error", err);
     } else if (data.Messages) {
       var message = data.Messages[0];
-      console.log('Message received:' + message);
+      console.log('Message received:' + JSON.stringify(message));
       var channel = client.channels.get('366737195744100352');
-      channel.send(message.Moderator + ' has opened ' + message.GameTitle + '. Thread Link: https://forums.somethingawful.com/showthread.php?threadid=' + message.threadId);
+      //channel.send(message.Moderator + ' has opened ' + message.GameTitle + '. Thread Link: https://forums.somethingawful.com/showthread.php?threadid=' + message.threadId);
       var deleteParams = {
         QueueUrl: queueUrl,
         ReceiptHandle: message.ReceiptHandle
