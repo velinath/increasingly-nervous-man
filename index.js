@@ -65,11 +65,13 @@ var sqsParams = {
 };
 
 var receiveMsg = function() {
+  console.log('Sending SQS request');
   sqs.receiveMessage(sqsParams, function(err, data) {
     if (err) {
       console.log("Receive Error", err);
     } else if (data.Messages) {
       var message = data.Messages[0];
+      console.log('Message received:' + message);
       var channel = client.channels.get('366737195744100352');
       channel.send(message.Moderator + ' has opened ' + message.GameTitle + '. Thread Link: https://forums.somethingawful.com/showthread.php?threadid=' + message.threadId);
       var deleteParams = {
