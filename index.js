@@ -5,9 +5,9 @@ var rp = require('request-promise');
 var markov = require('markovchain')
   , fs = require('fs')
 var twit = require('twit');
-client.on('ready', () => {
-  console.log('I am ready!');
-});
+var AWS = require('aws-sdk');
+var queueUrl = process.env.sqs_queue_url;
+AWS.config.update({region: process.env.region});
 
 var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p{P}|\s)/i
 var wh_live_pattern = /(^|\s)(today'?s disasters)(\p{P}|\s|$)/i
@@ -32,6 +32,13 @@ var t = new twit({
 });
 
 var stream = t.stream('statuses/filter', { follow: 25073877, stall_warnings: true });
+
+var sqs = new AWS.SQS({apiVersion: '2012-11-05'});
+
+client.on('ready', () => {
+  console.log('I am ready!');
+});
+
 stream.on('tweet', function(tweet) {
   if(tweet.user.id == 25073877) {
     var channel = client.channels.get('272035227574992897');
@@ -43,6 +50,52 @@ stream.on('tweet', function(tweet) {
     console.log(tweet);
   }
 }); 
+
+var sqsParams = {
+  AttributeNames: [
+    "SentTimestamp"
+  ],
+  MaxNumberOfMessages: 1,
+  MessageAttributeNames: [
+    "All"
+  ],
+  QueueUrl: queueUrl,
+  VisibilityTimeout: 0,
+  WaitTimeSeconds: 10
+};
+
+var receiveMsg = function() {
+  sqs.receiveMessage(sqsParams, function(err, data) {
+    if (err) {
+      console.log("Receive Error", err);
+    } else if (data.Messages) {
+      var message = data.Messages[0];
+      var channel = client.channels.get('366737195744100352');
+      channel.send(message.Moderator + ' has opened ' + message.GameTitle + '. Thread Link: https://forums.somethingawful.com/showthread.php?threadid=' + message.threadId);
+      var deleteParams = {
+        QueueUrl: queueUrl,
+        ReceiptHandle: message.ReceiptHandle
+      };
+      sqs.deleteMessage(deleteParams, function(err, data) {
+        if (err) {
+          console.log("Delete Error", err);
+          setTimeout(function() {
+            receiveMsg()
+          }, 60000);
+        } else {
+          console.log("Message Deleted", data);
+          receiveMsg();
+        }
+      });
+    } else {
+      setTimeout(function() {
+        receiveMsg()
+      }, 60000);
+    }
+  });
+};
+
+receiveMsg();
 
 client.on('message', message => {
   if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
