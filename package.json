@@ -19,7 +19,8 @@
     "simple-ngram-markov": "latest",
     "twit": "latest",
     "router": "latest",
-    "finalhandler": "latest"
+    "finalhandler": "latest",
+    "aws-sdk": "latest",
   },
   "repository": {
     "type": "git",
