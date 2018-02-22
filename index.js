@@ -58,14 +58,12 @@ var receiveMsg = function() {
       var message = data.Messages[0];
       console.log('Message received:' + JSON.stringify(message));
       var channel = client.channels.get('366737195744100352');
-      /*
       channel.send(message.MessageAttributes.Moderator.StringValue + 
                    ' has opened ' + 
                    message.MessageAttributes.GameTitle.StringValue + 
                    '. Thread Link: https://forums.somethingawful.com/showthread.php?threadid=' + 
                    message.MessageAttributes.threadId.StringValue
                   );
-      */
       var deleteParams = {
         QueueUrl: queueUrl,
         ReceiptHandle: message.ReceiptHandle
