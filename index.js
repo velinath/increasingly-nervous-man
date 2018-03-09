@@ -98,7 +98,7 @@ stream.on('tweet', function(tweet) {
     if(tweet.extended_tweet.full_text && tweet.extended_tweet.full_text.length > 0) {
       channel.send('A STATEMENT FROM THE PRESIDENT: ```' + tweet.extended_tweet.full_text + '```');
     }
-    if(tweet.text && tweet.text.length > 0) {
+    if(tweet.text && tweet.text.length > 0 && tweet.extended_tweet.full_text.length == 0) {
       channel.send('A STATEMENT FROM THE PRESIDENT: ```' + tweet.text + '```');
     }
     console.log(tweet);
