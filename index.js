@@ -154,12 +154,17 @@ client.on('message', message => {
       var seed_matches = covfefe_seed_pattern.exec(message.content);
       message.reply(quotes.start(seed_matches[3]).end(12).process());
     }
+  } else if(message.channel.id == 101150161291460608) {
+    if (daniels_pattern.test(message.content)) {
+      message.channel.send('`.---- ...-- ..... -...`');
+    }
   } else {
     if (mlyp_pattern.test(message.content)) {
       var emoji = message.guild.emojis.find('name', 'mlyp');
       message.react(emoji);
-    } else if (daniels_pattern.test(message.content)) {
-      message.channel.send('`.---- ...-- ..... -...`');
+      if (eggp_pattern.test(message.content)) {
+        message.react("🍆");
+      }
     } else if (role_pattern.test(message.content)) {
       var total = 0;
       var count = 0;
