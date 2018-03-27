@@ -23,6 +23,8 @@ var role_pattern = /^\!r ([0-9]{1})d([0-9]{1,3})$/im
 var eggp_pattern = /(^|\s|\p)(package)/i
 var swd_pattern = /(^|\s|\p)(knifies)/i
 
+var channel_blacklist = [400894454073917440];
+
 var t = new twit({
   consumer_key: process.env.twitter_app_key,
   consumer_secret: process.env.twitter_app_secret,
@@ -106,78 +108,80 @@ stream.on('tweet', function(tweet) {
 }); 
 
 client.on('message', message => {
-  if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
-    if (onion_pattern.test(message.content)) {
-      message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
-    } else if (mattering_pattern.test(message.content)) {
-      message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
-    } else if (wh_live_pattern.test(message.content)) {
-      var url = 'https://www.whitehouse.gov/live';
-      var events = [];
-      rp(url)
-      .then(function(html) {
-        var $ = cheerio.load(html);
-        $('.view-content').filter(function() {
-          var data = $(this);
-          data.find('.views-row').each(function(i,v) {
-            var eventTime = $(this).find('.date-display-single').first().text();
-            var eventName = $(this).find('a').first().text();
-            var eventStr = eventTime + ': ' + eventName;
-            events.push(eventStr);
+  if(channel_blacklist.indexOf(message.channel.id) === -1) {
+    if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
+      if (onion_pattern.test(message.content)) {
+        message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
+      } else if (mattering_pattern.test(message.content)) {
+        message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
+      } else if (wh_live_pattern.test(message.content)) {
+        var url = 'https://www.whitehouse.gov/live';
+        var events = [];
+        rp(url)
+        .then(function(html) {
+          var $ = cheerio.load(html);
+          $('.view-content').filter(function() {
+            var data = $(this);
+            data.find('.views-row').each(function(i,v) {
+              var eventTime = $(this).find('.date-display-single').first().text();
+              var eventName = $(this).find('a').first().text();
+              var eventStr = eventTime + ': ' + eventName;
+              events.push(eventStr);
+            });
           });
+          if (events.toString() != '') {
+            message.channel.send(events.join("\n"));
+          } else {
+            var pictureID = Math.floor(Math.random() * 4) + 1;
+            message.channel.sendFile('img/' + pictureID + '.gif'); //TODO deprecated method; replace with send('', {embed: {image: {'img/' + pictureID + '.gif'}});??
+          }
+        })
+        .catch(function(err) {
+          console.log('Crawl failed!');
         });
-        if (events.toString() != '') {
-          message.channel.send(events.join("\n"));
-        } else {
-          var pictureID = Math.floor(Math.random() * 4) + 1;
-          message.channel.sendFile('img/' + pictureID + '.gif'); //TODO deprecated method; replace with send('', {embed: {image: {'img/' + pictureID + '.gif'}});??
+      } else if (sad_pattern.test(message.content)) {
+        var emoji = message.guild.emojis.find('name', 'sad');
+        message.react(emoji);
+      } else if (abuela_pattern.test(message.content)) {
+        var emoji = message.guild.emojis.find('name', 'abuela');
+        message.react(emoji);
+      } else if (pres_pattern.test(message.content)) {
+        message.reply("Yes.");
+      }
+    } else if(message.channel.id == 350440271709732869) {
+      if (covfefe_pattern.test(message.content)) {
+        quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
+        message.reply(quotes.end(12).process());
+      } else if (covfefe_seed_pattern.test(message.content)) {
+        quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
+        var seed_matches = covfefe_seed_pattern.exec(message.content);
+        message.reply(quotes.start(seed_matches[3]).end(12).process());
+      }
+    } else if(message.channel.id == 101150161291460608) {
+      if (daniels_pattern.test(message.content)) {
+        message.channel.send('`.---- ...-- ..... -...`');
+      }
+    } else {
+      if (mlyp_pattern.test(message.content)) {
+        var emoji = message.guild.emojis.find('name', 'mlyp');
+        message.react(emoji);
+        if (eggp_pattern.test(message.content)) {
+          message.react("🍆");
         }
-      })
-      .catch(function(err) {
-        console.log('Crawl failed!');
-      });
-    } else if (sad_pattern.test(message.content)) {
-      var emoji = message.guild.emojis.find('name', 'sad');
-      message.react(emoji);
-    } else if (abuela_pattern.test(message.content)) {
-      var emoji = message.guild.emojis.find('name', 'abuela');
-      message.react(emoji);
-    } else if (pres_pattern.test(message.content)) {
-      message.reply("Yes.");
-    }
-  } else if(message.channel.id == 350440271709732869) {
-    if (covfefe_pattern.test(message.content)) {
-      quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
-      message.reply(quotes.end(12).process());
-    } else if (covfefe_seed_pattern.test(message.content)) {
-      quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
-      var seed_matches = covfefe_seed_pattern.exec(message.content);
-      message.reply(quotes.start(seed_matches[3]).end(12).process());
-    }
-  } else if(message.channel.id == 101150161291460608) {
-    if (daniels_pattern.test(message.content)) {
-      message.channel.send('`.---- ...-- ..... -...`');
-    }
-  } else {
-    if (mlyp_pattern.test(message.content)) {
-      var emoji = message.guild.emojis.find('name', 'mlyp');
-      message.react(emoji);
-      if (eggp_pattern.test(message.content)) {
+      } else if (role_pattern.test(message.content)) {
+        var total = 0;
+        var count = 0;
+        var regex_groups = role_pattern.exec(message.content)
+        while (count < regex_groups[1]) {
+          total += Math.floor(Math.random() * regex_groups[2]) + 1;
+          count++;
+        }
+        message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + total + "`");
+      } else if (eggp_pattern.test(message.content)) {
         message.react("🍆");
+      } else if (swd_pattern.test(message.content)) {
+        message.react("💦");
       }
-    } else if (role_pattern.test(message.content)) {
-      var total = 0;
-      var count = 0;
-      var regex_groups = role_pattern.exec(message.content)
-      while (count < regex_groups[1]) {
-        total += Math.floor(Math.random() * regex_groups[2]) + 1;
-        count++;
-      }
-      message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + total + "`");
-    } else if (eggp_pattern.test(message.content)) {
-      message.react("🍆");
-    } else if (swd_pattern.test(message.content)) {
-      message.react("💦");
     }
   }
 });
