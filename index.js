@@ -97,10 +97,9 @@ client.on('ready', () => {
 stream.on('tweet', function(tweet) {
   if(tweet.user.id == 25073877) {
     var channel = client.channels.get('272035227574992897');
-    if(tweet.extended_tweet.full_text && tweet.extended_tweet.full_text.length > 0) {
+    if(tweet.truncated) {
       channel.send('A STATEMENT FROM THE PRESIDENT: ```' + tweet.extended_tweet.full_text + '```');
-    }
-    if(tweet.text && tweet.text.length > 0 && tweet.extended_tweet.full_text.length == 0) {
+    } else {
       channel.send('A STATEMENT FROM THE PRESIDENT: ```' + tweet.text + '```');
     }
     console.log(tweet);
