@@ -15,15 +15,15 @@ var pres_pattern = /(^|\s)(is (donald )?trump still president)(\?)?(\p{P}|\s|$)/
 var mattering_pattern = /(^|\s|\p{P})mattering/i
 var sad_pattern = /(^|\s)(sad!|low energy)/i
 var abuela_pattern = /(^|\s)(hillary|clinton)($|\s|\p{P})/i
-var daniels_pattern = /(^|\s|\p)(voice friend bad|135b|but what if)($|\s|\p{P})/i
+var daniels_pattern = /(^|\s|\p)(voice friend bad)($|\s|\p{P})/i
 var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|awful|disgusting|terrible|unpleasant|impressive)($|\p{P})/i
 var covfefe_pattern = /(^|\s|\p)(covfefe)$/i
 var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
 var role_pattern = /^\!r ([0-9]{1})d([0-9]{1,3})$/im
-var eggp_pattern = /(^|\s|\p)(package)/i
+var eggp_pattern = /(^|\s|\p)(package|erect)/i
 var swd_pattern = /(^|\s|\p)(knifies)/i
 
-var channel_blacklist = [400894454073917440];
+var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 
 var t = new twit({
   consumer_key: process.env.twitter_app_key,
