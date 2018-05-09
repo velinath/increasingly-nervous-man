@@ -23,6 +23,7 @@ var role_pattern = /^\!r ([0-9]{1})d([0-9]{1,3})$/im
 var eggp_pattern = /(^|\s|\p)(package|erect)/i
 var swd_pattern = /(^|\s|\p)(knifies)/i
 
+client.login();
 var default_message_channel = client.channels.get(231119048006565888); //CJS
 console.log(default_message_channel);
 
