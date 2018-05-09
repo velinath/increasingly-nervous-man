@@ -211,7 +211,7 @@ router.post('/vf-gh', function(req, res) {
     } else {
       //Issue!
       //could test against "if typeof obj.issue !== 'undefined' then issue else release" in case this standard changes in future
-      send_to_channel.send("Votefinder: Issue #" + obj.issue.number + " " + obj.issue.action + ": " + obj.issue.title + " <" + obj.issue.html_url + ">");
+      send_to_channel.send("Votefinder: Issue #" + obj.issue.number + " " + obj.action + ": " + obj.issue.title + " <" + obj.issue.html_url + ">");
     }
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
