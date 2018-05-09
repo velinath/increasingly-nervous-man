@@ -23,7 +23,7 @@ var role_pattern = /^\!r ([0-9]{1})d([0-9]{1,3})$/im
 var eggp_pattern = /(^|\s|\p)(package|erect)/i
 var swd_pattern = /(^|\s|\p)(knifies)/i
 
-var default_message_channel = client.channels.get(0); //CJS
+var default_message_channel = client.channels.get(231119048006565888); //CJS
 
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 
