@@ -23,10 +23,7 @@ var role_pattern = /^\!r ([0-9]{1})d([0-9]{1,3})$/im
 var eggp_pattern = /(^|\s|\p)(package|erect)/i
 var swd_pattern = /(^|\s|\p)(knifies)/i
 
-client.login();
-var default_message_channel = client.channels.get(231119048006565888); //CJS
-console.log(default_message_channel);
-
+var default_message_channel = '';
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 
 var t = new twit({
@@ -96,6 +93,7 @@ var receiveMsg = function() {
 
 client.on('ready', () => {
   receiveMsg();
+  default_message_channel = client.channels.get(231119048006565888); //defer until here so that the client is logged in...
 });
 
 stream.on('tweet', function(tweet) {
@@ -189,7 +187,7 @@ client.on('message', message => {
   }
 });
 
-client.login(process.env.app_token);
+client.login(process.env.app_token).;
 var http = require('http');
 var finalhandler = require('finalhandler');
 var Router = require('router');
