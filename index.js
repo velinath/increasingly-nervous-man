@@ -203,7 +203,7 @@ router.post('/vf-gh', function(req, res) {
   req.on('end', function() {
     obj = JSON.parse(body);
     console.log(obj.action);
-    var send_to_channel = client.channels.get(231119048006565888);
+    var send_to_channel = client.channels.get("231119048006565888");
     // Now we need to set up message events based on what's received.
     if (obj.action == "published") {
       //New release      
