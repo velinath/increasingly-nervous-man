@@ -202,15 +202,13 @@ router.post('/vf-gh', function(req, res) {
     body += data;
   });
   req.on('end', function() {
-    console.log('Post received...' + body);
+    console.log(body.zen);
+    // Now we need to set up message events based on what's received.
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.end('\n');
+    console.log('success');
   });
-  var obj = JSON.parse(body);
-  console.log(obj.zen);
-  // Now we need to set up message events based on what's received.
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-  res.end('\n');
-  console.log('success');
 });
 
 var server = http.createServer(function(req, res) {
