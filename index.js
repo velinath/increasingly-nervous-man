@@ -23,6 +23,8 @@ var role_pattern = /^\!r ([0-9]{1})d([0-9]{1,3})$/im
 var eggp_pattern = /(^|\s|\p)(package|erect)/i
 var swd_pattern = /(^|\s|\p)(knifies)/i
 
+var default_message_channel = client.channels.get(0); //CJS
+
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 
 var t = new twit({
@@ -203,8 +205,16 @@ router.post('/vf-gh', function(req, res) {
   });
   req.on('end', function() {
     obj = JSON.parse(body);
-    console.log(obj.zen);
+    console.log(obj.action);
     // Now we need to set up message events based on what's received.
+    if (obj.action == "published") {
+      //New release!
+      default_message_channel.send("New Votefinder version " + obj.release.tag_name + " released! Changelog: <" + obj.release.html_url + ">");
+    } else {
+      //Issue!
+      //could test against "if typeof obj.issue !== 'undefined' then issue else release" in case this standard changes in future
+      default_message_channel.send("Votefinder: Issue #" + obj.issue.number + " " + obj.issue.action + ": " + obj.issue.title + " <" + obj.issue.html_url + ">");
+    }
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.end('\n');
