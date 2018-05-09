@@ -196,20 +196,19 @@ router.get('/', function(req, res) {
   res.end('increasingly-nervous-man\n');
 });
 
-router.get('/build_success', function(req, res) {
-  var channel = client.channels.get('314855070330126338');
-  //todo: check last deploy and send "back to normal" vs "success"
-  channel.send('A new WotLK server build just deployed successfully.');
+router.post('/vf-gh', function(req, res) {
+  var body = '';
+  req.on('data', function(data) {
+    body += data;
+  });
+  req.on('end', function() {
+    console.log('Post received...' + body);
+  });
+  var obj = JSON.parse(body);
+  // Now we need to set up message events based on what's received.
+  res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-  res.end('increasingly-nervous-man\n');
-});
-
-
-router.get('/build_failure', function(req, res) {
-  var channel = client.channels.get('314855070330126338');
-  channel.send('A new WotLK server build just failed, and <@98805971358330880> should fix it.');
-  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-  res.end('increasingly-nervous-man\n');
+  res.end('\n');
 });
 
 var server = http.createServer(function(req, res) {
