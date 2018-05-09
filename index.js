@@ -6,8 +6,13 @@ var markov = require('markovchain')
   , fs = require('fs')
 var twit = require('twit');
 var AWS = require('aws-sdk');
+var http = require('http');
+var finalhandler = require('finalhandler');
+var Router = require('router');
 var queueUrl = process.env.sqs_queue_url;
 AWS.config.update({region: process.env.region});
+client.login(process.env.app_token);
+
 
 var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p{P}|\s)/i
 var wh_live_pattern = /(^|\s)(today'?s disasters)(\p{P}|\s|$)/i
@@ -186,11 +191,6 @@ client.on('message', message => {
     }
   }
 });
-
-client.login(process.env.app_token);
-var http = require('http');
-var finalhandler = require('finalhandler');
-var Router = require('router');
 
 var router = Router()
 router.get('/', function(req, res) {
