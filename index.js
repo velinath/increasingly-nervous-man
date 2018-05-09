@@ -205,10 +205,12 @@ router.post('/vf-gh', function(req, res) {
     console.log('Post received...' + body);
   });
   var obj = JSON.parse(body);
+  console.log(obj.zen);
   // Now we need to set up message events based on what's received.
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
   res.end('\n');
+  console.log('success');
 });
 
 var server = http.createServer(function(req, res) {
