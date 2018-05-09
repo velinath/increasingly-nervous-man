@@ -27,8 +27,6 @@ var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
 var role_pattern = /^\!r ([0-9]{1})d([0-9]{1,3})$/im
 var eggp_pattern = /(^|\s|\p)(package|erect)/i
 var swd_pattern = /(^|\s|\p)(knifies)/i
-
-var default_message_channel = '';
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 
 var t = new twit({
@@ -98,7 +96,6 @@ var receiveMsg = function() {
 
 client.on('ready', () => {
   receiveMsg();
-  default_message_channel = client.channels.get(231119048006565888); //defer until here so that the client is logged in...
 });
 
 stream.on('tweet', function(tweet) {
@@ -206,14 +203,15 @@ router.post('/vf-gh', function(req, res) {
   req.on('end', function() {
     obj = JSON.parse(body);
     console.log(obj.action);
+    var send_to_channel = client.channels.get(231119048006565888);
     // Now we need to set up message events based on what's received.
     if (obj.action == "published") {
-      //New release!
-      default_message_channel.send("New Votefinder version " + obj.release.tag_name + " released! Changelog: <" + obj.release.html_url + ">");
+      //New release      
+      send_to_channel.send("New Votefinder version " + obj.release.tag_name + " released! Changelog: <" + obj.release.html_url + ">");
     } else {
       //Issue!
       //could test against "if typeof obj.issue !== 'undefined' then issue else release" in case this standard changes in future
-      default_message_channel.send("Votefinder: Issue #" + obj.issue.number + " " + obj.issue.action + ": " + obj.issue.title + " <" + obj.issue.html_url + ">");
+      send_to_channel.send("Votefinder: Issue #" + obj.issue.number + " " + obj.issue.action + ": " + obj.issue.title + " <" + obj.issue.html_url + ">");
     }
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
