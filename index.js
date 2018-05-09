@@ -187,7 +187,7 @@ client.on('message', message => {
   }
 });
 
-client.login(process.env.app_token).;
+client.login(process.env.app_token);
 var http = require('http');
 var finalhandler = require('finalhandler');
 var Router = require('router');
