@@ -20,7 +20,8 @@
     "twit": "latest",
     "router": "latest",
     "finalhandler": "latest",
-    "aws-sdk": "latest"
+    "aws-sdk": "latest",
+    "octonode": "latest"
   },
   "repository": {
     "type": "git",
