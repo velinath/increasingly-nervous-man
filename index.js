@@ -31,7 +31,7 @@ var role_pattern = /^\!r ([0-9]{1})d([0-9]{1,3})$/im
 var eggp_pattern = /(^|\s|\p)(package|erect)/i
 var swd_pattern = /(^|\s|\p)(knifies)/i
 var new_issue_pattern = /^\!issue (.*)$/im
-var description_pattern = /^\!issue (.*)$/im
+var description_pattern = /^\!desc (.*)$/im
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 var partial_issue = {};
 
@@ -174,17 +174,15 @@ client.on('message', message => {
       // CJS
       if (new_issue_pattern.test(message.content)) {
         var issue_text = new_issue_pattern.exec(message.content);
-        //issue_text[1] or issue_text[0] unsure
-        
-        //open issue w/ github API
-        //gh: octonode client
-
-        //todo interact to get better desc but for now...
-        partial_issue = {
-          "title": issue_text[1]
-          "author_id": message.author.id
-        };
-        message.reply("I've started opening an issue. Can you give me some more details / steps on reproducing using the `!desc` command?");
+        if(issue_text[1].length > 50) {
+          message.reply("please write a shorter issue summary; I'll prompt you for an expanded description afterwards.");
+        } else {
+          partial_issue = {
+            "title": issue_text[1]
+            "author_id": message.author.id
+          };
+          message.reply("I've started opening an issue. Can you give me some more details / steps on reproducing using the `!desc` command?");
+        }
       } else if (description_pattern.test(message.content) && message.author.id == partial_issue.author_id) {
         var desc_text = description_pattern.exec(message.content)
         vfrepo.issue({
