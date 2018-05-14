@@ -230,7 +230,7 @@ router.post('/vf-gh', function(req, res) {
     if (obj.action == "published") {
       //New release      
       send_to_channel.send("New Votefinder version " + obj.release.tag_name + " released! Changelog: <" + obj.release.html_url + ">");
-    } else {
+    } else if (obj.action == "opened" or obj.action == "closed") {
       //Issue!
       //could test against "if typeof obj.issue !== 'undefined' then issue else release" in case this standard changes in future
       send_to_channel.send("Votefinder: Issue #" + obj.issue.number + " " + obj.action + ": " + obj.issue.title + " <" + obj.issue.html_url + ">");
