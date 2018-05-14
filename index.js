@@ -11,6 +11,8 @@ var finalhandler = require('finalhandler');
 var Router = require('router');
 var queueUrl = process.env.sqs_queue_url;
 var gh = require('octonode');
+var ghclient = gh.client(process.env.gh_access_token);
+var vfrepo = ghclient.repo('velinath/votefinder-web');
 AWS.config.update({region: process.env.region});
 client.login(process.env.app_token);
 
@@ -30,6 +32,7 @@ var eggp_pattern = /(^|\s|\p)(package|erect)/i
 var swd_pattern = /(^|\s|\p)(knifies)/i
 var new_issue_pattern = /^\!issue (.*)$/im
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
+var partial_issue = {};
 
 var t = new twit({
   consumer_key: process.env.twitter_app_key,
@@ -174,17 +177,24 @@ client.on('message', message => {
         
         //open issue w/ github API
         //gh: octonode client
-        var client = gh.client(process.env.gh_access_token);
+
         //todo interact to get better desc but for now...
-        var vfrepo = client.repo('velinath/votefinder-web');
+        partial_issue = {
+          "title": issue_text[1]
+          "author_id": message.author.id
+        };
+        message.reply("I've started opening an issue. Can you give me some more details / steps on reproducing using the `!desc` command?");
+      } else if (description_pattern.test(message.content) && message.author.id == partial_issue.author_id) {
+        var desc_text = description_pattern.exec(message.content)
         vfrepo.issue({
-          "title": "Auto-created bug from Discord",
-          "body": issue_text[1],
+          "title": partial_issue.title,
+          "body": desc_text[1],
           "assignee": "velinath",
           "labels": ["needs-attention"]
         }, function() {
           console.log('Issue created.');
-        }); //returns an issue
+          console.log(message.author);
+        });
         // + ' - from ' + message.author.nick - figure out why nick isnt working or what to use instead
       }
     } else {
