@@ -1,6 +1,6 @@
 {
   "name": "increasingly-nervous-man",
-  "version": "0.9.1",
+  "version": "0.10.1",
   "description": "an increasingly nervous man",
   "engines": {
     "node": "7.10.0"
