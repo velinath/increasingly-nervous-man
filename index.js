@@ -31,6 +31,7 @@ var role_pattern = /^\!r ([0-9]{1})d([0-9]{1,3})$/im
 var eggp_pattern = /(^|\s|\p)(package|erect)/i
 var swd_pattern = /(^|\s|\p)(knifies)/i
 var new_issue_pattern = /^\!issue (.*)$/im
+var description_pattern = /^\!issue (.*)$/im
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 var partial_issue = {};
 
