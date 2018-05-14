@@ -157,6 +157,30 @@ client.on('message', message => {
       } else if (pres_pattern.test(message.content)) {
         message.reply("Yes.");
       }
+      if (new_issue_pattern.test(message.content)) {
+        var issue_text = new_issue_pattern.exec(message.content);
+        if(issue_text[1].length > 50) {
+          message.reply("please write a shorter issue summary; I'll prompt you for an expanded description afterwards.");
+        } else {
+          partial_issue = {
+            "title": issue_text[1],
+            "author_id": message.author.id
+          };
+          message.reply("I've started opening an issue. Can you give me some more details / steps on reproducing using the `!desc` command?");
+        }
+      } else if (description_pattern.test(message.content) && message.author.id == partial_issue.author_id) {
+        var desc_text = description_pattern.exec(message.content)
+        vfrepo.issue({
+          "title": partial_issue.title,
+          "body": desc_text[1],
+          "assignee": "velinath",
+          "labels": ["needs-attention"]
+        }, function() {
+          console.log('Issue created.');
+          console.log(message.author);
+        });
+        // + ' - from ' + message.author.nick - figure out why nick isnt working or what to use instead
+      }
     } else if(message.channel.id == 350440271709732869) {
       if (covfefe_pattern.test(message.content)) {
         quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
@@ -170,7 +194,7 @@ client.on('message', message => {
       if (daniels_pattern.test(message.content)) {
         message.channel.send('`.---- ...-- ..... -...`');
       }
-    } else if (message.channel.id == 231119048006565888 || message.channel.id == 311818566007652354) {
+    } else if (message.channel.id == 231119048006565888) {
       // CJS
       if (new_issue_pattern.test(message.content)) {
         var issue_text = new_issue_pattern.exec(message.content);
