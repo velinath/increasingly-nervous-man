@@ -178,8 +178,8 @@ client.on('message', message => {
         //todo interact to get better desc but for now...
         var vfrepo = client.repo('velinath/votefinder-web');
         vfrepo.issue({
-          "title": "Auto-created bug from increasingly-nervous-man",
-          "body": issue_text[1],
+          "title": "Auto-created bug from Discord",
+          "body": issue_text[1] + ' - from ' + message.author.nick,
           "assignee": "velinath",
           "labels": ["needs-attention"]
         }, function() {
