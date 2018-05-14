@@ -175,6 +175,14 @@ client.on('message', message => {
         //open issue w/ github API
         //gh: octonode client
         var client = gh.client(process.env.gh_access_token);
+        //todo interact to get better desc but for now...
+        var vfrepo = client.repo('velinath/votefinder-web');
+        vfrepo.issue({
+          "title": "Auto-created bug from increasingly-nervous-man",
+          "body": issue_text[1],
+          "assignee": "velinath",
+          "labels": ["needs-attention"]
+        }, callback); //issue
       }
     } else {
       if (mlyp_pattern.test(message.content)) {
