@@ -170,7 +170,7 @@ client.on('message', message => {
       if (daniels_pattern.test(message.content)) {
         message.channel.send('`.---- ...-- ..... -...`');
       }
-    } else if (message.channel.id == 231119048006565888 || message.channel.id == 311818566007652354) {
+    } else if (message.channel.id == 231119048006565888) {
       // CJS
       if (new_issue_pattern.test(message.content)) {
         var issue_text = new_issue_pattern.exec(message.content);
