@@ -179,12 +179,13 @@ client.on('message', message => {
         var vfrepo = client.repo('velinath/votefinder-web');
         vfrepo.issue({
           "title": "Auto-created bug from Discord",
-          "body": issue_text[1] + ' - from ' + message.author.nick,
+          "body": issue_text[1],
           "assignee": "velinath",
           "labels": ["needs-attention"]
         }, function() {
           console.log('Issue created.');
-        }); //issue
+        }); //returns an issue
+        // + ' - from ' + message.author.nick - figure out why nick isnt working or what to use instead
       }
     } else {
       if (mlyp_pattern.test(message.content)) {
