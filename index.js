@@ -178,7 +178,7 @@ client.on('message', message => {
           message.reply("please write a shorter issue summary; I'll prompt you for an expanded description afterwards.");
         } else {
           partial_issue = {
-            "title": issue_text[1]
+            "title": issue_text[1],
             "author_id": message.author.id
           };
           message.reply("I've started opening an issue. Can you give me some more details / steps on reproducing using the `!desc` command?");
