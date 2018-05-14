@@ -10,6 +10,7 @@ var http = require('http');
 var finalhandler = require('finalhandler');
 var Router = require('router');
 var queueUrl = process.env.sqs_queue_url;
+var gh = require('octonode');
 AWS.config.update({region: process.env.region});
 client.login(process.env.app_token);
 
@@ -27,6 +28,7 @@ var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
 var role_pattern = /^\!r ([0-9]{1})d([0-9]{1,3})$/im
 var eggp_pattern = /(^|\s|\p)(package|erect)/i
 var swd_pattern = /(^|\s|\p)(knifies)/i
+var new_issue_pattern = /^\!issue (.*)$/im
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 
 var t = new twit({
@@ -163,6 +165,16 @@ client.on('message', message => {
     } else if(message.channel.id == 101150161291460608) {
       if (daniels_pattern.test(message.content)) {
         message.channel.send('`.---- ...-- ..... -...`');
+      }
+    } else if (message.channel.id == 231119048006565888) {
+      // CJS
+      if (new_issue_pattern.test(message.content)) {
+        var issue_text = new_issue_pattern.exec(message.content);
+        //issue_text[1] or issue_text[0] unsure
+        
+        //open issue w/ github API
+        //gh: octonode client
+        var client = gh.client(process.env.gh_access_token);
       }
     } else {
       if (mlyp_pattern.test(message.content)) {
