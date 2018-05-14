@@ -182,7 +182,9 @@ client.on('message', message => {
           "body": issue_text[1],
           "assignee": "velinath",
           "labels": ["needs-attention"]
-        }, callback); //issue
+        }, function() {
+          console.log('Issue created.');
+        }); //issue
       }
     } else {
       if (mlyp_pattern.test(message.content)) {
