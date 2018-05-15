@@ -120,7 +120,7 @@ stream.on('tweet', function(tweet) {
 client.on('message', message => {
   if(channel_blacklist.indexOf(message.channel.id) === -1) {
     //general-use
-    if (help_pattern.test(message.content)) {
+    if (message.channel.type == 'dm' && help_pattern.test(message.content)) {
       console.log('help trigger');
       message.author.send('Politics: \n' +
         '`today\'s disasters` - currently scheduled White House press events\n' +
