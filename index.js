@@ -131,7 +131,7 @@ client.on('message', message => {
         'CJS:\n' +
         '`!issue (issue title)` - open an issue for Votefinder.\n\n' +
         'General-use:\n' +
-        '`!r <dice> <sides>` - Roll some dice.');
+        '`!r <dice>d<sides>` - Roll some dice.');
     }
     //General use
     if (role_pattern.test(message.content)) {
