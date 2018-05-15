@@ -119,6 +119,7 @@ stream.on('tweet', function(tweet) {
 client.on('message', message => {
   if(channel_blacklist.indexOf(message.channel.id) === -1) {
     if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
+      console.log(message.author);
       if (onion_pattern.test(message.content)) {
         message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
       } else if (mattering_pattern.test(message.content)) {
@@ -156,30 +157,6 @@ client.on('message', message => {
         message.react(emoji);
       } else if (pres_pattern.test(message.content)) {
         message.reply("Yes.");
-      }
-      if (new_issue_pattern.test(message.content)) {
-        var issue_text = new_issue_pattern.exec(message.content);
-        if(issue_text[1].length > 50) {
-          message.reply("please write a shorter issue summary; I'll prompt you for an expanded description afterwards.");
-        } else {
-          partial_issue = {
-            "title": issue_text[1],
-            "author_id": message.author.id
-          };
-          message.reply("I've started opening an issue. Can you give me some more details / steps on reproducing using the `!desc` command?");
-        }
-      } else if (description_pattern.test(message.content) && message.author.id == partial_issue.author_id) {
-        var desc_text = description_pattern.exec(message.content)
-        vfrepo.issue({
-          "title": partial_issue.title,
-          "body": desc_text[1],
-          "assignee": "velinath",
-          "labels": ["needs-attention"]
-        }, function() {
-          console.log('Issue created.');
-          console.log(message.author);
-        });
-        // + ' - from ' + message.author.nick - figure out why nick isnt working or what to use instead
       }
     } else if(message.channel.id == 350440271709732869) {
       if (covfefe_pattern.test(message.content)) {
