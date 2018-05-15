@@ -102,6 +102,7 @@ var receiveMsg = function() {
 
 
 client.on('ready', () => {
+  client.user.setActivity({game: {name: "DM !help for commands", type: 0}});
   receiveMsg();
 });
 
