@@ -119,7 +119,6 @@ stream.on('tweet', function(tweet) {
 client.on('message', message => {
   if(channel_blacklist.indexOf(message.channel.id) === -1) {
     if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
-      console.log(message.author.lastMessage.member.nickname);
       if (onion_pattern.test(message.content)) {
         message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
       } else if (mattering_pattern.test(message.content)) {
@@ -188,12 +187,11 @@ client.on('message', message => {
         var desc_text = description_pattern.exec(message.content)
         vfrepo.issue({
           "title": partial_issue.title,
-          "body": desc_text[1],
+          "body": desc_text[1] + ' _- reported by' + message.author.lastMessage.member.nickname + '_',
           "assignee": "velinath",
           "labels": ["needs-attention"]
         }, function() {
           console.log('Issue created.');
-          console.log(message.author);
         });
         // + ' - from ' + message.author.nick - figure out why nick isnt working or what to use instead
       }
