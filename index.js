@@ -212,9 +212,13 @@ client.on('message', message => {
         }
       } else if (description_pattern.test(message.content) && partial_issue && message.author.id == partial_issue.author_id) {
         var desc_text = description_pattern.exec(message.content)
+        if(message.author.lastMessage.member.nickname) {
+          var author = message.author.lastMessage.member.nickname;
+        } else {
+          var author = message.author.username;
         vfrepo.issue({
           "title": partial_issue.title,
-          "body": desc_text[1] + ' _- reported by' + message.author.lastMessage.member.nickname + '_',
+          "body": desc_text[1] + ' _- reported by ' + author + '_',
           "assignee": "velinath",
           "labels": ["needs-attention"]
         }, function() {
