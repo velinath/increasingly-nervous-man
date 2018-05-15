@@ -119,7 +119,7 @@ stream.on('tweet', function(tweet) {
 client.on('message', message => {
   if(channel_blacklist.indexOf(message.channel.id) === -1) {
     if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
-      console.log(message.author);
+      console.log(message.author.lastMessage.member.nickname);
       if (onion_pattern.test(message.content)) {
         message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
       } else if (mattering_pattern.test(message.content)) {
