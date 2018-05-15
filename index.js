@@ -133,6 +133,17 @@ client.on('message', message => {
         'General-use:\n' +
         '`!r <dice> <sides>` - Roll some dice.');
     }
+    //General use
+    if (role_pattern.test(message.content)) {
+      var total = 0;
+      var count = 0;
+      var regex_groups = role_pattern.exec(message.content)
+      while (count < regex_groups[1]) {
+        total += Math.floor(Math.random() * regex_groups[2]) + 1;
+        count++;
+      }
+      message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + total + "`");
+    }
     if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
       if (onion_pattern.test(message.content)) {
         message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
@@ -218,15 +229,6 @@ client.on('message', message => {
         if (eggp_pattern.test(message.content)) {
           message.react("🍆");
         }
-      } else if (role_pattern.test(message.content)) {
-        var total = 0;
-        var count = 0;
-        var regex_groups = role_pattern.exec(message.content)
-        while (count < regex_groups[1]) {
-          total += Math.floor(Math.random() * regex_groups[2]) + 1;
-          count++;
-        }
-        message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + total + "`");
       } else if (eggp_pattern.test(message.content)) {
         message.react("🍆");
       } else if (swd_pattern.test(message.content)) {
