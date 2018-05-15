@@ -135,6 +135,7 @@ client.on('message', message => {
     }
     //General use
     if (role_pattern.test(message.content)) {
+      console.log('roll');
       var total = 0;
       var count = 0;
       var regex_groups = role_pattern.exec(message.content)
