@@ -121,6 +121,7 @@ client.on('message', message => {
   if(channel_blacklist.indexOf(message.channel.id) === -1) {
     //general-use
     if (help_pattern.test(message.content)) {
+      console.log('help trigger');
       message.author.send('Politics: \n' +
         '`today\'s disasters` - currently scheduled White House press events\n' +
         '`is Trump still president` - check on a pressing question\n\n' + 
