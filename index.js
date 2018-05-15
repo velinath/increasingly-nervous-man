@@ -32,6 +32,7 @@ var eggp_pattern = /(^|\s|\p)(package|erect)/i
 var swd_pattern = /(^|\s|\p)(knifies)/i
 var new_issue_pattern = /^\!issue (.*)$/im
 var description_pattern = /^\!desc (.*)$/im
+var help_pattern = /^\!help (.*)$/im
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 var partial_issue = {};
 
@@ -118,6 +119,18 @@ stream.on('tweet', function(tweet) {
 
 client.on('message', message => {
   if(channel_blacklist.indexOf(message.channel.id) === -1) {
+    //general-use
+    if (help_pattern.test(message.content)) {
+      message.author.send('Politics: \n' +
+        '`today\'s disasters` - currently scheduled White House press events\n' +
+        '`is Trump still president` - check on a pressing question\n\n' + 
+        'Bot Playground:\n' +
+        '`covfefe` or `covfefe (word)` - generate a Trump tweet!\n\n' +
+        'CJS:\n' +
+        '`!issue (issue title)` - open an issue for Votefinder.\n\n' +
+        'General-use:\n' +
+        '`!r <dice> <sides>` - Roll some dice.');
+    }
     if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
       if (onion_pattern.test(message.content)) {
         message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
@@ -183,7 +196,7 @@ client.on('message', message => {
           };
           message.reply("I've started opening an issue. Can you give me some more details / steps on reproducing using the `!desc` command?");
         }
-      } else if (description_pattern.test(message.content) && message.author.id == partial_issue.author_id) {
+      } else if (description_pattern.test(message.content) && partial_issue && message.author.id == partial_issue.author_id) {
         var desc_text = description_pattern.exec(message.content)
         vfrepo.issue({
           "title": partial_issue.title,
@@ -192,6 +205,7 @@ client.on('message', message => {
           "labels": ["needs-attention"]
         }, function() {
           console.log('Issue created.');
+          partial_issue = undefined;
         });
         // + ' - from ' + message.author.nick - figure out why nick isnt working or what to use instead
       }
