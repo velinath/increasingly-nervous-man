@@ -216,6 +216,7 @@ client.on('message', message => {
           var author = message.author.lastMessage.member.nickname;
         } else {
           var author = message.author.username;
+        }
         vfrepo.issue({
           "title": partial_issue.title,
           "body": desc_text[1] + ' _- reported by ' + author + '_',
