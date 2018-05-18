@@ -34,7 +34,7 @@ var new_issue_pattern = /^\!issue (.*)$/im
 var description_pattern = /^\!desc (.*)$/im
 var help_pattern = /^\!help$/im
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
-var partial_issue = {};
+var issue_titles = new Array();
 
 var t = new twit({
   consumer_key: process.env.twitter_app_key,
@@ -204,13 +204,10 @@ client.on('message', message => {
         if(issue_text[1].length > 50) {
           message.reply("please write a shorter issue summary; I'll prompt you for an expanded description afterwards.");
         } else {
-          partial_issue = {
-            "title": issue_text[1],
-            "author_id": message.author.id
-          };
+          issue_titles[message.author.id] = issue_text[1];
           message.reply("I've started opening an issue. Can you give me some more details / steps on reproducing using the `!desc` command?");
         }
-      } else if (description_pattern.test(message.content) && partial_issue && message.author.id == partial_issue.author_id) {
+      } else if (description_pattern.test(message.content) && issue_titles[message.author.id]) {
         var desc_text = description_pattern.exec(message.content)
         if(message.author.lastMessage.member.nickname) {
           var author = message.author.lastMessage.member.nickname;
@@ -218,15 +215,16 @@ client.on('message', message => {
           var author = message.author.username;
         }
         vfrepo.issue({
-          "title": partial_issue.title,
+          "title": issue_titles[message.author.id],
           "body": desc_text[1] + ' _- reported by ' + author + '_',
           "assignee": "velinath",
           "labels": ["needs-attention"]
         }, function() {
           console.log('Issue created.');
-          partial_issue = undefined;
+          delete issue_titles[message.author.id]; //it being undefined is probably fine?
         });
-        // + ' - from ' + message.author.nick - figure out why nick isnt working or what to use instead
+      } else if (description_pattern.test(message.content)) {
+        message.reply("I don't have an issue title for this issue! Please start opening an issue using the `!issue` command.");
       }
     } else {
       if (mlyp_pattern.test(message.content)) {
