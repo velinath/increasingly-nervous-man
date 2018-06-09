@@ -226,6 +226,15 @@ client.on('message', message => {
       } else if (description_pattern.test(message.content)) {
         message.reply("I don't have an issue title for this issue! Please start opening an issue using the `!issue` command.");
       }
+    } else if (message.channel.id == 454476621358039051) {
+      // T / D
+      var open_td = /^!td\s/i
+      var accept_td = /^!(t|d)([1-5])\s/i
+      if (open_td.test(message.content)) {
+        
+      } else if (accept_td.test(message.content)) {
+        
+      }
     } else {
       if (mlyp_pattern.test(message.content)) {
         var emoji = message.guild.emojis.find('name', 'mlyp');
