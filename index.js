@@ -264,10 +264,12 @@ client.on('message', message => {
     } else {
       if(message.channel.id != 436536200380284928) {
         if (mlyp_pattern.test(message.content)) {
-          var emoji = message.guild.emojis.find('name', 'mlyp');
-          message.react(emoji);
-          if (eggp_pattern.test(message.content)) {
-            message.react("🍆");
+          if(Math.random() < 0.2) {
+            var emoji = message.guild.emojis.find('name', 'mlyp');
+            message.react(emoji);
+            if (eggp_pattern.test(message.content)) {
+              message.react("🍆");
+            }
           }
         } else if (eggp_pattern.test(message.content)) {
           message.react("🍆");
