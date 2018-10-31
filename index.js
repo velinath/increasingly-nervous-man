@@ -12,7 +12,7 @@ var Router = require('router');
 var queueUrl = process.env.sqs_queue_url;
 var gh = require('octonode');
 var ghclient = gh.client(process.env.gh_access_token);
-var vfrepo = ghclient.repo('velinath/votefinder-web');
+var vfrepo = ghclient.repo('aletson/votefinder-web');
 AWS.config.update({region: process.env.region});
 client.login(process.env.app_token);
 
@@ -243,7 +243,7 @@ client.on('message', message => {
         vfrepo.issue({
           "title": issue_titles[message.author.id],
           "body": desc_text[1] + ' _- reported by ' + author + '_',
-          "assignee": "velinath",
+          "assignee": "aletson",
           "labels": ["needs-attention"]
         }, function() {
           console.log('Issue created.');
