@@ -33,6 +33,7 @@ var swd_pattern = /(^|\s|\p)(knifies)/i
 var new_issue_pattern = /^\!issue (.*)$/im
 var description_pattern = /^\!desc (.*)$/im
 var help_pattern = /^\!help$/im
+var nice_pattern = '/^tell me something good/i'
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 var issue_titles = new Array();
 
@@ -144,6 +145,17 @@ client.on('message', message => {
         count++;
       }
       message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + total + "`");
+    }
+    if nice_pattern.test(message.content)) {
+      console.log('nice');
+      var file = fs.readFile('affirmations.txt', function(err, data) {
+        if(err) {
+          return console.log(err);
+        }
+        data = data.split('\n');
+        var lineNumber = Math.floor(Math.random() * data.length);
+        message.channel.send(data[lineNumber]);
+      });
     }
     if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
       if (onion_pattern.test(message.content)) {
