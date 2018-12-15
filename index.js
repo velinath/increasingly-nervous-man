@@ -147,7 +147,7 @@ client.on('message', message => {
       message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + total + "`");
     }
     
-    if nice_pattern.test(message.content)) {
+    if(nice_pattern.test(message.content)) {
       console.log('nice');
       var file = fs.readFile('affirmations.txt', function(err, data) {
         if(err) {
