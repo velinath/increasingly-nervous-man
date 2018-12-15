@@ -34,7 +34,7 @@ var swd_pattern = /(^|\s|\p)(knifies)/i
 var new_issue_pattern = /^\!issue (.*)$/im
 var description_pattern = /^\!desc (.*)$/im
 var help_pattern = /^\!help$/im
-var nice_pattern = '/^tell me something good/i'
+var nice_pattern = /^tell me something good/im
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 var issue_titles = new Array();
 
