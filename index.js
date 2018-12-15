@@ -16,7 +16,7 @@ var vfrepo = ghclient.repo('aletson/votefinder-web');
 AWS.config.update({region: process.env.region});
 client.login(process.env.app_token);
 
-/* --------------------- */
+
 
 var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p{P}|\s)/i
 var wh_live_pattern = /(^|\s)(today'?s disasters)(\p{P}|\s|$)/i
