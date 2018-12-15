@@ -146,6 +146,7 @@ client.on('message', message => {
       }
       message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + total + "`");
     }
+    
     if nice_pattern.test(message.content)) {
       console.log('nice');
       var file = fs.readFile('affirmations.txt', function(err, data) {
@@ -157,6 +158,7 @@ client.on('message', message => {
         message.channel.send(data[lineNumber]);
       });
     }
+    
     if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
       if (onion_pattern.test(message.content)) {
         message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
