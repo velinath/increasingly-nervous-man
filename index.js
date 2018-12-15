@@ -154,6 +154,7 @@ client.on('message', message => {
         if(err) {
           return console.log(err);
         }
+        data += '';
         data = data.split('\n');
         var lineNumber = Math.floor(Math.random() * data.length);
         message.channel.send(data[lineNumber]);
