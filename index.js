@@ -203,7 +203,7 @@ client.on('message', message => {
       }
     } else if(message.channel.id == 350440271709732869) {
       if (covfefe_pattern.test(message.content)) {
-        var url = 'https://covfefe.ajl.io/';
+        var url = 'http://covfefe.ajl.io/';
         rp(url).then(function(html) { message.reply(html) });
       } else if (covfefe_seed_pattern.test(message.content)) {
         quotes = new markov(fs.readFileSync('./tweets.txt', 'utf8'));
