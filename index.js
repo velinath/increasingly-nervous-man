@@ -318,9 +318,12 @@ router.post('/vf-gh', function(req, res) {
       //New release      
       send_to_channel.send("New Votefinder version " + obj.release.tag_name + " released! Changelog: <" + obj.release.html_url + ">");
     } else if (obj.action == "opened" || obj.action == "closed") {
-      //Issue!
-      //could test against "if typeof obj.issue !== 'undefined' then issue else release" in case this standard changes in future
-      send_to_channel.send("Votefinder: Issue #" + obj.issue.number + " " + obj.action + ": " + obj.issue.title + " <" + obj.issue.html_url + ">");
+      //Issue or pull request!
+      if (typeof obj.issue !== 'undefined') {
+        send_to_channel.send("Votefinder: Issue #" + obj.issue.number + " " + obj.action + ": " + obj.issue.title + " <" + obj.issue.html_url + ">");
+      } else if (typeof obj.pull_request !== 'undefined') {
+        send_to_channel.send("Votefinder: PR #" + obj.pull_request.number + " " + obj.action + ": " + obj.pull_request.title + "<" + obj.pull_request.html_url + ">");
+      }
     }
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
