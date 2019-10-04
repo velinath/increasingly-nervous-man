@@ -146,10 +146,10 @@ client.on('message', message => {
       while (count < regex_groups[1]) {
         var roll += Math.floor(Math.random() * regex_groups[2]) + 1;
         total += roll;
-        msg = msg + roll + ", "
+        msg = msg + roll + ", ";
         count++;
       }
-      msg = msg.slice(0, -2) + "] ="
+      msg = msg.slice(0, -2) + "] =";
       message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + msg +  total + "`");
     }
     
