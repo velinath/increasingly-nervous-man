@@ -141,12 +141,16 @@ client.on('message', message => {
       console.log('roll');
       var total = 0;
       var count = 0;
+      var msg = "["
       var regex_groups = role_pattern.exec(message.content)
       while (count < regex_groups[1]) {
-        total += Math.floor(Math.random() * regex_groups[2]) + 1;
+        var roll += Math.floor(Math.random() * regex_groups[2]) + 1;
+        total += roll;
+        msg = msg + roll + ", "
         count++;
       }
-      message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + total + "`");
+      msg = msg.slice(0, -2) + "] ="
+      message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + msg +  total + "`");
     }
     
     if(nice_pattern.test(message.content)) {
