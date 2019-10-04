@@ -144,7 +144,7 @@ client.on('message', message => {
       var msg = "["
       var regex_groups = role_pattern.exec(message.content)
       while (count < regex_groups[1]) {
-        var roll += Math.floor(Math.random() * regex_groups[2]) + 1;
+        var roll = Math.floor(Math.random() * regex_groups[2]) + 1;
         total += roll;
         msg = msg + roll + ", ";
         count++;
