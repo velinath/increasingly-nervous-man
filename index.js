@@ -35,6 +35,12 @@ var new_issue_pattern = /^\!issue (.*)$/im
 var description_pattern = /^\!desc (.*)$/im
 var help_pattern = /^\!help$/im
 var nice_pattern = /^tell me something good/im
+
+var insider_start = /^\!insider$/im
+var insider_signup = /^\!signup$/im
+var insider_startgame = /^\!startgame$/im
+var insider_players = new Array();
+
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 var issue_titles = new Array();
 
