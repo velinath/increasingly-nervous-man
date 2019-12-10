@@ -189,6 +189,7 @@ client.on('message', message => {
           data = data.split('\n');
           var lineNumber = Math.floor(Math.random() * data.length);
           word = data[lineNumber];
+          console.log(data);
         });
       console.log(word);
     }
