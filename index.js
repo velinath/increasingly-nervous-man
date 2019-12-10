@@ -40,6 +40,8 @@ var insider_start = /^\!insider$/im
 var insider_signup = /^\!signup$/im
 var insider_startgame = /^\!startgame$/im
 var insider_players = new Array();
+var insider_word = "";
+var insider_active = false;
 
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 var issue_titles = new Array();
@@ -158,6 +160,55 @@ client.on('message', message => {
       msg = msg.slice(0, -2) + "] =";
       message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + msg +  total + "`");
     }
+    
+    if (insider_start.test(message.content)) {
+      if(insider_active) {
+        message.channel.send('There\'s already an Insider game running. Type !signup to join the game.');
+      } else {
+        console.log('Starting Insider game');
+        insider_active = true;
+      }
+    }
+    
+    if (insider_signup.test(message.content)) {
+      if (insider_active && insider_players.length < 8) {
+        insider.players.push(message.author); //Discord user object
+      }
+    }
+    
+    if (insider_startgame.test(message.content)) {
+      if(insider_players.length >= 5 and insider_players.length <= 8){
+        message.channel.send('PM\'s will be sent to the Master and Insider and the game will begin in 15 seconds.');
+        var word = '';
+        var file = fs.readFile('insider.txt', function(err, data) {
+          if (err) {
+            return console.log(err);
+          }
+          data += '';
+          data = data.split('\n');
+          var lineNumber = Math.floor(Math.random() * data.length);
+          word = data[lineNumber];
+        }
+        var master_player = Math.floor(Math.random() * insider_players.length);
+        var insider_player = master_player;
+        while (insider_player == master_player) {
+          var insider_player = Math.floor(Math.random() * insider_players.length);
+        }
+        master_player.send("You are the MASTER! Your word is " + word);
+        insider_player.send("You are the INSIDER! Your word is " + word);
+        //randomize the player list, pick a word, and send it
+        
+        setTimeout(function() {
+          message.channel.send('The game has begun! Four minutes begins....now.');
+          setTimeout(function() {
+            message.channel.send('The timer has ended!!');
+            insider_active = false;
+            insider_players = [];
+          }, 240000);
+        }, 15000);
+      }
+    }
+      
     
     if(nice_pattern.test(message.content)) {
       console.log('nice');
