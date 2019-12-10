@@ -184,18 +184,12 @@ client.on('message', message => {
     }
     
     if(insider_wordtest.test(message.content)) {
-      var word = '';
-        var file = fs.readFile('insider.txt', function(err, data) {
-          if (err) {
-            return console.log(err);
-          }
-          data += '';
-          data = data.split('\n');
-          var lineNumber = Math.floor(Math.random() * data.length);
-          word = data[lineNumber];
-          console.log(data);
-          console.log(word);
-        });
+      var file = fs.readFileSync('insider.txt');
+      data = file.split('\n');
+      var lineNumber = Math.floor(Math.random() * data.length);
+      word = data[lineNumber];
+      console.log(data);
+      console.log(word);
     }
     
     if (insider_startgame.test(message.content)) {
