@@ -190,8 +190,8 @@ client.on('message', message => {
           var lineNumber = Math.floor(Math.random() * data.length);
           word = data[lineNumber];
           console.log(data);
+          console.log(word);
         });
-      console.log(word);
     }
     
     if (insider_startgame.test(message.content)) {
@@ -207,24 +207,24 @@ client.on('message', message => {
           var lineNumber = Math.floor(Math.random() * data.length);
           word = data[lineNumber];
           console.log(word);
-        });
-        var master_player = insider_players[Math.floor(Math.random() * insider_players.length)];
-        var insider_player = master_player;
-        while (insider_player == master_player) {
-          var insider_player = insider_players[Math.floor(Math.random() * insider_players.length)];
-        }
-        master_player.send("You are the MASTER! Your word is " + word);
-        insider_player.send("You are the INSIDER! Your word is " + word);
-        //randomize the player list, pick a word, and send it
+          var master_player = insider_players[Math.floor(Math.random() * insider_players.length)];
+          var insider_player = master_player;
+          while (insider_player == master_player) {
+            var insider_player = insider_players[Math.floor(Math.random() * insider_players.length)];
+          }
+          master_player.send("You are the MASTER! Your word is " + word);
+          insider_player.send("You are the INSIDER! Your word is " + word);
+          //randomize the player list, pick a word, and send it
         
-        setTimeout(function() {
-          message.channel.send('The game has begun! Four minutes begins....now.');
           setTimeout(function() {
-            message.channel.send('The timer has ended!!');
-            insider_active = false;
-            insider_players = [];
-          }, 240000);
-        }, 15000);
+            message.channel.send('The game has begun! Four minutes begins....now.');
+            setTimeout(function() {
+              message.channel.send('The timer has ended!!');
+              insider_active = false;
+              insider_players = [];
+            }, 240000);
+          }, 15000);
+        });
       } else {
         message.channel.send('The player count is not high enough. Insider supports between 5 and 8 players.');
       }
