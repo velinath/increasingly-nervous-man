@@ -169,6 +169,7 @@ client.on('message', message => {
       } else {
         console.log('Starting Insider game');
         message.channel.send('An Insider game is starting! Please type !signup to join the game.');
+        insider_players.push(message.author);
         insider_active = true;
       }
     }
@@ -176,6 +177,9 @@ client.on('message', message => {
     if (insider_signup.test(message.content)) {
       if (insider_active && insider_players.length < 8 && insider_players.indexOf(message.author) == -1) {
         insider_players.push(message.author); //Discord user object
+        var playerlist = '';
+        insider_players.forEach(e => playerlist += e.username + ' ');
+        message.channel.send(message.author.username + " has joined the game! Current players: " + playerlist);
       }
     }
     
