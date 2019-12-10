@@ -43,6 +43,8 @@ var insider_players = new Array();
 var insider_word = "";
 var insider_active = false;
 
+var insider_wordtest = /^!wordtest$/im
+
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 var issue_titles = new Array();
 
@@ -177,6 +179,20 @@ client.on('message', message => {
       }
     }
     
+    if(insider_wordtest.test(message.content)) {
+      var word = '';
+        var file = fs.readFile('insider.txt', function(err, data) {
+          if (err) {
+            return console.log(err);
+          }
+          data += '';
+          data = data.split('\n');
+          var lineNumber = Math.floor(Math.random() * data.length);
+          word = data[lineNumber];
+        });
+      console.log(word);
+    }
+    
     if (insider_startgame.test(message.content)) {
       if(insider_players.length >= 5 && insider_players.length <= 8){
         message.channel.send('PM\'s will be sent to the Master and Insider and the game will begin in 15 seconds.');
@@ -189,6 +205,7 @@ client.on('message', message => {
           data = data.split('\n');
           var lineNumber = Math.floor(Math.random() * data.length);
           word = data[lineNumber];
+          console.log(word);
         });
         var master_player = insider_players[Math.floor(Math.random() * insider_players.length)];
         var insider_player = master_player;
