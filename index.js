@@ -210,13 +210,21 @@ client.on('message', message => {
         }
         master_player.send("You are the MASTER! Your word is " + word);
         insider_player.send("You are the INSIDER! Your word is " + word);
+        console.log("insider: " + insider_player.username);
+        console.log("master: " + master_player.username);
         setTimeout(function() {
           message.channel.send('The game has begun! Four minutes begins....now.');
           setTimeout(function() {
-            message.channel.send('The timer has ended!!');
-            insider_active = false;
-            insider_players = [];
-          }, 240000);
+            message.channel.send('**Two minutes remain.**');
+            setTimeout(function() {
+              message.channel.send('**One minute left!!**');
+              setTimeout(function() {
+                message.channel.send('The timer has ended!!');
+                insider_active = false;
+                insider_players = [];
+              }, 60000);
+            }, 60000);
+          }, 120000);
         }, 15000);
       } else {
         message.channel.send('The player count is not high enough. Insider supports between 5 and 8 players.');
