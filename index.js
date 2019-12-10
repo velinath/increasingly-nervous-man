@@ -188,7 +188,7 @@ client.on('message', message => {
           data = data.split('\n');
           var lineNumber = Math.floor(Math.random() * data.length);
           word = data[lineNumber];
-        }
+        });
         var master_player = Math.floor(Math.random() * insider_players.length);
         var insider_player = master_player;
         while (insider_player == master_player) {
