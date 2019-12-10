@@ -201,32 +201,26 @@ client.on('message', message => {
     if (insider_startgame.test(message.content)) {
       if(insider_players.length >= 5 && insider_players.length <= 8){
         message.channel.send('PM\'s will be sent to the Master and Insider and the game will begin in 15 seconds.');
-        var file = fs.readFile('insider.txt', function(err, data) {
-          if (err) {
-            return console.log(err);
-          }
-          data += '';
-          data = data.split('\n');
-          var lineNumber = Math.floor(Math.random() * data.length);
-          var word = data[lineNumber];
-          console.log(word);
-          var master_player = insider_players[Math.floor(Math.random() * insider_players.length)];
-          var insider_player = master_player;
-          while (insider_player == master_player) {
-            var insider_player = insider_players[Math.floor(Math.random() * insider_players.length)];
-          }
-          master_player.send("You are the MASTER! Your word is " + word);
-          insider_player.send("You are the INSIDER! Your word is " + word);
-        
+        var file = fs.readFileSync('insider.txt');
+        data = file.split('\n');
+        var lineNumber = Math.floor(Math.random() * data.length);
+        var word = data[lineNumber];
+        console.log(word);
+        var master_player = insider_players[Math.floor(Math.random() * insider_players.length)];
+        var insider_player = master_player;
+        while (insider_player == master_player) {
+          var insider_player = insider_players[Math.floor(Math.random() * insider_players.length)];
+        }
+        master_player.send("You are the MASTER! Your word is " + word);
+        insider_player.send("You are the INSIDER! Your word is " + word);
+        setTimeout(function() {
+          message.channel.send('The game has begun! Four minutes begins....now.');
           setTimeout(function() {
-            message.channel.send('The game has begun! Four minutes begins....now.');
-            setTimeout(function() {
-              message.channel.send('The timer has ended!!');
-              insider_active = false;
-              insider_players = [];
-            }, 240000);
-          }, 15000);
-        });
+            message.channel.send('The timer has ended!!');
+            insider_active = false;
+            insider_players = [];
+          }, 240000);
+        }, 15000);
       } else {
         message.channel.send('The player count is not high enough. Insider supports between 5 and 8 players.');
       }
