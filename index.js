@@ -177,7 +177,7 @@ client.on('message', message => {
     }
     
     if (insider_startgame.test(message.content)) {
-      if(insider_players.length >= 5 and insider_players.length <= 8){
+      if(insider_players.length >= 5 && insider_players.length <= 8){
         message.channel.send('PM\'s will be sent to the Master and Insider and the game will begin in 15 seconds.');
         var word = '';
         var file = fs.readFile('insider.txt', function(err, data) {
