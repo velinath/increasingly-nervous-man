@@ -187,7 +187,7 @@ client.on('message', message => {
     }
     
     if(insider_wordtest.test(message.content)) {
-      var file = fs.readFileSync('insider.txt');
+      var file = fs.readFileSync('insider.txt', 'utf8');
       data = file.split('\n');
       var lineNumber = Math.floor(Math.random() * data.length);
       word = data[lineNumber];
@@ -198,7 +198,7 @@ client.on('message', message => {
     if (insider_startgame.test(message.content)) {
       if(insider_players.length >= 5 && insider_players.length <= 8){
         message.channel.send('PM\'s will be sent to the Master and Insider and the game will begin in 15 seconds.');
-        var file = fs.readFileSync('insider.txt');
+        var file = fs.readFileSync('insider.txt', 'utf8');
         data = file.split('\n');
         var lineNumber = Math.floor(Math.random() * data.length);
         var word = data[lineNumber];
