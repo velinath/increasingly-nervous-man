@@ -197,7 +197,6 @@ client.on('message', message => {
     if (insider_startgame.test(message.content)) {
       if(insider_players.length >= 5 && insider_players.length <= 8){
         message.channel.send('PM\'s will be sent to the Master and Insider and the game will begin in 15 seconds.');
-        var word = '';
         var file = fs.readFile('insider.txt', function(err, data) {
           if (err) {
             return console.log(err);
@@ -205,7 +204,7 @@ client.on('message', message => {
           data += '';
           data = data.split('\n');
           var lineNumber = Math.floor(Math.random() * data.length);
-          word = data[lineNumber];
+          var word = data[lineNumber];
           console.log(word);
           var master_player = insider_players[Math.floor(Math.random() * insider_players.length)];
           var insider_player = master_player;
@@ -214,7 +213,6 @@ client.on('message', message => {
           }
           master_player.send("You are the MASTER! Your word is " + word);
           insider_player.send("You are the INSIDER! Your word is " + word);
-          //randomize the player list, pick a word, and send it
         
           setTimeout(function() {
             message.channel.send('The game has begun! Four minutes begins....now.');
