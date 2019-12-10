@@ -172,7 +172,7 @@ client.on('message', message => {
     }
     
     if (insider_signup.test(message.content)) {
-      if (insider_active && insider_players.length < 8 && array.indexOf(message.author) == -1) {
+      if (insider_active && insider_players.length < 8 && insider_players.indexOf(message.author) == -1) {
         insider_players.push(message.author); //Discord user object
       }
     }
