@@ -172,7 +172,7 @@ client.on('message', message => {
     }
     
     if (insider_signup.test(message.content)) {
-      if (insider_active && insider_players.length < 8) {
+      if (insider_active && insider_players.length < 8 && array.indexOf(message.author) == -1) {
         insider_players.push(message.author); //Discord user object
       }
     }
@@ -190,10 +190,10 @@ client.on('message', message => {
           var lineNumber = Math.floor(Math.random() * data.length);
           word = data[lineNumber];
         });
-        var master_player = Math.floor(Math.random() * insider_players.length);
+        var master_player = insider_players[Math.floor(Math.random() * insider_players.length)];
         var insider_player = master_player;
         while (insider_player == master_player) {
-          var insider_player = Math.floor(Math.random() * insider_players.length);
+          var insider_player = insider_players[Math.floor(Math.random() * insider_players.length)];
         }
         master_player.send("You are the MASTER! Your word is " + word);
         insider_player.send("You are the INSIDER! Your word is " + word);
