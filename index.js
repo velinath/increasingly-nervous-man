@@ -166,6 +166,7 @@ client.on('message', message => {
         message.channel.send('There\'s already an Insider game running. Type !signup to join the game.');
       } else {
         console.log('Starting Insider game');
+        message.channel.send('An Insider game is starting! Please type !signup to join the game.');
         insider_active = true;
       }
     }
@@ -206,6 +207,8 @@ client.on('message', message => {
             insider_players = [];
           }, 240000);
         }, 15000);
+      } else {
+        message.channel.send('The player count is not high enough. Insider supports between 5 and 8 players.');
       }
     }
       
