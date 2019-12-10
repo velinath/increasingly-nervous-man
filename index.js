@@ -142,6 +142,9 @@ client.on('message', message => {
         '`covfefe` or `covfefe (word)` - generate a Trump tweet!\n\n' +
         'CJS:\n' +
         '`!issue (issue title)` - open an issue for Votefinder.\n\n' +
+        'Games:\n' +
+        '`!insider` - start an Insider game.\n' + 
+        '`!startgame` - start the currently active game.\n\n' +
         'General-use:\n' +
         '`!r <dice>d<sides>` - Roll some dice.\n' +
         '`tell me something good` - I\'ll tell you something good.');
