@@ -183,7 +183,7 @@ client.on('message', message => {
         console.log('Starting Insider game');
         message.channel.send('An Insider game is starting! Please type !signup to join the game.');
         active_games.push(
-          {'channel': message.channel, 'game': 'insider', 'user': message.author, 'data': {'players': [message.author]}});
+          {'channel': message.channel, 'game': 'insider', 'user': message.author, 'data': {'players': [message.author], 'started': false}});
       }
     }
     
@@ -200,8 +200,9 @@ client.on('message', message => {
     if (insider_startgame.test(message.content)) {
       var active_game = active_games.find(obj => obj.channel === message.channel);
       //case when this based on game type in active_game.game
-      if(active_game !== undefined && active_game.user == message.author && active_game.data.players.length >= 5 && active_game.data.players.length <= 8){
+      if(active_game !== undefined && active_game.user == message.author && active_game.data.started == false && active_game.data.players.length >= 5 && active_game.data.players.length <= 8){
         message.channel.send('PM\'s will be sent to the Master and Insider and the game will begin in 15 seconds.');
+        active_game.data.started = true;
         var file = fs.readFileSync('insider.txt', 'utf8');
         data = file.split('\n');
         var lineNumber = Math.floor(Math.random() * data.length);
