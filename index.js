@@ -168,6 +168,7 @@ client.on('message', message => {
     if (players.test(message.content)) {
       var active_game = active_games.find(obj => obj.channel === message.channel);
       if(active_game !== undefined) {
+        var playerlist = '';
         active_game.data.players.forEach(e => playerlist += e.username + ' ');
         message.channel.send(message.author.username + " has joined the game! Current players: " + playerlist);
       } else {
