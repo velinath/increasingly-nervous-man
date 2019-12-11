@@ -39,8 +39,8 @@ var nice_pattern = /^tell me something good/im
 var insider_start = /^\!insider$/im
 var insider_signup = /^\!signup$/im
 var insider_startgame = /^\!startgame$/im
-var insider_players = new Array();
-var insider_word = "";
+
+var players = /^\!players$/im
 
 var active_games = new Array();
 
@@ -165,6 +165,15 @@ client.on('message', message => {
       }
       msg = msg.slice(0, -2) + "] =";
       message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + msg +  total + "`");
+    }
+    
+    if (players.test(message.content)) {
+      var active_game = active_games.find(obj => obj.channel === message.channel);
+      if(active_game !== undefined) {
+        active_game.data.players.forEach(e => playerlist += e.username + ' ');
+        message.channel.send(message.author.username + " has joined the game! Current players: " + playerlist);
+      } else {
+        message.channel.send('No game is currently running in this channel. Please start one with the appropriate command. (currently supported: `!insider`)');
     }
     
     if (insider_start.test(message.content)) {
