@@ -34,6 +34,7 @@ var swd_pattern = /(^|\s|\p)(knifies)/i
 var new_issue_pattern = /^\!issue (.*)$/im
 var description_pattern = /^\!desc (.*)$/im
 var help_pattern = /^\!help$/im
+var help_specific = /^\!help (.*)/im
 var nice_pattern = /^tell me something good/im
 
 var insider_start = /^\!insider$/im
@@ -133,21 +134,41 @@ client.on('message', message => {
   if(channel_blacklist.indexOf(message.channel.id) === -1) {
     //general-use
     if (message.channel.type == 'dm' && help_pattern.test(message.content)) {
-      console.log('help trigger');
       message.author.send('Politics: \n' +
-        '`today\'s disasters` - currently scheduled White House press events\n' +
-        '`is Trump still president` - check on a pressing question\n\n' + 
-        'Bot Playground:\n' +
-        '`covfefe` or `covfefe (word)` - generate a Trump tweet!\n\n' +
-        'CJS:\n' +
-        '`!issue (issue title)` - open an issue for Votefinder.\n\n' +
-        'Games:\n' +
-        '`!insider` - start an Insider game.\n' + 
-        '`!startgame` - start the currently active game.\n' +
-        '`!players` - show the current game\'s playerlist.\n\n' +
-        'General-use:\n' +
-        '`!r <dice>d<sides>` - Roll some dice.\n' +
-        '`tell me something good` - I\'ll tell you something good.');
+                          '`today\'s disasters` - currently scheduled White House press events\n' +
+                          '`is Trump still president` - check on a pressing question\n\n' + 
+                          'Bot Playground:\n' +
+                          '`covfefe` or `covfefe (word)` - generate a Trump tweet!\n\n' +
+                          'CJS:\n' +
+                          '`!issue (issue title)` - open an issue for Votefinder.\n\n' +
+                          'Games:\n' +
+                          '`!insider` - start an Insider game.\n' + 
+                          '`!startgame` - start the currently active game.\n' +
+                          '`!players` - show the current game\'s playerlist.\n\n' +
+                          'Rules: \n' +
+                          '`!help insider` - show rules for Insider.\n\n' +
+                          'General-use:\n' +
+                          '`!r <dice>d<sides>` - Roll some dice.\n' +
+                          '`tell me something good` - I\'ll tell you something good.');
+    }
+    if (message.channel.type == 'dm' && help_specific.test(message.content)) {
+      var help_text = help_specific.exec(message.content);
+      switch(help_text[1]) {
+        case 'insider': 
+          message.author.send('Rules for Insider:\n\n' + 
+                              '- Roles are: 1 Master (confirmed town), 1 Insider (scum), remainder Common (town).\n' +
+                              '- Master and Insider will be told the target word. The Master should reveal themself before the timer starts.\n' +
+                              '- Insider and Commoners ask Y/N questions to try and guess the target word.\n' +
+                              '- The word must be correctly guessed within 4 minutes. If it is not, everyone (including the Insider) loses.\n' +
+                              '- If the word is guessed, the game moves to discussion/voting.\n' +
+                              '- The person that guessed the word breaks ties during voting\n' +
+                              '- First, players decide by majority vote whether or not the player that guessed the word is the Insider. If they decide to vote yes, and are correct, the town wins.\n' +
+                              '- If players decide that the guesser was not the Insider, a discussion phase commences and a plurality vote is taken to determine who is the Insider.\n' +
+                              '- The Insider wins if they are not voted in this phase. The town wins if they correctly identify the Insider by plurality vote.');
+          break;
+        default:
+          message.author.send('I\'m sorry, I don\'t have a help topic for that.');
+      }
     }
     //General use
     if (role_pattern.test(message.content)) {
