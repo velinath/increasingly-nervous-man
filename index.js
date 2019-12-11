@@ -44,8 +44,6 @@ var players = /^\!players$/im
 
 var active_games = new Array();
 
-var insider_wordtest = /^!wordtest$/im
-
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 var issue_titles = new Array();
 
@@ -174,6 +172,7 @@ client.on('message', message => {
         message.channel.send(message.author.username + " has joined the game! Current players: " + playerlist);
       } else {
         message.channel.send('No game is currently running in this channel. Please start one with the appropriate command. (currently supported: `!insider`)');
+      }
     }
     
     if (insider_start.test(message.content)) {
