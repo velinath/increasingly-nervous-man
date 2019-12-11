@@ -81,7 +81,6 @@ var active_playerlist = function(channel, game) {
 
 
 var receiveMsg = function() {
-  console.log('Sending SQS request');
   sqs.receiveMessage(sqsParams, function(err, data) {
     if (err) {
       console.log("Receive Error", err);
@@ -132,7 +131,6 @@ stream.on('tweet', function(tweet) {
     } else {
       channel.send('A STATEMENT FROM THE PRESIDENT: ```' + tweet.text + '```');
     }
-    console.log(tweet);
   }
 }); 
 
@@ -178,7 +176,6 @@ client.on('message', message => {
     }
     //General use
     if (role_pattern.test(message.content)) {
-      console.log('roll');
       var total = 0;
       var count = 0;
       var msg = "["
@@ -206,7 +203,6 @@ client.on('message', message => {
       if(active_games.find(obj => obj.channel === message.channel) !== undefined) {
         message.channel.send('There\'s already an Insider game running. Type !signup to join the game.');
       } else {
-        console.log('Starting Insider game');
         message.channel.send('An Insider game is starting! Please type !signup to join the game.');
         active_games.push(
           {'channel': message.channel, 'game': 'insider', 'user': message.author, 'data': {'players': [message.author], 'started': false}});
@@ -262,7 +258,6 @@ client.on('message', message => {
       
     
     if(nice_pattern.test(message.content)) {
-      console.log('nice');
       var file = fs.readFile('affirmations.txt', function(err, data) {
         if(err) {
           return console.log(err);
@@ -339,10 +334,9 @@ client.on('message', message => {
         vfrepo.issue({
           "title": issue_titles[message.author.id],
           "body": desc_text[1] + ' _- reported by ' + author + '_',
-          "assignee": "velinath",
+          "assignee": "aletson",
           "labels": ["needs-attention"]
         }, function() {
-          console.log('Issue created.');
           delete issue_titles[message.author.id]; //it being undefined is probably fine?
         });
       } else if (description_pattern.test(message.content)) {
@@ -375,7 +369,6 @@ client.on('message', message => {
           "assignee": "aletson",
           "labels": ["needs-attention"]
         }, function() {
-          console.log('Issue created.');
           delete issue_titles[message.author.id]; //it being undefined is probably fine?
         });
       } else if (description_pattern.test(message.content)) {
@@ -423,7 +416,6 @@ router.post('/vf-gh', function(req, res) {
   });
   req.on('end', function() {
     obj = JSON.parse(body);
-    console.log(obj.action);
     var send_to_channel = client.channels.get("231119048006565888");
     // Now we need to set up message events based on what's received.
     if (obj.action == "published") {
@@ -440,7 +432,6 @@ router.post('/vf-gh', function(req, res) {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.end('\n');
-    console.log('success');
   });
 });
 
