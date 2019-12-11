@@ -179,7 +179,7 @@ client.on('message', message => {
     }
     
     if (insider_signup.test(message.content)) {
-      var active_game == active_games.find(obj => obj.channel === message.channel);
+      var active_game = active_games.find(obj => obj.channel === message.channel);
       if (active_game !== undefined && active_game.data.players.length < 8 && active_game.data.players.indexOf(message.author) == -1) {
         active_game.data.players.push(message.author); //Discord user object
         var playerlist = '';
@@ -189,7 +189,7 @@ client.on('message', message => {
     }
     
     if (insider_startgame.test(message.content)) {
-      var active_game == active_games.find(obj => obj.channel === message.channel);
+      var active_game = active_games.find(obj => obj.channel === message.channel);
       //case when this based on game type in active_game.game
       if(active_game !== undefined && active_game.data.players.length >= 5 && active_game.data.players.length <= 8){
         message.channel.send('PM\'s will be sent to the Master and Insider and the game will begin in 15 seconds.');
