@@ -2,6 +2,8 @@
   "name": "increasingly-nervous-man",
   "version": "0.11.1",
   "description": "an increasingly nervous man",
+  "author": "Allison Letson <me@ajl.io> (https://ajl.io)",
+  "homepage": "https://github.com/aletson/increasingly-nervous-man",
   "engines": {
     "node": "7.10.0"
   },
