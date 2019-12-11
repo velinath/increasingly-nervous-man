@@ -200,7 +200,7 @@ client.on('message', message => {
     if (insider_startgame.test(message.content)) {
       var active_game = active_games.find(obj => obj.channel === message.channel);
       //case when this based on game type in active_game.game
-      if(active_game !== undefined && active_game.data.players.length >= 5 && active_game.data.players.length <= 8){
+      if(active_game !== undefined && active_game.user == message.author && active_game.data.players.length >= 5 && active_game.data.players.length <= 8){
         message.channel.send('PM\'s will be sent to the Master and Insider and the game will begin in 15 seconds.');
         var file = fs.readFileSync('insider.txt', 'utf8');
         data = file.split('\n');
