@@ -143,7 +143,8 @@ client.on('message', message => {
         '`!issue (issue title)` - open an issue for Votefinder.\n\n' +
         'Games:\n' +
         '`!insider` - start an Insider game.\n' + 
-        '`!startgame` - start the currently active game.\n\n' +
+        '`!startgame` - start the currently active game.\n' +
+        '`!players` - show the current game\'s playerlist.\n\n' +
         'General-use:\n' +
         '`!r <dice>d<sides>` - Roll some dice.\n' +
         '`tell me something good` - I\'ll tell you something good.');
