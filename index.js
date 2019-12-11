@@ -173,7 +173,8 @@ client.on('message', message => {
       } else {
         console.log('Starting Insider game');
         message.channel.send('An Insider game is starting! Please type !signup to join the game.');
-        active_games.push({'channel': message.channel, 'game': 'insider', 'user': message.author, 'data': {'players': [message.author]}};
+        active_games.push(
+          {'channel': message.channel, 'game': 'insider', 'user': message.author, 'data': {'players': [message.author]}});
       }
     }
     
