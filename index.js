@@ -41,7 +41,8 @@ var insider_signup = /^\!signup$/im
 var insider_startgame = /^\!startgame$/im
 var insider_players = new Array();
 var insider_word = "";
-var insider_active = false;
+
+var active_games = new Array();
 
 var insider_wordtest = /^!wordtest$/im
 
@@ -167,51 +168,44 @@ client.on('message', message => {
     }
     
     if (insider_start.test(message.content)) {
-      if(insider_active) {
+      if(active_games.find(obj => obj.channel === message.channel) !== undefined) {
         message.channel.send('There\'s already an Insider game running. Type !signup to join the game.');
       } else {
         console.log('Starting Insider game');
         message.channel.send('An Insider game is starting! Please type !signup to join the game.');
-        insider_players.push(message.author);
-        insider_active = true;
+        active_games.push({'channel': message.channel, 'game': 'insider', 'user': message.author, 'data': {'players': [message.author]}};
       }
     }
     
     if (insider_signup.test(message.content)) {
-      if (insider_active && insider_players.length < 8 && insider_players.indexOf(message.author) == -1) {
-        insider_players.push(message.author); //Discord user object
+      var active_game == active_games.find(obj => obj.channel === message.channel);
+      if (active_game !== undefined && active_game.data.players.length < 8 && active_game.data.players.indexOf(message.author) == -1) {
+        active_game.data.players.push(message.author); //Discord user object
         var playerlist = '';
-        insider_players.forEach(e => playerlist += e.username + ' ');
+        active_game.data.players.forEach(e => playerlist += e.username + ' ');
         message.channel.send(message.author.username + " has joined the game! Current players: " + playerlist);
       }
     }
     
-    if(insider_wordtest.test(message.content)) {
-      var file = fs.readFileSync('insider.txt', 'utf8');
-      data = file.split('\n');
-      var lineNumber = Math.floor(Math.random() * data.length);
-      word = data[lineNumber];
-      console.log(data);
-      console.log(word);
-    }
-    
     if (insider_startgame.test(message.content)) {
-      if(insider_players.length >= 5 && insider_players.length <= 8){
+      var active_game == active_games.find(obj => obj.channel === message.channel);
+      //case when this based on game type in active_game.game
+      if(active_game !== undefined && active_game.data.players.length >= 5 && active_game.data.players.length <= 8){
         message.channel.send('PM\'s will be sent to the Master and Insider and the game will begin in 15 seconds.');
         var file = fs.readFileSync('insider.txt', 'utf8');
         data = file.split('\n');
         var lineNumber = Math.floor(Math.random() * data.length);
-        var word = data[lineNumber];
-        console.log(word);
-        var master_player = insider_players[Math.floor(Math.random() * insider_players.length)];
-        var insider_player = master_player;
-        while (insider_player == master_player) {
-          var insider_player = insider_players[Math.floor(Math.random() * insider_players.length)];
+        active_game.data.word = data[lineNumber];
+        console.log(active_game.data.word);
+        active_game.data.master_player = active_game.data.players[Math.floor(Math.random() * insider_players.length)];
+        active_game.data.insider_player = active_game.data.players[Math.floor(Math.random() * insider_players.length)];
+        while (active_game.data.insider_player == active_game.data.master_player) {
+          active_game.data.insider_player = active_game.data.players[Math.floor(Math.random() * insider_players.length)];
         }
-        master_player.send("You are the MASTER! Your word is " + word);
-        insider_player.send("You are the INSIDER! Your word is " + word);
-        console.log("insider: " + insider_player.username);
-        console.log("master: " + master_player.username);
+        active_game.data.master_player.send("You are the MASTER! Your word is " + active_game.data.word);
+        active_game.data.insider_player.send("You are the INSIDER! Your word is " + active_game.data.word);
+        console.log("insider: " + active_game.data.insider_player.username);
+        console.log("master: " + active_game.data.master_player.username);
         setTimeout(function() {
           message.channel.send('The game has begun! Four minutes begins....now.');
           setTimeout(function() {
@@ -220,8 +214,7 @@ client.on('message', message => {
               message.channel.send('**One minute left!!**');
               setTimeout(function() {
                 message.channel.send('The timer has ended!!');
-                insider_active = false;
-                insider_players = [];
+                active_games = active_games.filter(obj => obj.channel !== message.channel);
               }, 60000);
             }, 60000);
           }, 120000);
