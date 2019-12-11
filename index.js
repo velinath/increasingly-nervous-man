@@ -125,7 +125,7 @@ client.on('ready', () => {
 });
 
 stream.on('tweet', function(tweet) {
-  if(tweet.user.id == 25073877) {
+  if(tweet.user.id == 25073877 && tweet.retweeted_status === undefined) {
     var channel = client.channels.get('272035227574992897');
     if(tweet.truncated) {
       channel.send('A STATEMENT FROM THE PRESIDENT: ```' + tweet.extended_tweet.full_text + '```');
