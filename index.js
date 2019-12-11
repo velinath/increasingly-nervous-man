@@ -73,6 +73,12 @@ var sqsParams = {
   WaitTimeSeconds: 10
 };
 
+var active_playerlist = function(channel, game) {
+  var playerlist = '';
+  game.data.players.forEach(e => playerlist += e.username + ' ');
+  channel.send("Current players: " + playerlist);
+};
+
 
 var receiveMsg = function() {
   console.log('Sending SQS request');
@@ -190,9 +196,7 @@ client.on('message', message => {
     if (players.test(message.content)) {
       var active_game = active_games.find(obj => obj.channel === message.channel);
       if(active_game !== undefined) {
-        var playerlist = '';
-        active_game.data.players.forEach(e => playerlist += e.username + ' ');
-        message.channel.send("Current players: " + playerlist);
+        active_playerlist(message.channel, active_game);
       } else {
         message.channel.send('No game is currently running in this channel. Please start one with the appropriate command. (currently supported: `!insider`)');
       }
@@ -213,9 +217,7 @@ client.on('message', message => {
       var active_game = active_games.find(obj => obj.channel === message.channel);
       if (active_game !== undefined && active_game.data.players.length < 8 && active_game.data.players.indexOf(message.author) == -1) {
         active_game.data.players.push(message.author); //Discord user object
-        var playerlist = '';
-        active_game.data.players.forEach(e => playerlist += e.username + ' ');
-        message.channel.send(message.author.username + " has joined the game! Current players: " + playerlist);
+        message.react('👍');
       }
     }
     
@@ -247,6 +249,7 @@ client.on('message', message => {
               message.channel.send('**One minute left!!**');
               setTimeout(function() {
                 message.channel.send('The timer has ended!!');
+                active_playerlist(message.channel, active_game);
                 active_games = active_games.filter(obj => obj.channel !== message.channel);
               }, 60000);
             }, 60000);
