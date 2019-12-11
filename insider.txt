@@ -1,11 +1,252 @@
-forest
-parking lot
+colander
+vase
+bucket
+basket
+bowl
+trash bin
+border
+meeting
+global warming
+history
+culture
+civilization
+weather report
+news
+announcer
+commercial
+actress
+comedian
+dynamite
+pistol
+boomerang
+arrow
+katana
+tank
+ghost
+candle
+zombie
+pyramid
+vampire
+blood
+tent
+lamp
+sleeping bag
+backpack
+rope
+camping
+electricity
+magnet
+gravity
+thunderbolt
 nuclear energy
-desert
+heat
+Olympics
+World Cup
+field day
+marathon
+swimming
+triathlon
+saw
+hammer
+scissors
+cutter
+axe
+pickaxe
+wood log
+drinking straw
+test tube
+telescope
+cane
+umbrella
+mountain
+river
+forest
+volcano
+sea
+pond
+birthday
+gift
+Christmas
+party
+wedding
+grave
+ballpoint pen
+brush
+notebook
+pencil
+paint
+ruler
+parking lot
+tennis court
+residential area
+field
+chocolate
+graph paper
+calendar
+alarm clock
+hourglass
+compass
+shadow
+season
+spoon
+fork
+knife
+chopsticks
+dish
+glass
+soap
+detergent
+sponge
+toothbrush
+towel
+washing machine
+wheat
+corn
+kidney bean
+peanut
+milk
+rice
+dice
+chess
+playing card
+board game
+puzzle
+casino
+father
+mother
+grandfather
+grandmother
+child
+pet
+coffee
+mug
+beer
+wine
+popcorn
+paper cup
+lawyer
+congressman
+architect
+nurse
+teacher
+pilot
+salt
+pepper
+chili pepper
+soy sauce
+basil
+sugar
+parent
+brother
+sister
+twins
+couple
+classmate
+road sign
+power pole
+pylon
+fence
+billboard
+highway
+fire truck
+police car
+bulldozer
+crane (construction)
+tow truck
+tractor
+Galapagos Islands
+Antarctica
+Hawaii
+New Zealand
+Mount Everest
+Atlantis
+hat
+glasses
+T-shirt
+underwear
+socks
+shoes
+tennis
+baseball
+soccer
+ping-pong
+golf
+wrestling
+apartment
+department store
+fast food
+convenience store
+cafe
+restaurant
+kindergarten
+elementary school
+junior high school / middle school
 high school
+university
 college
-Florida
-electrician
-welder
+sun
+earth
+moon
+astronaut
+astronomer
+space shuttle
+sidewalk
+rope bridge
+tunnel
+guardrail
+crosswalk
+traffic signal
+car
+bicycle
+tricycle
+motorcycle
+train
+plane
+power plant
+battery
+windmill
+solar panel
+fireplace
+steam engine
+zoo
+amusement park
+picnic
+climbing
+beach
+karaoke
+bedroom
+kitchen
+dining table
+bathroom
+bathtub
+garden
 guitar
+piano
+drum
+flute
 violin
+trumpet
+tree
+fire
+soil
+gold
+water
+air
+wall
+pillar
+floor
+ceiling
+roof
+balcony
+head
+neck
+shoulder
+body
+hand
+leg
+comicc
+novel
+dictionary
+diary
+magazine
+textbook
