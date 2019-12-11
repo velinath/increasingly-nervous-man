@@ -170,7 +170,7 @@ client.on('message', message => {
       if(active_game !== undefined) {
         var playerlist = '';
         active_game.data.players.forEach(e => playerlist += e.username + ' ');
-        message.channel.send(message.author.username + " has joined the game! Current players: " + playerlist);
+        message.channel.send("Current players: " + playerlist);
       } else {
         message.channel.send('No game is currently running in this channel. Please start one with the appropriate command. (currently supported: `!insider`)');
       }
