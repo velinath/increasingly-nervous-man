@@ -206,7 +206,7 @@ client.on('message', message => {
     
     if (vote_pattern.test(message.content)) {
       var active_game = active_games.find(obj => obj.channel === message.channel);
-      if(active_game !== undefined && active_game.data.started == true && active_game.data.players.find(player => player === message.author) !== undefined) { //TODO: add `accepting_votes` property to game?
+      if(active_game !== undefined && active_game.data.started == true && active_game.data.players.includes(message.author) !== undefined) { //TODO: add `accepting_votes` property to game?
         var vote_target = message.mentions.members.first();
         var voter = message.author
         var existing_vote = active_game.data.votes.find(obj => obj.voter == voter);
