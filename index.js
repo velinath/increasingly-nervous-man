@@ -41,6 +41,8 @@ var insider_start = /^\!insider$/im
 var insider_signup = /^\!signup$/im
 var insider_startgame = /^\!startgame$/im
 
+var vote_pattern = /^\*\*\#\#vote (.*)\*\*$/im
+
 var players = /^\!players$/im
 
 var active_games = new Array();
@@ -73,11 +75,23 @@ var sqsParams = {
   WaitTimeSeconds: 10
 };
 
-var active_playerlist = function(channel, game) {
+var active_playerlist = function(game) {
   var playerlist = '';
   game.data.players.forEach(e => playerlist += e.username + ' ');
-  channel.send("Current players: " + playerlist);
+  game.channel.send("Current players: " + playerlist);
 };
+
+var count_votes = function(game) {
+  var votes = [];
+  //votes: [Target: {count: 0, votelist: []}]
+  game.data.votes.forEach(function(e) {
+    votes[e.target].count++;
+    votes[e.target].votelist.push(e.voter)
+  });
+  console.log(votes);
+  return votes;
+  //This literally just counts votes. No processing. That way processing majority vs plurality can be done on a per game, or even separate function basis.
+}
 
 
 var receiveMsg = function() {
@@ -190,10 +204,27 @@ client.on('message', message => {
       message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + msg +  total + "`");
     }
     
+    if (vote_pattern.test(message.content)) {
+      var active_game = active_games.find(obj => obj.channel === message.channel);
+      if(active_game !== undefined && active_game.data.started == true) { //TODO: add `accepting_votes` property to game?
+        var vote_target = message.mentions.members.first();
+        var voter = message.author
+        var existing_vote = active_game.data.votes.find(obj => obj.voter == voter);
+        if(existing_vote) {
+          existing_vote.target = vote_target;
+        } else {
+          active_game.data.votes.push({'voter': voter, 'target': vote_target});
+        }
+        message.react('✅');
+      } else {
+        message.react('❌');
+      }
+    }
+    
     if (players.test(message.content)) {
       var active_game = active_games.find(obj => obj.channel === message.channel);
       if(active_game !== undefined) {
-        active_playerlist(message.channel, active_game);
+        active_playerlist(active_game);
       } else {
         message.channel.send('No game is currently running in this channel. Please start one with the appropriate command. (currently supported: `!insider`)');
       }
@@ -245,7 +276,7 @@ client.on('message', message => {
               message.channel.send('**One minute left!!**');
               setTimeout(function() {
                 message.channel.send('The timer has ended!!');
-                active_playerlist(message.channel, active_game);
+                active_playerlist(active_game);
                 active_games = active_games.filter(obj => obj.channel !== message.channel);
               }, 60000);
             }, 60000);
