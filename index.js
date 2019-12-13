@@ -220,7 +220,7 @@ client.on('message', message => {
     if (insider_startgame.test(message.content)) {
       var active_game = active_games.find(obj => obj.channel === message.channel);
       //case when this based on game type in active_game.game
-      if(active_game !== undefined && active_game.user == message.author && active_game.data.started == false /* && active_game.data.players.length >= 5 */ && active_game.data.players.length <= 8){
+      if(active_game !== undefined && active_game.user == message.author && active_game.data.started == false && active_game.data.players.length >= 5 && active_game.data.players.length <= 8){
         message.channel.send('PM\'s will be sent to the Master and Insider and the game will begin in 15 seconds.');
         active_game.data.started = true;
         var file = fs.readFileSync('insider.txt', 'utf8');
@@ -228,11 +228,11 @@ client.on('message', message => {
         var lineNumber = Math.floor(Math.random() * data.length);
         active_game.data.word = data[lineNumber];
         console.log(active_game.data.word);
-        active_game.data.master_player = active_game.data.players[Math.floor(Math.random() * insider_players.length)];
-        active_game.data.insider_player = active_game.data.players[Math.floor(Math.random() * insider_players.length)];
-        //while (active_game.data.insider_player == active_game.data.master_player) {
-        //  active_game.data.insider_player = active_game.data.players[Math.floor(Math.random() * insider_players.length)];
-        //}
+        active_game.data.master_player = active_game.data.players[Math.floor(Math.random() * active_game.data.players.length)];
+        active_game.data.insider_player = active_game.data.players[Math.floor(Math.random() * active_game.data.players.length)];
+        while (active_game.data.insider_player == active_game.data.master_player) {
+          active_game.data.insider_player = active_game.data.players[Math.floor(Math.random() * active_game.data.players.length)];
+        }
         active_game.data.master_player.send("You are the MASTER! Your word is " + active_game.data.word);
         active_game.data.insider_player.send("You are the INSIDER! Your word is " + active_game.data.word);
         console.log("insider: " + active_game.data.insider_player.username);
