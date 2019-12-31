@@ -206,7 +206,7 @@ client.on('message', message => {
     
     if (vote_pattern.test(message.content)) {
       var active_game = active_games.find(obj => obj.channel === message.channel);
-      if(active_game !== undefined && active_game.data.started == true && active_game.data.players.includes(message.author) && active_game.data.players.includes(message.mentions.members.first())) { //TODO: add `accepting_votes` property to game?
+      if(active_game !== undefined && active_game.data.started == true && active_game.data.players.includes(message.author) && active_game.data.players.includes(message.mentions.members.first()) && active_game.data.accepting_votes) { //TODO: add `accepting_votes` property to game?
         var vote_target = message.mentions.members.first();
         var voter = message.author
         var existing_vote = active_game.data.votes.find(obj => obj.voter == voter);
@@ -216,6 +216,7 @@ client.on('message', message => {
           active_game.data.votes.push({'voter': voter, 'target': vote_target});
         }
         message.react('✅');
+        //check to see if there's a majority I suppose? count_votes and get the result and then feed it into is_majority
       } else {
         message.react('❌');
       }
@@ -236,7 +237,7 @@ client.on('message', message => {
       } else {
         message.channel.send('An Insider game is starting! Please type !signup to join the game.');
         active_games.push(
-          {'channel': message.channel, 'game': 'insider', 'user': message.author, 'data': {'players': [message.author], 'started': false}});
+          {'channel': message.channel, 'game': 'insider', 'user': message.author, 'data': {'players': [message.author], 'started': false, 'accepting_votes': false}});
       }
     }
     
@@ -275,7 +276,8 @@ client.on('message', message => {
             setTimeout(function() {
               message.channel.send('**One minute left!!**');
               setTimeout(function() {
-                message.channel.send('The timer has ended!!');
+                message.channel.send('The timer has ended!! Votes are now being accepted. Vote: **##vote @<Player>**');
+                active_game.data.accepting_votes = true;
                 active_playerlist(active_game);
                 active_games = active_games.filter(obj => obj.channel !== message.channel);
               }, 60000);
