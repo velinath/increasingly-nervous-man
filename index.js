@@ -87,7 +87,7 @@ var receiveMsg = function() {
     } else if (data.Messages) {
       var message = data.Messages[0];
       console.log('Message received:' + JSON.stringify(message));
-      var channel = client.channels.get('366737195744100352');
+      var channel = client.channels.get('368136920284397580');
       channel.send(message.MessageAttributes.Moderator.StringValue + 
                    ' has opened ' + 
                    message.MessageAttributes.GameTitle.StringValue + 
