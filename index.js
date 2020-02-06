@@ -151,7 +151,7 @@ setInterval(function() {
     if (percentage > previous_largest_known) {
 	  previous_largest_known = percentage;
 	  var channel = client.channels.get('272035227574992897');
-      message.channel.send(percentage);
+      channel.send(percentage);
     }
 }, 120000);
 
