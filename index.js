@@ -29,8 +29,6 @@ var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|p
 var covfefe_pattern = /(^|\s|\p)(covfefe)$/i
 var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
 var role_pattern = /^\!r ([0-9]{1,2})d([0-9]{1,4})$/im
-var eggp_pattern = /(^|\s|\p)(package|erect)/i
-var swd_pattern = /(^|\s|\p)(knifies)/i
 var new_issue_pattern = /^\!issue (.*)$/im
 var description_pattern = /^\!desc (.*)$/im
 var help_pattern = /^\!help$/im
@@ -410,16 +408,7 @@ client.on('message', message => {
           if(Math.random() < 0.2) {
             var emoji = message.guild.emojis.find('name', 'mlyp');
             message.react(emoji);
-            if (eggp_pattern.test(message.content)) {
-              message.react("🍆");
-            }
           }
-        } else if (eggp_pattern.test(message.content)) {
-	  if(Math.random() < 0.2) {
-            message.react("🍆");
-	  }
-        } else if (swd_pattern.test(message.content)) {
-          message.react("💦");
         }
       }
     }
