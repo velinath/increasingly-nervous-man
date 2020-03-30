@@ -415,7 +415,9 @@ client.on('message', message => {
             }
           }
         } else if (eggp_pattern.test(message.content)) {
-          message.react("🍆");
+	  if(Math.random() < 0.2) {
+            message.react("🍆");
+	  }
         } else if (swd_pattern.test(message.content)) {
           message.react("💦");
         }
