@@ -82,8 +82,10 @@ var job = schedule.scheduleJob({hour: 9, minute: 0}, function() {
   var endDate = new Date(2020,7,25);
   var today = new Date();
   var diff = Math.floor((endDate - today) / (1000 * 60 * 60 * 24));
-  var channel = client.channels.get('698328412598829096');
-  channel.send('**' + diff + 'days remain.**');
+  if (diff >= 0) {
+    var channel = client.channels.get('698328412598829096');
+    channel.send('**' + diff + 'days remain.**');
+  }
 )};
 
 var receiveMsg = function() {
