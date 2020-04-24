@@ -11,12 +11,13 @@ var finalhandler = require('finalhandler');
 var Router = require('router');
 var queueUrl = process.env.sqs_queue_url;
 var gh = require('octonode');
+var schedule = require('node-schedule');
+
 var ghclient = gh.client(process.env.gh_access_token);
 var vfrepo = ghclient.repo('aletson/votefinder-web');
+
 AWS.config.update({region: process.env.region});
 client.login(process.env.app_token);
-
-
 
 var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p{P}|\s)/i
 var wh_live_pattern = /(^|\s)(today'?s disasters)(\p{P}|\s|$)/i
@@ -77,6 +78,13 @@ var active_playerlist = function(channel, game) {
   channel.send("Current players: " + playerlist);
 };
 
+var job = schedule.scheduleJob({hour: 9, minute: 0}, function() {
+  var endDate = new Date(2020,7,25);
+  var today = new Date();
+  var diff = Math.floor((endDate - today) / (1000 * 60 * 60 * 24));
+  var channel = client.channels.get('698328412598829096');
+  channel.send('**' + diff + 'days remain.**');
+)};
 
 var receiveMsg = function() {
   sqs.receiveMessage(sqsParams, function(err, data) {
