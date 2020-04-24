@@ -86,7 +86,7 @@ var job = schedule.scheduleJob({hour: 9, minute: 0}, function() {
     var channel = client.channels.get('698328412598829096');
     channel.send('**' + diff + 'days remain.**');
   }
-)};
+});
 
 var receiveMsg = function() {
   sqs.receiveMessage(sqsParams, function(err, data) {
