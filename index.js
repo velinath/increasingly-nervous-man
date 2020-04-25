@@ -82,9 +82,12 @@ var job = schedule.scheduleJob({hour: 9, minute: 0}, function() {
   var endDate = new Date(2020,7,25);
   var today = new Date();
   var diff = Math.floor((endDate - today) / (1000 * 60 * 60 * 24));
-  if (diff >= 0) {
+  if (diff >= 2) {
     var channel = client.channels.get('698328412598829096');
-    channel.send('**' + diff + 'days remain.**');
+    channel.send('**' + diff + ' days remain.**');
+  } else if (diff == 1) {
+    channel.send('**Dawn of the Final Day**');
+    channel.send('==~~24~~ 22 hours remain==');
   }
 });
 
