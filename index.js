@@ -78,7 +78,7 @@ var active_playerlist = function(channel, game) {
   channel.send("Current players: " + playerlist);
 };
 
-var job = schedule.scheduleJob({hour: 9, minute: 0}, function() {
+var job = schedule.scheduleJob({hour: 12, minute: 0}, function() {
   var endDate = new Date(2020,7,25);
   var today = new Date();
   var diff = Math.floor((endDate - today) / (1000 * 60 * 60 * 24));
@@ -87,7 +87,7 @@ var job = schedule.scheduleJob({hour: 9, minute: 0}, function() {
     channel.send('**' + diff + ' days remain.**');
   } else if (diff == 1) {
     channel.send('**Dawn of the Final Day**');
-    channel.send('==~~24~~ 22 hours remain==');
+    channel.send('==~~24~~ 19 hours remain==');
   }
 });
 
