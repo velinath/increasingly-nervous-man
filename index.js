@@ -144,27 +144,6 @@ stream.on('tweet', function(tweet) {
   }
 }); 
 
-var previous_largest_known = 97;
-
-setInterval(function() {
-  var percentage = previous_largest_known;
-  var url = 'https://results.thecaucuses.org';
-  rp(url)
-    .then(function(html) {
-      var $ = cheerio.load(html);
-      $('.view-content').filter(function() {
-        var data = $(this);
-        percentage = $(this).find('.is-centered"').first().text().split("%")[0];
-      });
-    });
-    console.log(percentage);
-    if (percentage > previous_largest_known) {
-	  previous_largest_known = percentage;
-	  var channel = client.channels.get('272035227574992897');
-      channel.send(percentage);
-    }
-}, 120000);
-
 client.on('message', message => {
   if(channel_blacklist.indexOf(message.channel.id) === -1) {
     //general-use
