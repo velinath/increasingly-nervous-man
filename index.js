@@ -11,26 +11,24 @@ var finalhandler = require('finalhandler');
 var Router = require('router');
 var queueUrl = process.env.sqs_queue_url;
 var gh = require('octonode');
+var schedule = require('node-schedule');
+
 var ghclient = gh.client(process.env.gh_access_token);
 var vfrepo = ghclient.repo('aletson/votefinder-web');
+
 AWS.config.update({region: process.env.region});
 client.login(process.env.app_token);
-
-
 
 var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p{P}|\s)/i
 var wh_live_pattern = /(^|\s)(today'?s disasters)(\p{P}|\s|$)/i
 var pres_pattern = /(^|\s)(is (donald )?trump still president)(\?)?(\p{P}|\s|$)/i
 var mattering_pattern = /(^|\s|\p{P})mattering/i
 var sad_pattern = /(^|\s)(sad!|low energy)/i
-var abuela_pattern = /(^|\s)(liz|warren)($|\s|\p{P})/i
 var daniels_pattern = /(^|\s|\p)(voice friend bad)($|\s|\p{P})/i
 var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|awful|disgusting|terrible|unpleasant|impressive)($|\p{P})/i
 var covfefe_pattern = /(^|\s|\p)(covfefe)$/i
 var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
 var role_pattern = /^\!r ([0-9]{1,2})d([0-9]{1,4})$/im
-var eggp_pattern = /(^|\s|\p)(package|erect)/i
-var swd_pattern = /(^|\s|\p)(knifies)/i
 var new_issue_pattern = /^\!issue (.*)$/im
 var description_pattern = /^\!desc (.*)$/im
 var help_pattern = /^\!help$/im
@@ -81,6 +79,19 @@ var active_playerlist = function(game) {
   game.channel.send("Current players: " + playerlist);
 };
 
+var job = schedule.scheduleJob({hour: 12, minute: 0}, function() {
+  var endDate = new Date(2020,7,25);
+  var today = new Date();
+  var diff = Math.floor((endDate - today) / (1000 * 60 * 60 * 24));
+  if (diff >= 2) {
+    var channel = client.channels.get('698328412598829096');
+    channel.send('**' + diff + ' days remain.**');
+  } else if (diff == 1) {
+    channel.send('**Dawn of the Final Day**');
+    channel.send('==~~24~~ 19 hours remain==');
+  }
+});
+
 var count_votes = function(game) {
   var votes = [];
   //votes: [Target: {count: 0, votelist: []}]
@@ -93,7 +104,6 @@ var count_votes = function(game) {
   //This literally just counts votes. No processing. That way processing majority vs plurality can be done on a per game, or even separate function basis.
 }
 
-
 var receiveMsg = function() {
   sqs.receiveMessage(sqsParams, function(err, data) {
     if (err) {
@@ -101,7 +111,7 @@ var receiveMsg = function() {
     } else if (data.Messages) {
       var message = data.Messages[0];
       console.log('Message received:' + JSON.stringify(message));
-      var channel = client.channels.get('366737195744100352');
+      var channel = client.channels.get('368136920284397580');
       channel.send(message.MessageAttributes.Moderator.StringValue + 
                    ' has opened ' + 
                    message.MessageAttributes.GameTitle.StringValue + 
@@ -335,9 +345,6 @@ client.on('message', message => {
       } else if (sad_pattern.test(message.content)) {
         var emoji = message.guild.emojis.find('name', 'sad');
         message.react(emoji);
-      } else if (abuela_pattern.test(message.content)) {
-        var emoji = message.guild.emojis.find('name', 'abuela');
-        message.react(emoji);
       } else if (pres_pattern.test(message.content)) {
         message.reply("Yes.");
       }
@@ -422,14 +429,7 @@ client.on('message', message => {
           if(Math.random() < 0.2) {
             var emoji = message.guild.emojis.find('name', 'mlyp');
             message.react(emoji);
-            if (eggp_pattern.test(message.content)) {
-              message.react("🍆");
-            }
           }
-        } else if (eggp_pattern.test(message.content)) {
-          message.react("🍆");
-        } else if (swd_pattern.test(message.content)) {
-          message.react("💦");
         }
       }
     }
