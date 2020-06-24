@@ -90,6 +90,18 @@ var job = schedule.scheduleJob({hour: 12, minute: 0}, function() {
   }
 });
 
+var count_votes = function(game) {
+  var votes = [];
+  //votes: [Target: {count: 0, votelist: []}]
+  game.data.votes.forEach(function(e) {
+    votes[e.target].count++;
+    votes[e.target].votelist.push(e.voter)
+  });
+  console.log(votes);
+  return votes;
+  //This literally just counts votes. No processing. That way processing majority vs plurality can be done on a per game, or even separate function basis.
+}
+
 var receiveMsg = function() {
   sqs.receiveMessage(sqsParams, function(err, data) {
     if (err) {
