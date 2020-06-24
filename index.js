@@ -40,6 +40,7 @@ var insider_signup = /^\!signup$/im
 var insider_startgame = /^\!startgame$/im
 
 var vote_pattern = /^\*\*\#\#vote (.*)\*\*$/im
+var votecount_pattern = /^\*\*\#\#votecount\*\*$/im
 
 var players = /^\!players$/im
 
@@ -229,6 +230,22 @@ client.on('message', message => {
         //check to see if there's a majority I suppose? count_votes and get the result and then feed it into is_majority
       } else {
         message.react('❌');
+      }
+    }
+    
+    if (votecount_pattern.test(message.content)) {
+      var active_game = active_games.find(obj => obj.channel === message.channel);
+      if(active_game !== undefined && active_game.data.started == true && active_game.data.players.includes(message.author) && active_game.data.players.includes(message.mentions.members.first()) && active_game.data.accepting_votes) { //TODO: add `accepting_votes` property to game?
+        votes = count_votes(active_games.find(obj => obj.channel === message.channel));
+        var messageBody = '';
+        votes.forEach(function(target, thisVote) {
+          messageBody += target + ' (' + thisVote.votelist.length + '): ';
+          thisVote.votelist.forEach(function(voter) {
+            messageBody += voter + ' ';
+          });
+          messageBody += "\n";
+        });
+        message.channel.send(messageBody);
       }
     }
     
