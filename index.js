@@ -376,7 +376,7 @@ client.on('message', message => {
       } else       if (new_issue_pattern.test(message.content)) {
         var issue_text = new_issue_pattern.exec(message.content);
         if(issue_text[1].length > 50) {
-          message.reply("please write a shorter issue summary; I'll prompt you for an expanded description afterwards.");
+          message.reply("Please write a shorter issue summary; I'll prompt you for an expanded description afterwards.");
         } else {
           issue_titles[message.author.id] = issue_text[1];
           message.reply("I've started opening an issue. Can you give me some more details / steps on reproducing using the `!desc` command?");
@@ -402,34 +402,6 @@ client.on('message', message => {
     } else if(message.channel.id == 101150161291460608) {
       if (daniels_pattern.test(message.content)) {
         message.channel.send('`.---- ...-- ..... -...`');
-      }
-    } else if (message.channel.id == 231119048006565888) {
-      // CJS
-      if (new_issue_pattern.test(message.content)) {
-        var issue_text = new_issue_pattern.exec(message.content);
-        if(issue_text[1].length > 50) {
-          message.reply("please write a shorter issue summary; I'll prompt you for an expanded description afterwards.");
-        } else {
-          issue_titles[message.author.id] = issue_text[1];
-          message.reply("I've started opening an issue. Can you give me some more details / steps on reproducing using the `!desc` command?");
-        }
-      } else if (description_pattern.test(message.content) && issue_titles[message.author.id]) {
-        var desc_text = description_pattern.exec(message.content)
-        if(message.author.lastMessage.member.nickname) {
-          var author = message.author.lastMessage.member.nickname;
-        } else {
-          var author = message.author.username;
-        }
-        vfrepo.issue({
-          "title": issue_titles[message.author.id],
-          "body": desc_text[1] + ' _- reported by ' + author + '_',
-          "assignee": "aletson",
-          "labels": ["needs-attention"]
-        }, function() {
-          delete issue_titles[message.author.id]; //it being undefined is probably fine?
-        });
-      } else if (description_pattern.test(message.content)) {
-        message.reply("I don't have an issue title for this issue! Please start opening an issue using the `!issue` command.");
       }
     } else if (message.channel.id == 454476621358039051) {
       // T / D
@@ -466,7 +438,7 @@ router.post('/vf-gh', function(req, res) {
   });
   req.on('end', function() {
     obj = JSON.parse(body);
-    var send_to_channel = client.channels.get("231119048006565888");
+    var send_to_channel = client.channels.get("350440271709732869");
     // Now we need to set up message events based on what's received.
     if (obj.action == "published") {
       //New release      
