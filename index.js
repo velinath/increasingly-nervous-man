@@ -29,6 +29,7 @@ var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|p
 var covfefe_pattern = /(^|\s|\p)(covfefe)$/i
 var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
 var role_pattern = /^\!r ([0-9]{1,2})d([0-9]{1,4})$/im
+var coffee_pattern = /^\!coffee$/im
 var new_issue_pattern = /^\!issue (.*)$/im
 var description_pattern = /^\!desc (.*)$/im
 var help_pattern = /^\!help$/im
@@ -213,6 +214,10 @@ client.on('message', message => {
       }
       msg = msg.slice(0, -2) + "] =";
       message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + msg +  total + "`");
+    }
+    
+    if (coffee_pattern.test(message.content)) {
+      message.channel.send('I LITERALLY do not like people who say they need coffee to function. that makes you an addict, the same jacks who say that will sneer and look down their noses at somone who have an alcohol/gambling/drugs/whatever problem. If you need something to function, you\'re an addict. If you don\'t need it to function you\'re just someone who loves to make a scene and pretend coffee is your everything, you probably ruined bacon for people too with meme levels of glorification.'
     }
     
     if (vote_pattern.test(message.content)) {
