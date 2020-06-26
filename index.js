@@ -217,7 +217,7 @@ client.on('message', message => {
     }
     
     if (coffee_pattern.test(message.content)) {
-      message.channel.send('I LITERALLY do not like people who say they need coffee to function. that makes you an addict, the same jacks who say that will sneer and look down their noses at somone who have an alcohol/gambling/drugs/whatever problem. If you need something to function, you\'re an addict. If you don\'t need it to function you\'re just someone who loves to make a scene and pretend coffee is your everything, you probably ruined bacon for people too with meme levels of glorification.'
+      message.channel.send('I LITERALLY do not like people who say they need coffee to function. that makes you an addict, the same jacks who say that will sneer and look down their noses at somone who have an alcohol/gambling/drugs/whatever problem. If you need something to function, you\'re an addict. If you don\'t need it to function you\'re just someone who loves to make a scene and pretend coffee is your everything, you probably ruined bacon for people too with meme levels of glorification.');
     }
     
     if (vote_pattern.test(message.content)) {
