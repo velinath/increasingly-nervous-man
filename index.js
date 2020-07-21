@@ -436,32 +436,6 @@ router.get('/', function(req, res) {
   res.end('increasingly-nervous-man\n');
 });
 
-router.post('/vf-gh', function(req, res) {
-  var body = '';
-  req.on('data', function(data) {
-    body += data;
-  });
-  req.on('end', function() {
-    obj = JSON.parse(body);
-    var send_to_channel = client.channels.get("350440271709732869");
-    // Now we need to set up message events based on what's received.
-    if (obj.action == "published") {
-      //New release      
-      send_to_channel.send("New Votefinder version " + obj.release.tag_name + " released! Changelog: <" + obj.release.html_url + ">");
-    } else if (obj.action == "opened" || obj.action == "closed") {
-      //Issue or pull request!
-      if (typeof obj.issue !== 'undefined') {
-        send_to_channel.send("Votefinder: Issue #" + obj.issue.number + " " + obj.action + ": " + obj.issue.title + " <" + obj.issue.html_url + ">");
-      } else if (typeof obj.pull_request !== 'undefined') {
-        send_to_channel.send("Votefinder: PR #" + obj.pull_request.number + " " + obj.action + ": " + obj.pull_request.title + "<" + obj.pull_request.html_url + ">");
-      }
-    }
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-    res.end('\n');
-  });
-});
-
 var server = http.createServer(function(req, res) {
   router(req, res, finalhandler(req, res))
 })
