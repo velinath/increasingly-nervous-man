@@ -35,6 +35,7 @@ var description_pattern = /^\!desc (.*)$/im
 var help_pattern = /^\!help$/im
 var help_specific = /^\!help (.*)/im
 var nice_pattern = /^tell me something good/im
+var card_pattern = /^!card (.*)/im
 
 var insider_start = /^\!insider$/im
 var insider_signup = /^\!signup$/im
@@ -370,6 +371,10 @@ client.on('message', message => {
       } else if (pres_pattern.test(message.content)) {
         message.reply("Yes.");
       }
+    } else if (message.channel.id == 730998787744595989) {
+      if (card_pattern.test(message.content)) {
+        message.channel.send('A player has raised a **' + card_pattern.exec(message.content)[1] + '** card.');
+        message.delete();
     } else if(message.channel.id == 350440271709732869 || message.channel.id == 735135546480918638) {
       if (covfefe_pattern.test(message.content)) {
         var url = 'http://covfefe.ajl.io/';
