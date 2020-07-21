@@ -370,7 +370,7 @@ client.on('message', message => {
       } else if (pres_pattern.test(message.content)) {
         message.reply("Yes.");
       }
-    } else if(message.channel.id == 350440271709732869) {
+    } else if(message.channel.id == 350440271709732869 || message.channel.id == 735135546480918638) {
       if (covfefe_pattern.test(message.content)) {
         var url = 'http://covfefe.ajl.io/';
         rp(url).then(function(html) { message.reply(html) });
