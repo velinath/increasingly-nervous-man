@@ -5,18 +5,15 @@ var rp = require('request-promise');
 var markov = require('markovchain')
   , fs = require('fs')
 var twit = require('twit');
-var AWS = require('aws-sdk');
 var http = require('http');
 var finalhandler = require('finalhandler');
 var Router = require('router');
-var queueUrl = process.env.sqs_queue_url;
 var gh = require('octonode');
 var schedule = require('node-schedule');
 
 var ghclient = gh.client(process.env.gh_access_token);
 var vfrepo = ghclient.repo('aletson/votefinder-web');
 
-AWS.config.update({region: process.env.region});
 client.login(process.env.app_token);
 
 var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p{P}|\s)/i
@@ -61,21 +58,6 @@ var t = new twit({
 
 var stream = t.stream('statuses/filter', { follow: 25073877, stall_warnings: true });
 
-var sqs = new AWS.SQS({apiVersion: '2012-11-05'});
-
-var sqsParams = {
-  AttributeNames: [
-    "SentTimestamp"
-  ],
-  MaxNumberOfMessages: 1,
-  MessageAttributeNames: [
-    "All"
-  ],
-  QueueUrl: queueUrl,
-  VisibilityTimeout: 0,
-  WaitTimeSeconds: 10
-};
-
 var active_playerlist = function(game) {
   var playerlist = '';
   game.data.players.forEach(e => playerlist += e.username + ' ');
@@ -107,47 +89,8 @@ var count_votes = function(game) {
   //This literally just counts votes. No processing. That way processing majority vs plurality can be done on a per game, or even separate function basis.
 }
 
-var receiveMsg = function() {
-  sqs.receiveMessage(sqsParams, function(err, data) {
-    if (err) {
-      console.log("Receive Error", err);
-    } else if (data.Messages) {
-      var message = data.Messages[0];
-      console.log('Message received:' + JSON.stringify(message));
-      var channel = client.channels.get('368136920284397580');
-      channel.send(message.MessageAttributes.Moderator.StringValue + 
-                   ' has opened ' + 
-                   message.MessageAttributes.GameTitle.StringValue + 
-                   '. Thread Link: https://forums.somethingawful.com/showthread.php?threadid=' + 
-                   message.MessageAttributes.threadId.StringValue
-                  );
-      var deleteParams = {
-        QueueUrl: queueUrl,
-        ReceiptHandle: message.ReceiptHandle
-      };
-      sqs.deleteMessage(deleteParams, function(err, data) {
-        if (err) {
-          console.log("Delete Error", err);
-          setTimeout(function() {
-            receiveMsg()
-          }, 60000);
-        } else {
-          console.log("Message Deleted", data);
-          receiveMsg();
-        }
-      });
-    } else {
-      setTimeout(function() {
-        receiveMsg()
-      }, 60000);
-    }
-  });
-};
-
-
 client.on('ready', () => {
   client.user.setActivity("DM !help for commands");
-  receiveMsg();
 });
 
 stream.on('tweet', function(tweet) {
