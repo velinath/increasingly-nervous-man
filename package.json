@@ -23,8 +23,7 @@
     "router": "latest",
     "finalhandler": "latest",
     "aws-sdk": "latest",
-    "octonode": "latest",
-    "node-schedule": "latest"
+    "octonode": "latest"
   },
   "repository": {
     "type": "git",
