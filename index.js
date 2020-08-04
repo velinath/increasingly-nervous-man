@@ -28,7 +28,7 @@ var daniels_pattern = /(^|\s|\p)(voice friend bad)($|\s|\p{P})/i
 var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|awful|disgusting|terrible|unpleasant|impressive)($|\p{P})/i
 var covfefe_pattern = /(^|\s|\p)(covfefe)$/i
 var covfefe_seed_pattern = /(^|\s|\p)(covfefe )(.*)$/i
-var role_pattern = /^\!r ([0-9]{1,2})d([0-9]{1,4})$/im
+var roll_pattern = /^\!r ([0-9]{1,2})d([0-9]{1,4})$/im
 var coffee_pattern = /^\!coffee$/im
 var new_issue_pattern = /^\!issue (.*)$/im
 var description_pattern = /^\!desc (.*)$/im
@@ -202,11 +202,11 @@ client.on('message', message => {
       }
     }
     //General use
-    if (role_pattern.test(message.content)) {
+    if (roll_pattern.test(message.content)) {
       var total = 0;
       var count = 0;
       var msg = "["
-      var regex_groups = role_pattern.exec(message.content)
+      var regex_groups = roll_pattern.exec(message.content)
       while (count < regex_groups[1]) {
         var roll = Math.floor(Math.random() * regex_groups[2]) + 1;
         total += roll;
