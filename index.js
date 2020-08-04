@@ -205,7 +205,7 @@ client.on('message', message => {
     if (roll_pattern.test(message.content)) {
       var total = 0;
       var count = 0;
-      var msg = "["
+      var msg = ""
       var regex_groups = roll_pattern.exec(message.content)
       while (count < regex_groups[1]) {
         var roll = Math.floor(Math.random() * regex_groups[2]) + 1;
@@ -213,8 +213,8 @@ client.on('message', message => {
         msg = msg + roll + ", ";
         count++;
       }
-      msg = msg.slice(0, -2) + "] =";
-      message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": " + msg +  total + "`");
+      msg = msg.slice(0, -2) + "] = ";
+      message.channel.send("`" + regex_groups[1] + "d" + regex_groups[2] + ": [" + msg +  total + "`");
     }
     
     if (coffee_pattern.test(message.content)) {
