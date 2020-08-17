@@ -83,7 +83,7 @@ var active_playerlist = function(game) {
 };
 
 var job = schedule.scheduleJob({hour: 12, minute: 0}, function() {
-  var endDate = new Date(2020,7,25);
+  var endDate = new Date(2020,7,26);
   var today = new Date();
   var diff = Math.floor((endDate - today) / (1000 * 60 * 60 * 24));
   if (diff >= 2) {
