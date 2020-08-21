@@ -373,7 +373,11 @@ client.on('message', message => {
       }
     } else if (message.channel.id == 730998787744595989 || message.channel.id == 98811810655764480) {
       if (card_pattern.test(message.content)) {
-        message.channel.send('A player has raised a **' + card_pattern.exec(message.content)[1] + '** card.');
+        var color = card_pattern.exec(message.content)[1];
+        //if (color == 'tarot' || color == 'playing') {
+          
+        //}
+        message.channel.send('A player has raised a **' + color + '** card.');
         message.delete();
       }
     } else if (message.channel.id == 350440271709732869 || message.channel.id == 735135546480918638) {
