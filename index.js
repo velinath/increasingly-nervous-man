@@ -116,6 +116,7 @@ var start_themind_round = function(game) {
   delete game.data.cards;
   game.data.cards = [];
   game.data.players.forEach(function(player) {
+    game.data.cards[player.id] = [];
     for(i=0;i<game.data.round;i++) {
       var random = Math.floor(Math.random() * cards.length);
       game.data.cards[player.id].push(cards.splice(random,1));
