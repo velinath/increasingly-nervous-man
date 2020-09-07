@@ -382,6 +382,7 @@ client.on('message', message => {
           console.log('card can be played');
           active_game.data.cards[message.author.id].splice(active_game.data.cards[message.author.id].indexOf(number), 1);
           active_game.data.cards.forEach(function(cards_by_player, player_id) {
+            console.log(player_id + ": " + cards_by_player);
             if (cards_by_player.length > 0) {
               cards_by_player.forEach(function(card, index, this_array) {
                 if (card < number) {
@@ -398,7 +399,6 @@ client.on('message', message => {
           if (okay) {
             message.react("✅");
           } else {
-            message.react("⛔");
             var whoopsie_string = "Lower cards found!\n"
             whoopsie_cards.forEach(function(card) {
               whoopsie_string += card.player.username + ': ' + card.card_value + '\n';
@@ -416,7 +416,9 @@ client.on('message', message => {
             active_game.data.round++;
             start_themind_round(active_game);
           }
-        } 
+        } else {
+          message.react("⛔");
+        }
       } else {
         message.channel.send('No appropriate game is currently running in this channel. Please start one with the appropriate command. (currently supported: `!insider, !themind`)');
       }
