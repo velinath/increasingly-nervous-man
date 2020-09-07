@@ -379,11 +379,11 @@ client.on('message', message => {
                   whoopsie_cards.push({'player': client.fetchUser(player_id), 'card_value': card});
                   this_array.splice(index,1);
                 }
-                if(this_array.length > 0) {
+                if (this_array.length > 0) {
                   there_are_cards = true;
                 }
-              }
-            });
+              });
+            }
           });
           if (okay) {
             message.react("✅");
