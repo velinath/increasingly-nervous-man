@@ -393,6 +393,7 @@ client.on('message', message => {
               active_games = active_games.filter(obj => obj.channel !== message.channel);
             } else {
               message.channel.send(active_game.data.chances + " lives remaining.");
+            }
           }
         } 
       } else {
