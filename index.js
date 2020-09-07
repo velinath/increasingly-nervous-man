@@ -381,6 +381,7 @@ client.on('message', message => {
         if (active_game.data.cards[message.author.id].includes(number)) {
           console.log('card can be played');
           active_game.data.cards[message.author.id].splice(active_game.data.cards[message.author.id].indexOf(number), 1);
+          console.log(active_game.data.cards);
           active_game.data.cards.forEach(function(cards_by_player, player_id) {
             console.log(player_id + ": " + cards_by_player);
             if (cards_by_player.length > 0) {
