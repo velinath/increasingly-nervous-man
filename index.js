@@ -291,7 +291,7 @@ client.on('message', message => {
       }
     }
     
-    if mind_start.test(message.content)) {
+    if (mind_start.test(message.content)) {
       if(active_games.find(obj => obj.channel === message.channel) !== undefined) {
         message.channel.send('There\'s already an automated game running in this channel. Type !signup to join the game.');
       } else {
