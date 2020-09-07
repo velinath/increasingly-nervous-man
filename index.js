@@ -371,9 +371,12 @@ client.on('message', message => {
       if(active_game !== undefined && active_game.game == 'themind') {
         console.log('game found');
         var number = parseInt(play_card.exec(message.content)[1]);
+        console.log(typeof(number));
+        console.log(number);
         var okay = true;
         var there_are_cards = false;
         var whoopsie_cards = [];
+        console.log(active_game.data.cards[message.author.id].toString());
         if (active_game.data.cards[message.author.id].includes(number)) {
           console.log('card can be played');
           active_game.data.cards[message.author.id].splice(active_game.data.cards[message.author.id].indexOf(number), 1);
