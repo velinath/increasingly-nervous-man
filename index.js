@@ -41,6 +41,10 @@ var insider_start = /^\!insider$/im
 var insider_signup = /^\!signup$/im
 var insider_startgame = /^\!startgame$/im
 
+var mind_start = /^\!mind$/im
+
+var play_card = /^\!play (.*)\$/im
+
 var vote_pattern = /^\*\*\#\#vote (.*)\*\*$/im
 var votecount_pattern = /^\*\*\#\#votecount\*\*$/im
 
@@ -106,6 +110,19 @@ var count_votes = function(game) {
   return votes;
   //This literally just counts votes. No processing. That way processing majority vs plurality can be done on a per game, or even separate function basis.
 }
+
+var start_themind_round = function(game) {
+  var cards = Array.from({length: 100}, (_, i) => i + 1)
+  game.data.players.forEach(function(player) {
+    for(i=0;i<game.data.round;i++) {
+      var random = Math.floor(Math.random() * cards.length);
+      game.data.cards[player.id].push(cards.splice(random,1));
+    }
+    player.send("Your cards this round are `" + game.data.cards[player].toString() + "`. Play them with `!play <number>` in-channel.");
+  });
+  game.channel.send("Round " + round + " Start!");
+}
+  
 
 var receiveMsg = function() {
   sqs.receiveMessage(sqsParams, function(err, data) {
@@ -274,9 +291,22 @@ client.on('message', message => {
       }
     }
     
+    if mind_start.test(message.content)) {
+      if(active_games.find(obj => obj.channel === message.channel) !== undefined) {
+        message.channel.send('There\'s already an automated game running in this channel. Type !signup to join the game.');
+      } else {
+        message.channel.send('A _The Mind_ game is starting! Please type !signup to join the game.');
+        active_games.push(
+          {'channel': message.channel, 'game': 'themind', 'user': message.author, 'data': {'players': [message.author], 'started': false}});
+      }
+    }
+    
     if (insider_signup.test(message.content)) {
       var active_game = active_games.find(obj => obj.channel === message.channel);
-      if (active_game !== undefined && active_game.data.players.length < 8 && active_game.data.players.indexOf(message.author) == -1) {
+      if (active_game !== undefined && active_game.game == 'insider' && active_game.data.players.length < 8 && active_game.data.players.indexOf(message.author) == -1) {
+        active_game.data.players.push(message.author); //Discord user object
+        message.react('👍');
+      } else if (active_game !== undefined && active_game.game == 'themind' && active_game.data.players.length < 4 && active_game.data.players.indexOf(message.author) == -1) {
         active_game.data.players.push(message.author); //Discord user object
         message.react('👍');
       }
@@ -285,40 +315,88 @@ client.on('message', message => {
     if (insider_startgame.test(message.content)) {
       var active_game = active_games.find(obj => obj.channel === message.channel);
       //case when this based on game type in active_game.game
-      if(active_game !== undefined && active_game.user == message.author && active_game.data.started == false && active_game.data.players.length >= 5 && active_game.data.players.length <= 8){
-        message.channel.send('PM\'s will be sent to the Master and Insider and the game will begin in 15 seconds.');
-        active_game.data.started = true;
-        var file = fs.readFileSync('insider.txt', 'utf8');
-        data = file.split('\n');
-        var lineNumber = Math.floor(Math.random() * data.length);
-        active_game.data.word = data[lineNumber];
-        console.log(active_game.data.word);
-        active_game.data.master_player = active_game.data.players[Math.floor(Math.random() * active_game.data.players.length)];
-        active_game.data.insider_player = active_game.data.players[Math.floor(Math.random() * active_game.data.players.length)];
-        while (active_game.data.insider_player == active_game.data.master_player) {
+      if(active_game !== undefined && active_game.user == message.author && active_game.data.started == false){
+        if (active_game.game == 'insider' && active_game.data.players.length >= 5 && active_game.data.players.length <= 8) {
+          message.channel.send('PM\'s will be sent to the Master and Insider and the game will begin in 15 seconds.');
+          active_game.data.started = true;
+          var file = fs.readFileSync('insider.txt', 'utf8');
+          data = file.split('\n');
+          var lineNumber = Math.floor(Math.random() * data.length);
+          active_game.data.word = data[lineNumber];
+          console.log(active_game.data.word);
+          active_game.data.master_player = active_game.data.players[Math.floor(Math.random() * active_game.data.players.length)];
           active_game.data.insider_player = active_game.data.players[Math.floor(Math.random() * active_game.data.players.length)];
-        }
-        active_game.data.master_player.send("You are the MASTER! Your word is " + active_game.data.word);
-        active_game.data.insider_player.send("You are the INSIDER! Your word is " + active_game.data.word);
-        console.log("insider: " + active_game.data.insider_player.username);
-        console.log("master: " + active_game.data.master_player.username);
-        setTimeout(function() {
-          message.channel.send('The game has begun! Four minutes begins....now.');
+          while (active_game.data.insider_player == active_game.data.master_player) {
+            active_game.data.insider_player = active_game.data.players[Math.floor(Math.random() * active_game.data.players.length)];
+          }
+          active_game.data.master_player.send("You are the MASTER! Your word is " + active_game.data.word);
+          active_game.data.insider_player.send("You are the INSIDER! Your word is " + active_game.data.word);
+          console.log("insider: " + active_game.data.insider_player.username);
+          console.log("master: " + active_game.data.master_player.username);
           setTimeout(function() {
-            message.channel.send('**Two minutes remain.**');
+            message.channel.send('The game has begun! Four minutes begins....now.');
             setTimeout(function() {
-              message.channel.send('**One minute left!!**');
+              message.channel.send('**Two minutes remain.**');
               setTimeout(function() {
-                message.channel.send('The timer has ended!! Votes are now being accepted. Vote: **##vote @<Player>**');
-                active_game.data.accepting_votes = true;
-                active_playerlist(active_game);
-                active_games = active_games.filter(obj => obj.channel !== message.channel);
+                message.channel.send('**One minute left!!**');
+                setTimeout(function() {
+                  message.channel.send('The timer has ended!! Votes are now being accepted. Vote: **##vote @<Player>**');
+                  active_game.data.accepting_votes = true;
+                  active_playerlist(active_game);
+                  active_games = active_games.filter(obj => obj.channel !== message.channel);
+                }, 60000);
               }, 60000);
-            }, 60000);
-          }, 120000);
-        }, 15000);
+            }, 120000);
+          }, 15000);
+        } else if (active_game.game == 'themind' && active_game.data.players.length >= 2 && active_game.data.players.length <= 4) {
+          message.channel.send('Each player will receive a PM with the cards that they are dealt.')
+          message.channel.send('Use `!play <number>` to play a card.');
+          active_game.data.chances = active_game.data.players.length;
+          active_game.data.throwing_stars = 1;
+          //each player in players gets an array of cards, any !play is checked against this
+          active_game.data.current_card = 0;
+          active_game.data.round = 1;
+          start_themind_round(active_game.round);
+        }
       } else {
-        message.channel.send('The player count is not high enough. Insider supports between 5 and 8 players.');
+        message.channel.send('The player count is not high enough. Insider supports between 5 and 8 players, The Mind supports 2 to 4 players.');
+      }
+    }
+    
+    if(play_card.test(message.content)) {
+      var active_game = active_games.find(obj => obj.channel === message.channel);
+      if(active_game !== undefined && active_game.game == 'themind') {
+        var number = int(play_card.exec(message.content)[1]);
+        var okay = true;
+        var whoopsie_cards = [];
+        if (active_game.data.cards[message.author.id].includes(number)) {
+          active_game.data.cards.forEach(function(cards_by_player, player_id) {
+            cards_by_player.forEach(function(card, index, this_array) {
+              if (card < number) {
+                whoopsie_cards.push({'player': client.fetchUser(player_id), 'card_value': card});
+                this_array.splice(index,1);
+              }
+            });
+          });
+          if (okay) {
+            message.react("✅");
+          } else {
+            message.react("⛔");
+            var whoopsie_string = "Lower cards found!\n"
+            whoopsie_cards.forEach(function(card) {
+              whoopsie_string += card.player.username + ': ' + card.card_value + '\n';
+            });
+            message.channel.send(whoopsie_string);
+            active_game.data.chances--;
+            if (active_game.data.chances < 1) {
+              message.channel.send("Out of lives!");
+              active_games = active_games.filter(obj => obj.channel !== message.channel);
+            } else {
+              message.channel.send(active_game.data.chances + " lives remaining.");
+          }
+        } 
+      } else {
+        message.channel.send('No appropriate game is currently running in this channel. Please start one with the appropriate command. (currently supported: `!insider, !themind`)');
       }
     }
       
