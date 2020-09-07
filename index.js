@@ -370,7 +370,7 @@ client.on('message', message => {
       var active_game = active_games.find(obj => obj.channel === message.channel);
       if(active_game !== undefined && active_game.game == 'themind') {
         console.log('game found');
-        var number = int(play_card.exec(message.content)[1]);
+        var number = play_card.exec(message.content)[1];
         var okay = true;
         var there_are_cards = false;
         var whoopsie_cards = [];
