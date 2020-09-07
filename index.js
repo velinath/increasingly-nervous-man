@@ -356,7 +356,7 @@ client.on('message', message => {
           //each player in players gets an array of cards, any !play is checked against this
           active_game.data.current_card = 0;
           active_game.data.round = 1;
-          start_themind_round(active_game.round);
+          start_themind_round(active_game);
         }
       } else {
         message.channel.send('The player count is not high enough. Insider supports between 5 and 8 players, The Mind supports 2 to 4 players.');
@@ -368,13 +368,20 @@ client.on('message', message => {
       if(active_game !== undefined && active_game.game == 'themind') {
         var number = int(play_card.exec(message.content)[1]);
         var okay = true;
+        var there_are_cards = false;
         var whoopsie_cards = [];
         if (active_game.data.cards[message.author.id].includes(number)) {
           active_game.data.cards.forEach(function(cards_by_player, player_id) {
-            cards_by_player.forEach(function(card, index, this_array) {
-              if (card < number) {
-                whoopsie_cards.push({'player': client.fetchUser(player_id), 'card_value': card});
-                this_array.splice(index,1);
+            if (cards_by_player.length > 0) {
+              cards_by_player.forEach(function(card, index, this_array) {
+                if (card < number) {
+                  okay = false;
+                  whoopsie_cards.push({'player': client.fetchUser(player_id), 'card_value': card});
+                  this_array.splice(index,1);
+                }
+                if(this_array.length > 0) {
+                  there_are_cards = true;
+                }
               }
             });
           });
@@ -388,12 +395,16 @@ client.on('message', message => {
             });
             message.channel.send(whoopsie_string);
             active_game.data.chances--;
-            if (active_game.data.chances < 1) {
-              message.channel.send("Out of lives!");
-              active_games = active_games.filter(obj => obj.channel !== message.channel);
-            } else {
-              message.channel.send(active_game.data.chances + " lives remaining.");
-            }
+          }
+          if (active_game.data.chances < 1) {
+            message.channel.send("Out of lives!");
+            active_games = active_games.filter(obj => obj.channel !== message.channel);
+          } else if (!okay) {
+            message.channel.send(active_game.data.chances + " lives remaining");
+          } else if (!there_are_cards) {
+            message.channel.send("All cards played!");
+            active_game.data.round++;
+            start_themind_round(active_game);
           }
         } 
       } else {
