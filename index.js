@@ -43,7 +43,7 @@ var insider_startgame = /^\!startgame$/im
 
 var mind_start = /^\!mind$/im
 
-var play_card = /^\!play (.*)\$/im
+var play_card = /^\!play (.*)$/im
 
 var vote_pattern = /^\*\*\#\#vote (.*)\*\*$/im
 var votecount_pattern = /^\*\*\#\#votecount\*\*$/im
