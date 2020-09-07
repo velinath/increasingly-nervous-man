@@ -366,14 +366,17 @@ client.on('message', message => {
       }
     }
     
-    if(play_card.test(message.content)) {
+    if (play_card.test(message.content)) {
       var active_game = active_games.find(obj => obj.channel === message.channel);
       if(active_game !== undefined && active_game.game == 'themind') {
+        console.log('game found');
         var number = int(play_card.exec(message.content)[1]);
         var okay = true;
         var there_are_cards = false;
         var whoopsie_cards = [];
         if (active_game.data.cards[message.author.id].includes(number)) {
+          console.log('card can be played');
+          active_game.data.cards[message.author.id].splice(active_game.data.cards[message.author.id].indexOf(number), 1));
           active_game.data.cards.forEach(function(cards_by_player, player_id) {
             if (cards_by_player.length > 0) {
               cards_by_player.forEach(function(card, index, this_array) {
