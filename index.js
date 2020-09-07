@@ -376,7 +376,8 @@ client.on('message', message => {
         var okay = true;
         var there_are_cards = false;
         var whoopsie_cards = [];
-        console.log(active_game.data.cards[message.author.id].toString());
+        console.log("array: " + active_game.data.cards[message.author.id].toString());
+        console.log(active_game.data.cards[message.author.id].includes(number));
         if (active_game.data.cards[message.author.id].includes(number)) {
           console.log('card can be played');
           active_game.data.cards[message.author.id].splice(active_game.data.cards[message.author.id].indexOf(number), 1);
