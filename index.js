@@ -112,7 +112,9 @@ var count_votes = function(game) {
 }
 
 var start_themind_round = function(game) {
-  var cards = Array.from({length: 100}, (_, i) => i + 1)
+  var cards = Array.from({length: 100}, (_, i) => i + 1);
+  delete game.data.cards;
+  game.data.cards = [];
   game.data.players.forEach(function(player) {
     for(i=0;i<game.data.round;i++) {
       var random = Math.floor(Math.random() * cards.length);
