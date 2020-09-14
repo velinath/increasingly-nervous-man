@@ -381,12 +381,13 @@ client.on('message', message => {
         console.log(active_game.data.cards[message.author.id].includes(number));
         if (active_game.data.cards[message.author.id].includes(number)) {
           console.log('card can be played');
-          //active_game.data.cards[message.author.id].splice(active_game.data.cards[message.author.id].indexOf(number), 1);
-          console.log(active_game.data.cards.toString());
+          active_game.data.cards[message.author.id].splice(active_game.data.cards[message.author.id].indexOf(number), 1);          
+          active_game.data.cards.forEach((entry) => { console.log(entry) });
           active_game.data.cards.forEach(function(cards_by_player, player_id) {
             console.log(player_id + ": " + cards_by_player);
             if (cards_by_player.length > 0) {
               cards_by_player.forEach(function(card, index, this_array) {
+                console.log(card);
                 if (card < number) {
                   okay = false;
                   whoopsie_cards.push({'player': client.fetchUser(player_id), 'card_value': card});
