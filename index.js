@@ -119,7 +119,7 @@ var start_themind_round = function(game) {
     game.data.cards[player.id] = [];
     for(i=0;i<game.data.round;i++) {
       var random = Math.floor(Math.random() * cards.length);
-      game.data.cards[parseInt(player.id)].push(parseInt(cards.splice(random,1)));
+      game.data.cards[player.id].push(parseInt(cards.splice(random,1)));
     }
     player.send("Your cards this round are `" + game.data.cards[player.id].toString() + "`. Play them with `!play <number>` in-channel.");
   });
@@ -377,12 +377,12 @@ client.on('message', message => {
         var okay = true;
         var there_are_cards = false;
         var whoopsie_cards = [];
-        console.log("array: " + active_game.data.cards[parseInt(message.author.id)].toString());
-        console.log(active_game.data.cards[parseInt(message.author.id)].includes(number));
-        if (active_game.data.cards[parseInt(message.author.id)].includes(number)) {
+        console.log("array: " + active_game.data.cards[message.author.id].toString());
+        console.log(active_game.data.cards[message.author.id].includes(number));
+        if (active_game.data.cards[message.author.id].includes(number)) {
           console.log('card can be played');
-          active_game.data.cards[parseInt(message.author.id)].splice(active_game.data.cards[parseInt(message.author.id)].indexOf(number), 1);          
-          active_game.data.cards.forEach(function(cards_by_player, player_id) {
+          active_game.data.cards[message.author.id].splice(active_game.data.cards[message.author.id].indexOf(number), 1);          
+          Object.keys(active_game.data.cards).forEach(function(cards_by_player, player_id) {
             console.log(player_id + ": " + cards_by_player);
             if (cards_by_player.length > 0) {
               cards_by_player.forEach(function(card, index, this_array) {
