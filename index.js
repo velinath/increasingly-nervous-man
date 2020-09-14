@@ -123,6 +123,7 @@ var start_themind_round = function(game) {
     }
     player.send("Your cards this round are `" + game.data.cards[player.id].toString() + "`. Play them with `!play <number>` in-channel.");
   });
+  console.log(game.data.cards);
   game.channel.send("Round " + game.data.round + " Start!");
 }
   
