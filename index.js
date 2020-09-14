@@ -123,8 +123,8 @@ var start_themind_round = function(game) {
     }
     player.send("Your cards this round are `" + game.data.cards[player.id].toString() + "`. Play them with `!play <number>` in-channel.");
   });
-  console.log(game.toString());
   game.channel.send("Round " + game.data.round + " Start!")
+  return game;
 }
   
 
@@ -360,7 +360,7 @@ client.on('message', message => {
           //each player in players gets an array of cards, any !play is checked against this
           active_game.data.current_card = 0;
           active_game.data.round = 1;
-          start_themind_round(active_game);
+          active_game = start_themind_round(active_game);
         }
       } else {
         message.channel.send('The player count is not high enough. Insider supports between 5 and 8 players, The Mind supports 2 to 4 players.');
