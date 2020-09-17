@@ -411,12 +411,15 @@ client.on('message', message => {
           if (active_game.data.chances < 1) {
             message.channel.send("Out of lives!");
             active_games = active_games.filter(obj => obj.channel !== message.channel);
-          } else if (!okay) {
-            message.channel.send(active_game.data.chances + " lives remaining");
-          } else if (!there_are_cards) {
-            message.channel.send("All cards played!");
-            active_game.data.round++;
-            start_themind_round(active_game);
+          } else {
+            if (!okay) {
+              message.channel.send(active_game.data.chances + " lives remaining");
+            }
+            if (!there_are_cards) {
+              message.channel.send("All cards played!");
+              active_game.data.round++;
+              start_themind_round(active_game);
+            }
           }
         } else {
           message.react("⛔");
