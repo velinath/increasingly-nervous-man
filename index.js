@@ -385,14 +385,14 @@ client.on('message', message => {
           Object.keys(active_game.data.cards).forEach(function(player_id) {
             console.log(active_game.data.cards[player_id]);
             if (active_game.data.cards[player_id].length > 0) {
-              active_game.data.cards[player_id].forEach(function(card, index, this_array) {
+              active_game.data.cards[player_id].forEach(function(card, index) {
                 console.log(card);
                 if (card < number) {
                   okay = false;
                   whoopsie_cards.push({'player': client.fetchUser(player_id), 'card_value': card});
-                  this_array.splice(index,1);
+                  active_game.data.cards[player_id].splice(index,1);
                 }
-                if (this_array.length > 0) {
+                if (active_game.data.cards[player_id].length > 0) {
                   there_are_cards = true;
                 }
               });
