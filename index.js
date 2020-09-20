@@ -121,6 +121,7 @@ var start_themind_round = function(game) {
       var random = Math.floor(Math.random() * cards.length);
       game.data.cards[player.id].push(parseInt(cards.splice(random,1)));
     }
+    game.data.cards[player.id].sort((a,b) => a-b);
     player.send("Your cards this round are `" + game.data.cards[player.id].toString() + "`. Play them with `!play <number>` in-channel.");
   });
   game.channel.send("Round " + game.data.round + " Start!")
