@@ -36,7 +36,7 @@ var help_pattern = /^\!help$/im
 var help_specific = /^\!help (.*)/im
 var nice_pattern = /^tell me something good/im
 var card_pattern = /^!card (.*)/im
-
+var star_pattern = /^\!star$/im
 var insider_start = /^\!insider$/im
 var insider_signup = /^\!signup$/im
 var insider_startgame = /^\!startgame$/im
@@ -86,19 +86,6 @@ var active_playerlist = function(game) {
   game.channel.send("Current players: " + playerlist);
 };
 
-//var job = schedule.scheduleJob({hour: 12, minute: 0}, function() {
-//  var endDate = new Date(2020,7,26);
-//  var today = new Date();
-//  var diff = Math.floor((endDate - today) / (1000 * 60 * 60 * 24));
-//  if (diff >= 2) {
-//    var channel = client.channels.get('698328412598829096');
-//    channel.send('**Womp.**');
-//  } else if (diff == 1) {
-//    channel.send('**Dawn of the Final Day**');
-//    channel.send('==~~24~~ 13 hours remain==');
-//  }
-//});
-
 var count_votes = function(game) {
   var votes = [];
   //votes: [Target: {count: 0, votelist: []}]
@@ -124,6 +111,14 @@ var start_themind_round = function(game) {
     game.data.cards[player.id].sort((a,b) => a-b);
     player.send("Your cards this round are `" + game.data.cards[player.id].toString() + "`. Play them with `!play <number>` in-channel.");
   });
+  if (game.data.round == 3 || game.data.round == 6 || game.data.round == 9) {
+    game.data.throwing_stars++;
+    game.channel.send("Gained a star!");
+  }
+  if (game.data.round == 4 || game.data.round == 7 || game.data.round == 10) {
+    game.data.lives++;
+    game.channel.send("Gained a life!");
+  }
   game.channel.send("Round " + game.data.round + " Start!")
   return game;
 }
@@ -367,7 +362,20 @@ client.on('message', message => {
         message.channel.send('The player count is not high enough. Insider supports between 5 and 8 players, The Mind supports 2 to 4 players.');
       }
     }
-    
+    if (star_pattern.test(message.content)) {
+      var active_game = active_games.find(obj => obj.channel === message.channel);
+      if(active_game !== undefined && active_game.game == 'themind') {
+        if (game.data.throwing_stars > 0) {
+          Object.keys(active_game.data.cards).forEach(function(player_id) {
+            tossed_cards.push({'player': client.fetchUser(player_id), 'card_value': active_game.data.cards[player_id].shift()});
+          });
+          message.channel.send("Star used!");
+          tossed_cards.forEach(function(card) {
+            message.channel.send(card.player.username + ": " + card.card_value);
+          }
+        }
+      }
+    }
     if (play_card.test(message.content)) {
       var active_game = active_games.find(obj => obj.channel === message.channel);
       if(active_game !== undefined && active_game.game == 'themind') {
