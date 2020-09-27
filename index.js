@@ -372,7 +372,7 @@ client.on('message', message => {
           message.channel.send("Star used!");
           tossed_cards.forEach(function(card) {
             message.channel.send(card.player.username + ": " + card.card_value);
-          }
+          });
         }
       }
     }
