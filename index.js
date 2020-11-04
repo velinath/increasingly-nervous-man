@@ -464,7 +464,7 @@ client.on('message', message => {
         message.react(emoji);
       } else if (pres_pattern.test(message.content)) {
         var today = new Date()
-        var january = new Date(2021, 0, 21);
+        var january = new Date(2021, 0, 20);
         if (today < january) {
           message.reply("For now.");
         } else {
