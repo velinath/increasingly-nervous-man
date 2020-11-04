@@ -463,7 +463,13 @@ client.on('message', message => {
         var emoji = message.guild.emojis.find('name', 'sad');
         message.react(emoji);
       } else if (pres_pattern.test(message.content)) {
-        message.reply("Yes.");
+        var today = new Date()
+        var january = new Date(2021, 0, 21);
+        if (today < january) {
+          message.reply("For now.");
+        } else {
+          message.reply("No. Finally.")
+        }
       }
     } else if (message.channel.id == 730998787744595989 || message.channel.id == 98811810655764480) {
       if (card_pattern.test(message.content)) {
