@@ -4,7 +4,6 @@ var cheerio = require('cheerio');
 var rp = require('request-promise');
 var markov = require('markovchain')
   , fs = require('fs')
-var twit = require('twit');
 var AWS = require('aws-sdk');
 var http = require('http');
 var finalhandler = require('finalhandler');
@@ -54,16 +53,6 @@ var active_games = new Array();
 
 var channel_blacklist = [400894454073917440, 368136920284397580, 436536200380284928];
 var issue_titles = new Array();
-
-var t = new twit({
-  consumer_key: process.env.twitter_app_key,
-  consumer_secret: process.env.twitter_app_secret,
-  access_token: process.env.access_token,
-  access_token_secret: process.env.token_secret,
-  tweet_mode: 'extended'
-});
-
-var stream = t.stream('statuses/filter', { follow: 25073877, stall_warnings: true });
 
 var sqs = new AWS.SQS({apiVersion: '2012-11-05'});
 
@@ -166,17 +155,6 @@ client.on('ready', () => {
   client.user.setActivity("DM !help for commands");
   receiveMsg();
 });
-
-stream.on('tweet', function(tweet) {
-  if(tweet.user.id == 25073877 && tweet.retweeted_status === undefined) {
-    var channel = client.channels.get('272035227574992897');
-    if(tweet.truncated) {
-      channel.send('A STATEMENT FROM THE PRESIDENT: ```' + tweet.extended_tweet.full_text + '```');
-    } else {
-      channel.send('A STATEMENT FROM THE PRESIDENT: ```' + tweet.text + '```');
-    }
-  }
-}); 
 
 client.on('message', message => {
   if(channel_blacklist.indexOf(message.channel.id) === -1) {
