@@ -19,7 +19,6 @@
     "request-promise": "latest",
     "markovchain": "latest",
     "simple-ngram-markov": "latest",
-    "twit": "latest",
     "router": "latest",
     "finalhandler": "latest",
     "aws-sdk": "latest",
