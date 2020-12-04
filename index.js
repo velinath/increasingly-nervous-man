@@ -498,11 +498,7 @@ client.on('message', message => {
         }
       } else if (description_pattern.test(message.content) && issue_titles[message.author.id]) {
         var desc_text = description_pattern.exec(message.content)
-        if(message.author.lastMessage.member.nickname) {
-          var author = message.author.lastMessage.member.nickname;
-        } else {
-          var author = message.author.username;
-        }
+        var author = message.author.username;
         vfrepo.issue({
           "title": issue_titles[message.author.id],
           "body": desc_text[1] + ' _- reported by ' + author + '_',
