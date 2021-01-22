@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-var cheerio = require('cheerio');
 var rp = require('request-promise');
 var markov = require('markovchain')
   , fs = require('fs')
@@ -18,10 +17,6 @@ var vfrepo = ghclient.repo('aletson/votefinder-web');
 AWS.config.update({region: process.env.region});
 client.login(process.env.app_token);
 
-var onion_pattern = /(^|\s)(nervous man|end of trump's campaign)($|\p{P}|\s)/i
-var wh_live_pattern = /(^|\s)(today'?s disasters)(\p{P}|\s|$)/i
-var pres_pattern = /(^|\s)(is (donald )?trump still president)(\?)?(\p{P}|\s|$)/i
-var mattering_pattern = /(^|\s|\p{P})mattering/i
 var sad_pattern = /(^|\s)(sad!|low energy)/i
 var daniels_pattern = /(^|\s|\p)(voice friend bad)($|\s|\p{P})/i
 var mlyp_pattern = /(^|\s|\p)(shameful|meaningless|garbage|fantastic|wonderful|perfect|sucks|awful|disgusting|terrible|unpleasant|impressive)($|\p{P})/i
@@ -161,8 +156,6 @@ client.on('message', message => {
     //general-use
     if (message.channel.type == 'dm' && help_pattern.test(message.content)) {
       message.author.send('Politics: \n' +
-                          '`today\'s disasters` - currently scheduled White House press events\n' +
-                          '`is Trump still president` - check on a pressing question\n\n' + 
                           'Bot Playground:\n' +
                           '`covfefe` or `covfefe (word)` - generate a Trump tweet!\n\n' +
                           'CJS:\n' +
@@ -430,46 +423,9 @@ client.on('message', message => {
     }
     
     if(message.channel.id == 272035227574992897 || message.channel.id == 311818566007652354) {
-      if (onion_pattern.test(message.content)) {
-        message.reply('<http://www.theonion.com/article/will-be-end-trumps-campaign-says-increasingly-nerv-52002>');
-      } else if (mattering_pattern.test(message.content)) {
-        message.reply('Who cares, nothing matters, no one knows anything, everything sucks.');
-      } else if (wh_live_pattern.test(message.content)) {
-        var url = 'https://www.whitehouse.gov/live';
-        var events = [];
-        rp(url)
-        .then(function(html) {
-          var $ = cheerio.load(html);
-          $('.view-content').filter(function() {
-            var data = $(this);
-            data.find('.views-row').each(function(i,v) {
-              var eventTime = $(this).find('.date-display-single').first().text();
-              var eventName = $(this).find('a').first().text();
-              var eventStr = eventTime + ': ' + eventName;
-              events.push(eventStr);
-            });
-          });
-          if (events.toString() != '') {
-            message.channel.send(events.join("\n"));
-          } else {
-            var pictureID = Math.floor(Math.random() * 4) + 1;
-            message.channel.sendFile('img/' + pictureID + '.gif'); //TODO deprecated method; replace with send('', {embed: {image: {'img/' + pictureID + '.gif'}});??
-          }
-        })
-        .catch(function(err) {
-          console.log('Crawl failed!');
-        });
-      } else if (sad_pattern.test(message.content)) {
+      if (sad_pattern.test(message.content)) {
         var emoji = message.guild.emojis.find('name', 'sad');
         message.react(emoji);
-      } else if (pres_pattern.test(message.content)) {
-        var today = new Date()
-        var january = new Date(2021, 0, 20);
-        if (today < january) {
-          message.reply("For now.");
-        } else {
-          message.reply("No. Finally.")
-        }
       }
     } else if (message.channel.id == 730998787744595989 || message.channel.id == 98811810655764480) {
       if (card_pattern.test(message.content)) {
